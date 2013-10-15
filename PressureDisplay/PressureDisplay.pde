@@ -8,9 +8,9 @@ final int HEIGHT = 4;
 final int WIDTH = 4;
 
 // Serial Communcation Constants
-final int SERIAL_START_CHAR = 0xFF;
-final int FIRST_SERIAL_RECEIVE_CHAR = 0xFF;
-final int FINAL_SERIAL_RECEIVE_CHAR = 10;  // LInefeed in ASCII
+final int SERIAL_START_CHAR = 'A';
+final int FIRST_SERIAL_RECEIVE_CHAR = 'B';
+final int FINAL_SERIAL_RECEIVE_CHAR = 10;  // LIinefeed in ASCII
 
 // Member variables
 Serial myPort;                       
@@ -24,7 +24,7 @@ void setup() {
   
   // Print a list of the serial ports, for debugging purposes:
   println(Serial.list());
-  String portName = Serial.list()[0];
+  String portName = Serial.list()[8];
   myPort = new Serial(this, portName, 9600);
   // Number of bytes to buffer before calling serialEvent()
   //myport.buffer(1);
@@ -34,6 +34,7 @@ void setup() {
   for (int i = 0;i < displayColors.length; ++i) {
     displayColors[i] = int(random(255));
   }
+  frameRate(5);
 }
 
 
@@ -48,9 +49,18 @@ void draw() {
 }
 
 
+int waitToRead(Serial myPort) {
+  while(myPort.available() == 0){
+  }
+  return myPort.read();
+}
+
+
 void processSerial() {
   // Read first byte from the serial port
   int inByte = myPort.read();
+  //int inByte = waitToRead(myPort);
+  println("first" + inByte);
   // If the first byte received is not the start of the data, 
   // flush the serial buffer and return
   if (inByte != FIRST_SERIAL_RECEIVE_CHAR) {
@@ -58,24 +68,22 @@ void processSerial() {
     println("Error receiving first char");
     return;
   }
+  println("Received start char!");
+
   // Read the payload from the serial
   for (int i = 0; i < serialInArray.length; ++i) {
-    while(myPort.available() == 0){
-      // spin till data arrives
-    }
-     serialInArray[i] =  myPort.read();
+     serialInArray[i] =  waitToRead(myPort);
+     println("Data char " + serialInArray[i]);
   }
   // Ensure final char is correct
-  while(myPort.available() == 0){
-    // spin till data arrives
-  }
-  inByte = myPort.read();
+  inByte = waitToRead(myPort);
   if (inByte != FINAL_SERIAL_RECEIVE_CHAR) {
     println("Error receiving final char");
     return;
   }
   // Update display array
   System.arraycopy(serialInArray, 0, displayColors, 0, serialInArray.length);
+  println("Data success!");
 }
 
 
