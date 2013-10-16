@@ -3,9 +3,9 @@ import java.lang.System;
 import processing.serial.*;
 
 // Display Constants
-final int SQUARE_SIZE = 80;
-final int HEIGHT = 4;
-final int WIDTH = 4;
+final int SQUARE_SIZE = 150;
+final int HEIGHT = 5;
+final int WIDTH = 7;
 
 // Serial Communcation Constants
 final int SERIAL_START_CHAR = 'A';
@@ -17,6 +17,7 @@ Serial myPort;
 int[] serialInArray = new int[HEIGHT * WIDTH];  // Input bytes from the serial
 int[] displayColors = new int[HEIGHT * WIDTH];  // Values for running display
 
+PFont myFont;
 
 void setup() {
   // Init display
@@ -35,6 +36,13 @@ void setup() {
     displayColors[i] = int(random(255));
   }
   frameRate(5);
+  
+  // Font setup
+  //String[] fontList = PFont.list();
+  //println(fontList);
+  myFont = createFont("Georgia", 72);
+  textAlign(CENTER, CENTER); 
+  textSize(50);
 }
 
 
@@ -73,7 +81,7 @@ void processSerial() {
   // Read the payload from the serial
   for (int i = 0; i < serialInArray.length; ++i) {
      serialInArray[i] =  waitToRead(myPort);
-     println("Data char " + serialInArray[i]);
+     println("Data char " + serialInArray[i] + " at index " + i);
   }
   // Ensure final char is correct
   inByte = waitToRead(myPort);
@@ -93,7 +101,9 @@ void drawDisplay() {
     for (int j = 0; j < WIDTH; ++j) {
       int brightness = displayColors[i * WIDTH + j];
       fill(brightness);
-      rect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+      rect(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+      fill(0, 102, 153);
+      text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
     }
   }
 }
