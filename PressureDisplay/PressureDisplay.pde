@@ -3,9 +3,10 @@ import java.lang.System;
 import processing.serial.*;
 
 // Display Constants
-final int SQUARE_SIZE = 150;
-final int HEIGHT = 5;
-final int WIDTH = 7;
+final int SQUARE_SIZE = 85;
+final int HEIGHT = 10;
+final int WIDTH = 12;
+final int TEXT_SIZE = 35;
 
 // Serial Communcation Constants
 final int SERIAL_START_CHAR = 'A';
@@ -35,14 +36,14 @@ void setup() {
   for (int i = 0;i < displayColors.length; ++i) {
     displayColors[i] = int(random(255));
   }
-  frameRate(5);
+  frameRate(4);
   
   // Font setup
   //String[] fontList = PFont.list();
   //println(fontList);
   myFont = createFont("Georgia", 72);
   textAlign(CENTER, CENTER); 
-  textSize(50);
+  textSize(TEXT_SIZE);
 }
 
 
