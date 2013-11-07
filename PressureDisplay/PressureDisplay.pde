@@ -4,14 +4,16 @@ import processing.serial.*;
 
 // Display Constants
 final int SQUARE_SIZE = 85;
-final int HEIGHT = 10;
-final int WIDTH = 12;
+final int WIDTH = 4;
+final int HEIGHT = 4;
 final int TEXT_SIZE = 35;
 
 // Serial Communcation Constants
 final int SERIAL_START_CHAR = 'A';
 final int FIRST_SERIAL_RECEIVE_CHAR = 'B';
-final int FINAL_SERIAL_RECEIVE_CHAR = 10;  // LIinefeed in ASCII
+final int FINAL_SERIAL_RECEIVE_CHAR = 'C';  // LIinefeed in ASCII
+final int SERIAL_READY_CHAR = 'D';
+
 
 // Member variables
 Serial myPort;                       
@@ -30,6 +32,7 @@ void setup() {
   myPort = new Serial(this, portName, 9600);
   // Number of bytes to buffer before calling serialEvent()
   //myport.buffer(1);
+  establishContact();
   
   // Drawing setup
   rectMode(CORNER);
@@ -47,6 +50,14 @@ void setup() {
 }
 
 
+void establishContact() {
+  while (myPort.available() ==0) {
+  }
+  myPort.write(SERIAL_READY_CHAR);   // send a capital A
+  myPort.clear();
+}
+
+
 void draw() {
   background(0,0,0);
   // Tell PSoc to start communicating
@@ -58,7 +69,7 @@ void draw() {
 }
 
 
-int waitToRead(Serial myPort) {
+int waitToRead() {
   while(myPort.available() == 0){
   }
   return myPort.read();
@@ -68,12 +79,12 @@ int waitToRead(Serial myPort) {
 void processSerial() {
   // Read first byte from the serial port
   int inByte = myPort.read();
-  //int inByte = waitToRead(myPort);
-  println("first" + inByte);
+  println("first " + inByte);
   // If the first byte received is not the start of the data, 
   // flush the serial buffer and return
   if (inByte != FIRST_SERIAL_RECEIVE_CHAR) {
     String trash = myPort.readStringUntil(FINAL_SERIAL_RECEIVE_CHAR);
+    println("Trash: " + trash);
     println("Error receiving first char");
     return;
   }
@@ -81,11 +92,12 @@ void processSerial() {
 
   // Read the payload from the serial
   for (int i = 0; i < serialInArray.length; ++i) {
-     serialInArray[i] =  waitToRead(myPort);
+     serialInArray[i] =  waitToRead();
      println("Data char " + serialInArray[i] + " at index " + i);
   }
   // Ensure final char is correct
-  inByte = waitToRead(myPort);
+  inByte = waitToRead();
+  println("final " + inByte);
   if (inByte != FINAL_SERIAL_RECEIVE_CHAR) {
     println("Error receiving final char");
     return;
