@@ -53,6 +53,7 @@ void setup() {
 void establishContact() {
   while (myPort.available() ==0) {
   }
+  println("Established contact!");
   myPort.write(SERIAL_READY_CHAR);   // send a capital A
   myPort.clear();
 }
@@ -60,7 +61,7 @@ void establishContact() {
 
 void draw() {
   background(0,0,0);
-  // Tell PSoc to start communicating
+  // Tell Arduino to start communicating pressure values
   myPort.write(SERIAL_START_CHAR);
   // Receive serial payload and update display values
   processSerial();
