@@ -1,31 +1,25 @@
-class Balance{
+class Balance{ // Analyzes
   
 int HEIGHT; //number of rows of sensors in the mat
 int WIDTH; // number of coumns of sensors in the mat
 MatGraphics graphics;
-float[][] matData;
-float[] diff;
-float[] normalized;
+float[][] rawPres; // Raw pressure values from mat (data from all sense points)
+float[] normalized; // rawPres normalized with total pressure
+float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
 
-float[]ref = {0.89, 0.11};
-int[][] poseAreas = {{0,0,0,0},{0,1,0,1}};
 
-Balance(int HEIGHT, int WIDTH) {
+float[]ref; // will be set to the normalized pressures for each matArea
+int[][] poseAreas = {{0,0,0,0},{0,1,0,1}};  // Row defined two points that define rectangles on the mat, in which the hands/feet are placed. 
+                                            //This will eventually be part of a .txt file containing all nessecary info about a given pose
+
+Balance(int HEIGHT, int WIDTH) { 
    this.HEIGHT = HEIGHT;
    this.WIDTH = WIDTH;
-   matData = new float[HEIGHT][WIDTH];
+   rawPres = new float[HEIGHT][WIDTH];
    normalized = new float[poseAreas.length];
    graphics = new MatGraphics(HEIGHT, WIDTH);
 }
 
-Balance(int HEIGHT, int WIDTH, int[][] poseAreas) {
-  this.HEIGHT = HEIGHT;
-  this.WIDTH = WIDTH;
-  matData = new float[HEIGHT][WIDTH];
-  this.poseAreas = poseAreas;
-  normalized = new float[poseAreas.length];
-  graphics = new MatGraphics(HEIGHT, WIDTH);
-}
 
 void setRef(float[] ref){
   this.ref = ref;
@@ -36,11 +30,11 @@ void setAreas(int[][] poseAreas){
 }
 
 float[] analyzeBalance(float[][] data){
-  matData = data;
+  rawPres = data;
   int[] areaSums = sumAreas(poseAreas);
   normalized = normAreas(areaSums);
   diff = getDiff(ref, normalized);
-  graphics.drawDisplay(matData, diff);
+  graphics.drawDisplay(rawPres, diff);
   return makeBinary(diff);
 }
 
@@ -88,7 +82,7 @@ int[] sumAreas(int [][] poseAreas){
     int sum = 0;
     for (int i = poseAreas[areaNum][0]; i <= poseAreas[areaNum][2]; ++i) {
       for (int j = poseAreas[areaNum][1]; j <= poseAreas[areaNum][3]; ++j) {
-        sum+=matData[i][j];
+        sum+=rawPres[i][j];
       }
     }
     
