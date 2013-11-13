@@ -9,10 +9,15 @@ final int HEIGHT = 4;
 final int TEXT_SIZE = 35;
 
 // Serial Communcation Constants
-final int SERIAL_START_CHAR = 'A';
-final int FIRST_SERIAL_RECEIVE_CHAR = 'B';
-final int FINAL_SERIAL_RECEIVE_CHAR = 'C';  // LIinefeed in ASCII
-final int SERIAL_READY_CHAR = 'D';
+final int SERIAL_ESTABLISH_CONTACT_CHAR = 'A';
+
+final int SERIAL_PRESSURE_START_CHAR = 'B';
+final int SERIAL_PRESSURE_FIRST_RECEIVE_CHAR = 'C'; 
+final int SERIAL_PRESSURE_FINAL_RECEIVE_CHAR = 'D';
+
+final int SERIAL_LIGHT_START_CHAR = 'E';
+final int SERIAL_LIGHT_FIRST_RECEIVE_CHAR = 'F'; 
+final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'G';
 
 
 // Member variables
@@ -54,7 +59,7 @@ void establishContact() {
   while (myPort.available() ==0) {
   }
   println("Established contact!");
-  myPort.write(SERIAL_READY_CHAR);   // send a capital A
+  myPort.write(SERIAL_ESTABLISH_CONTACT_CHAR);   // send a capital A
   myPort.clear();
 }
 
@@ -62,7 +67,7 @@ void establishContact() {
 void draw() {
   background(0,0,0);
   // Tell Arduino to start communicating pressure values
-  myPort.write(SERIAL_START_CHAR);
+  myPort.write(SERIAL_PRESSURE_START_CHAR);
   // Receive serial payload and update display values
   processSerial();
   // Paint display
@@ -83,8 +88,8 @@ void processSerial() {
   println("first " + inByte);
   // If the first byte received is not the start of the data, 
   // flush the serial buffer and return
-  if (inByte != FIRST_SERIAL_RECEIVE_CHAR) {
-    String trash = myPort.readStringUntil(FINAL_SERIAL_RECEIVE_CHAR);
+  if (inByte != SERIAL_PRESSURE_FIRST_RECEIVE_CHAR) {
+    String trash = myPort.readStringUntil(SERIAL_PRESSURE_FINAL_RECEIVE_CHAR);
     println("Trash: " + trash);
     println("Error receiving first char");
     return;
@@ -99,7 +104,7 @@ void processSerial() {
   // Ensure final char is correct
   inByte = waitToRead();
   println("final " + inByte);
-  if (inByte != FINAL_SERIAL_RECEIVE_CHAR) {
+  if (inByte != SERIAL_PRESSURE_FINAL_RECEIVE_CHAR) {
     println("Error receiving final char");
     return;
   }
