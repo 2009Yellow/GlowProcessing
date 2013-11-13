@@ -2,7 +2,7 @@ class LED{
   int[] pixels = new int[4];
   int[] colors = new int[4];
  MatIn mat;
-  LED(){
+  LED(MatIn mat){
     this.MatIn = mat;
   }
 
