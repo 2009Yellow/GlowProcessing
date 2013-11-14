@@ -13,13 +13,13 @@ public class SimpleButton extends UIElement {
 
   // called by manager
   public void mousePressed () {
-    println("pressed");
+    //println("pressed");
     on = !on;
   }
   
   public boolean isInside ( float mx, float my ) {
     boolean r =  Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
-    println("called " + r);
+    //println("called " + r);
     return r;
   }
   

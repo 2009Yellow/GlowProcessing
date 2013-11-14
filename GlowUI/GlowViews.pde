@@ -11,8 +11,8 @@ public class GlowViews {
     // Add buttons to view
     UIElement dogButton = new ImageButton(200, 200, loadImage("dog.jpg"));
     view.addUIElement(dogButton);
-    UIElement simpleButton = new SimpleButton(400, 400, 40, 40);
-    view.addUIElement(simpleButton);
+    //UIElement simpleButton = new SimpleButton(400, 400, 40, 40);
+    //view.addUIElement(simpleButton);
 
     // Return
     return view;

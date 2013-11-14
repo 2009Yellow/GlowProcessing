@@ -14,7 +14,7 @@ public class ImageButton extends SimpleButton {
   public void draw() {
     pushStyle();
     if (on) { 
-      tint(0, 153, 204);
+      tint(128);
     }
     image(img, x, y, elementWidth, elementHeight);
     popStyle();
