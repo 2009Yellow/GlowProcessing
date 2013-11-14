@@ -1,17 +1,29 @@
 import processing.serial.*;
 
-Pressure pressure;
+
+Balance balance;
 Serial myPort;
-int pose = 2;
+MatController matControl;
+//LED led;
+
+int poseNumber = 2;
+Pose pose;
+
 void setup() { 
-  String portName = Serial.list()[0];
-  myPort = new Serial(this, portName, 9600);
-  pressure = new Pressure(myPort);
+  pose = new Pose();
+  pose.loadPoseData(1); //load data for pose #1
+  matControl = new MatController(this, pose);
 }
 
 void draw() {
+  
 //  checkUI();
-pressure.doeverything(pose);
+// if UI says it's time for a new pose;
+//matControl.poseEvent(int pose);
+
+// if it has been 0.2 seconds since the last time we did this...
+// pose.loadPoseData(poseNumber);
+   matControl.loadAndProcessData();
 //  LEDFB();
 //  AudioFB();
 //  UIFB();

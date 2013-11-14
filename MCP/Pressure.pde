@@ -1,86 +1,98 @@
-import processing.serial.*;
+class Pressure{ // Analyzes
+  
+  int mat_h; //number of rows of sensors in the mat
+  int mat_w; // number of coumns of sensors in the mat
+  float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
 
-class Pressure{
-
-MatIn mat;
-
-Pressure(Serial myPort){
-  mat = new MatIn(myPort);
-}
-
-void doeverything(int pose) {
-float[][] stanDist = loadData("C:\\Users\\Erin\\Dropbox\\GlowCode\\standards\\standard",pose);
-float[] standard = stanDist[0];
-float[][] options = loadData("C:\\Users\\Erin\\Dropbox\\GlowCode\\standards\\Feedback4Point",pose);
-String[] words = loadWords("C:\\Users\\Erin\\Dropbox\\GlowCode\\standards\\Words",pose);
-int[][] points = {{0, 0, 0, 0},{0, 1, 0, 1}};
-float[] MatOut = mat.getBalance(standard,points);
-
-//float[] MatOut = {-1, 1};
-int feedback = matchFeedback(MatOut, options);
-println(words[feedback]);
+  MatIn matIn;
+  float[][] poseAreas;// = {{0,0,0,0},{0,1,0,1}};  // Row defined two points that define rectangles on the mat, in which the hands/feet are placed. 
+                                            //This will eventually be part of a .txt file containing all nessecary info about a given pose
+  Pose pose;
 
 
-}
+  //for testing purposes
+  MatGraphics matGraphics;
 
-int matchFeedback(float[] MatOut, float[][] options) {
-  //println(MatOut);
-  int output = 1;
-      for (int i = 0 ; i < options.length; i++) {
-        float[] temp = options[i];
-        //println(temp);
-        boolean isequal = true;
-        for (int j = 0 ; j < temp.length; j++) {
-            if(temp[j] != MatOut[j]) {
-                isequal = false;
+  Pressure(int mat_h, int mat_w, MatIn matIn, Pose pose) { 
+    //initialize variables
+     this.pose = pose;
+     this.matIn = matIn;    //lets Pressure talk to the arduino
+     this.mat_h = mat_h;
+     this.mat_w = mat_w;
+     setAreas(pose.getAreas());
+     
+     //just for testing
+     matGraphics = new MatGraphics(mat_h, mat_w);
+  }
 
-            }
-          }
-          if(isequal){
-            output = i;
-          }
-        }
-            //println(output);
-  return output;
-    }
+  void setAreas(float[][] poseAreas){
+    this.poseAreas = poseAreas;
+
+  }
+
+  void updateAreas(){
+    setAreas(pose.getAreas());
+  }
+
+  //gives total normalized pressure in each area
+  float[] getNormPressDist(){  
+    float[][] rawData = matIn.getPressureDataMatrix();
     
-
-
-
-  
-String [] loadWords(String filePath, int pose) {
-  
-  filePath = filePath+pose+".txt";
-  String lines[] = loadStrings(filePath);
-  String[] output = new String [lines.length];
-    for (int i = 0 ; i < lines.length; i++) {
-      output[i] = lines[i];
-    }
-  return output;
-}
-
-float[][] loadData(String filePath, int pose) {
-  filePath = filePath+pose+".csv";
-  float csvarray[][];
-  String lines[] = loadStrings(filePath);
-  int csvWidth=0;
-
-  for (int i=0; i < lines.length; i++) {
-    String [] chars=split(lines[i],',');
-    if (chars.length>csvWidth){
-      csvWidth=chars.length;
-    }
+    //for testing
+    matGraphics.drawDisplay(rawData);
+    
+    float[] areaSums = sumAreas(rawData);
+    return normAreas(areaSums);
   }
-  
-  csvarray = new float [lines.length][csvWidth];
- 
-  for (int i=0; i < lines.length; i++) {
-    String [] temp = new String [lines.length];
-    temp= split(lines[i], ',');
-    for (int j=0; j < temp.length; j++){
-     csvarray[i][j]=float(temp[j]);
-    }
+
+  float[] multMat(float[] input, float factor) {
+      float[]output = new float[input.length];
+      for (int i = 0; i < input.length; ++i) {
+          output[i] = input[i]*factor;
+        }
+      return output;
   }
-  return csvarray;
-}
+
+  //receives poseAreas (each row contains data about one point of contact with mat)
+  float[] sumAreas(float [][] rawData){
+    float[] areaSums = new float[poseAreas.length];
+  
+    //loop through the different contact areas listed defined by poseAreas
+    for (int areaNum = 0; areaNum < poseAreas.length; areaNum++)
+    {
+      int sum = 0;
+      for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
+        for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
+          float temp = rawData[i][j];
+          sum+=rawData[i][j];
+        }
+      }
+    
+      areaSums[areaNum] = sum;
+    }
+  
+    return areaSums;
+  
+  }
+
+  //normalizes the data
+  float[] normAreas(float[] input) {
+      //float[][] output = new float[HEIGHT][WIDTH];
+      float mass = 0;
+      for (int i = 0; i < input.length; ++i) {
+          mass += input[i];
+      }
+      float[] output = multMat(input,1/mass);
+      return output;
+  }
+
+
+
+
+
+
+
+
+
+
 }
