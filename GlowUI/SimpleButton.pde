@@ -1,27 +1,38 @@
-public class SimpleButton {
-  float x, y, width, height;
-  boolean on;
+public class SimpleButton extends UIElement {
+  protected int x, y, elementWidth, elementHeight;
+  protected boolean on;
 
-  SimpleButton ( float xx, float yy, float w, float h ) {
+  public SimpleButton ( int xx, int yy, int w, int h ) {
+    super();
     x = xx; 
     y = yy; 
-    width = w; 
-    height = h;
-
-    Interactive.add( this ); // register it with the manager
+    elementWidth = w; 
+    elementHeight = h;
+    println("New button with width " + elementWidth + " and height " + elementHeight);
   }
 
   // called by manager
-
-  void mousePressed () {
+  public void mousePressed () {
+    println("pressed");
     on = !on;
   }
-
-  void draw () {
+  
+  public boolean isInside ( float mx, float my ) {
+    boolean r =  Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
+    println("called " + r);
+    return r;
+  }
+  
+  // called by manager
+  public void draw () {
     if ( on ) fill( 200 );
     else fill( 100 );
+    rect(x, y, elementWidth, elementHeight);
 
-    rect(x, y, width, height);
+  }
+  
+  public boolean getState() {
+    return on;
   }
 }
 

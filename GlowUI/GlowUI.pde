@@ -1,28 +1,24 @@
-import de.bezier.guido.*;
+import de.bezier.guido.Interactive;
 
-SimpleButton button;
+ViewManager viewManager;
+GlowViews glowViews;
 
 void setup () {
-  size(400, 400);
+  size(800, 800);
 
-  // make the manager
-
+  // Make the manager
   Interactive.make( this );
-
-  // create some buttons
-
-    int w = (width-20)/20;
-  for ( int ix = 20, k = width-w; ix <= k; ix += 2*w )
-  {
-    for ( int iy = 20, n = height-w; iy <= n; iy += 2*w )
-    {
-      new SimpleButton( ix, iy, w, w );
-    }
-  }
+  
+  // Create ViewManage and views
+  glowViews = new GlowViews(this);
+  viewManager = new ViewManager(0,0, glowViews.HelloView());
+  //viewManager = new ViewManager(0,0);
 }
 
 void draw () {
-  background( 0 );
+  //background( 0 );
+  // Draw the views
+  viewManager.draw();
 }
 
 
