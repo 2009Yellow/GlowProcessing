@@ -2,21 +2,28 @@ public class ViewManager{
   
   // View member variables
   private View currentView;
-  int offset_x;
-  int offset_y;
+  private int offset_x;
+  private int offset_y;
+  private PApplet papplet;
   
   // ========================== Constructor ==========================
-  public ViewManager(int off_x, int off_y) {
+  public ViewManager(int off_x, int off_y, PApplet p) {
     offset_x = off_x;
     offset_y = off_y;
+    papplet = p;
+    // Register key events
+    papplet.registerMethod("keyEvent", this);
     // Create default view
     initDefaultView();
   }
   
-  public ViewManager(int off_x, int off_y, View view) {
+  public ViewManager(int off_x, int off_y, PApplet p,  View view) {
+    papplet = p;
     offset_x = off_x;
     offset_y = off_y;
     currentView = view;
+    // Register key events
+    papplet.registerMethod("keyEvent", this);
   }
   
   
@@ -48,15 +55,28 @@ public class ViewManager{
     }
   }
   
+  public void keyEvent (KeyEvent e ) {
+    if(e.getAction() == e.PRESS) {
+      currentView.keyEvent(e);
+    }
+  }
+  
   public void destroyCurrentView() {
     currentView.destroy();
   }
   
   public void setView(View newView) {
     // Destroy the old view
-    currentView.destroy();
+    if (currentView != null) {
+      currentView.destroy();
+    }
     // Set the new view
-    currentView = newView;
+    if (newView != null) {
+      currentView = newView;
+      newView.setViewManager(this);
+    } else {
+      currentView = null;
+    }
   }
   
 }

@@ -11,8 +11,8 @@ void setup () {
   
   // Create ViewManage and views
   glowViews = new GlowViews(this);
-  viewManager = new ViewManager(0,0, glowViews.HelloView());
-  //viewManager = new ViewManager(0,0);
+  viewManager = new ViewManager(0,0, this,  glowViews.HelloView());
+  //viewManager = new ViewManager(0,0, this);
 }
 
 void draw () {
