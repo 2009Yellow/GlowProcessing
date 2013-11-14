@@ -137,9 +137,10 @@ public class MatIn {
   }
   
   public float[][] getPressureDataMatrix() {
-    float [][] outputMatrix = new float[HEIGHT][WIDTH];
-    for (int j = 0; j<HEIGHT; ++j){
-      for (int i = 0; i < WIDTH; ++i){
+    float [][] outputMatrix = new float[matHeight][matWidth];
+        for (int j = 0; j<matWidth; ++j){
+      for (int i = 0; i <matHeight; ++i){
+
         outputMatrix[i][j] = serialInArray[j * WIDTH + i];
       }
     }

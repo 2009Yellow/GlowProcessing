@@ -5,7 +5,7 @@ class Pressure{ // Analyzes
   float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
 
   MatIn matIn;
-  float[][] poseAreas = {{0,0,0,0},{0,1,0,1}};  // Row defined two points that define rectangles on the mat, in which the hands/feet are placed. 
+  float[][] poseAreas;// = {{0,0,0,0},{0,1,0,1}};  // Row defined two points that define rectangles on the mat, in which the hands/feet are placed. 
                                             //This will eventually be part of a .txt file containing all nessecary info about a given pose
   Pose pose;
 
@@ -27,6 +27,7 @@ class Pressure{ // Analyzes
 
   void setAreas(float[][] poseAreas){
     this.poseAreas = poseAreas;
+
   }
 
   void updateAreas(){
@@ -60,8 +61,9 @@ class Pressure{ // Analyzes
     for (int areaNum = 0; areaNum < poseAreas.length; areaNum++)
     {
       int sum = 0;
-      for (int i = (int)poseAreas[areaNum][0]; i <= (int)poseAreas[areaNum][2]; ++i) {
-        for (int j = (int)poseAreas[areaNum][1]; j <= (int)poseAreas[areaNum][3]; ++j) {
+      for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
+        for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
+          float temp = rawData[i][j];
           sum+=rawData[i][j];
         }
       }

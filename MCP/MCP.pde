@@ -11,7 +11,7 @@ Pose pose;
 
 void setup() { 
   pose = new Pose();
-  pose.loadPoseData(1);
+  pose.loadPoseData(1); //load data for pose #1
   matControl = new MatController(this, pose);
 }
 

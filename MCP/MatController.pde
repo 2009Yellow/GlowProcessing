@@ -5,8 +5,8 @@ public class MatController {
   Pose pose;
   //LED led;
     
-  int HEIGHT = 4;
-  int WIDTH = 4;
+  int HEIGHT = 4; //Do we still need HEIGHT and WIDTH here? It looks like we don't
+  int WIDTH = 4;  
 
   
   MatController(PApplet papplet, Pose pose) {
