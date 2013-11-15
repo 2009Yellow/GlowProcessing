@@ -1,5 +1,5 @@
 class MatGraphics{
-   
+    
   
 // Display Constants
 final int SQUARE_SIZE = 85;

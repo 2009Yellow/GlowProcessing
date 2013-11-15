@@ -34,7 +34,7 @@ void poseEvent(){
 float[] getBinaryFeedback(){
   float[] diff = getDiff();
   float binary[] = new float[diff.length];
-  
+   
   for (int i = 0; i<diff.length; i++){
     //arbitrary tolerance value
     if(abs(diff[i]) > 0.05){ 

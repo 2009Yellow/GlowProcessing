@@ -3,7 +3,7 @@ class Pose{ //will return the reference (i.e. correct, based on yoga expert) LED
   float[][] allPoseData; // contains all of the data in the Pose#Data.txt file
   int PRESSUREROW = 1; // row in the .csv file that contains reference pressures for each area
   int LEDROW = 0; // row in the .csv file that contains LEDs associated with each area
-  
+   
   Pose() {}
   
   void loadPoseData(int poseNumber) { //call this once when a new pose begins to load in all of the new pose refernce data. pose = the number of the new pose

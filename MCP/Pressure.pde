@@ -72,7 +72,7 @@ class Pressure{ // Analyzes
           sum+=rawData[i][j];
         }
       }
-    
+     
       areaSums[areaNum] = sum;
     }
     

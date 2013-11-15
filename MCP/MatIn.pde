@@ -39,7 +39,7 @@ public class MatIn {
     // Update time counters
     lastTime = System.currentTimeMillis();
   }
-  
+   
   // ========================== Private Methods ==========================
   private void establishContact() {
     while (myPort.available() ==0) {
