@@ -58,31 +58,31 @@ public class MatIn {
   private void processSerial() {
     // Read first byte from the serial port
     int inByte = myPort.read();
-    println("first " + inByte);
+   // println("first " + inByte);
     // If the first byte received is not the start of the data, 
     // flush the serial buffer and return
     if (inByte != SERIAL_PRESSURE_FIRST_RECEIVE_CHAR) {
       String trash = myPort.readStringUntil(SERIAL_PRESSURE_FINAL_RECEIVE_CHAR);
-      println("Trash: " + trash);
-      println("Error receiving first char");
+      //println("Trash: " + trash);
+      //println("Error receiving first char");
       return;
     }
-    println("Received start char!");
+    //println("Received start char!");
   
     // Read the payload from the serial
     for (int i = 0; i < serialInArray.length; ++i) {
        serialInArray[i] =  waitToRead();
-       println("Data char " + serialInArray[i] + " at index " + i);
+      // println("Data char " + serialInArray[i] + " at index " + i);
     }
     // Ensure final char is correct
     inByte = waitToRead();
-    println("final " + inByte);
+    //println("final " + inByte);
     if (inByte != SERIAL_PRESSURE_FINAL_RECEIVE_CHAR) {
-      println("Error receiving final char");
+     // println("Error receiving final char");
       return;
     }
     // Update display array
-    println("Data success!");
+    //println("Data success!");
   }
   
   

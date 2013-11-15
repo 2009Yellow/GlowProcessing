@@ -23,6 +23,7 @@ Balance(int mat_h, int mat_w, MatIn matIn, Pose pose){
 void poseEvent(){
   //update pressure distribution
   stanDist = pose.getPressures(); //the global Pose instance has already been updated
+  pressure.updateRecord();
   pressure.updateAreas();          
 }
 
@@ -40,7 +41,7 @@ float[] getBinaryFeedback(){
       binary[i] = abs(diff[i])/diff[i];
     }   
   }
-  
+  println(binary);
   return binary;
 }
 
