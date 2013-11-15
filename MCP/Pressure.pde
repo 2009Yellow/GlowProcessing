@@ -41,11 +41,11 @@ class Pressure{ // Analyzes
     //for testing
     matGraphics.drawDisplay(rawData);
     
-    float[] areaSums = sumAreas(rawData);
+    float[] areaSums = sumAndAvgAreas(rawData,2);
     return normAreas(areaSums);
   }
 
-  float[] multMat(float[] input, float factor) {
+ public float[] multMat(float[] input, float factor) {
       float[]output = new float[input.length];
       for (int i = 0; i < input.length; ++i) {
           output[i] = input[i]*factor;
@@ -54,7 +54,7 @@ class Pressure{ // Analyzes
   }
 
   //receives poseAreas (each row contains data about one point of contact with mat)
-  float[] sumAreas(float [][] rawData){
+  float[] sumAndAvgAreas(float [][] rawData, int nAvg){
     float[] areaSums = new float[poseAreas.length];
   
     //loop through the different contact areas listed defined by poseAreas
@@ -70,8 +70,10 @@ class Pressure{ // Analyzes
     
       areaSums[areaNum] = sum;
     }
+    
+    float[] averagedAreaSums = averageData(areaSums,nAvg); //average data over nAvg historical data sets
   
-    return areaSums;
+    return averagedAreaSums;
   
   }
 
@@ -86,7 +88,23 @@ class Pressure{ // Analyzes
       return output;
   }
 
-
+float[] averageData(float[] dataNew,int n) { //dataNew is array of summed pressures from sensing areas on the mat and n is the number of time steps to average over
+  float[][] dataRecord = new float[n][dataNew.length]; //intialize an array to hold n historical data sets
+  
+    for (int i = 0; i < n-1; ++i) {
+      dataRecord[i] = dataRecord[i+1]; //delete oldest data, shift to make room for new data
+    }
+  dataRecord[n-1] = dataNew; //add new data
+  
+  float[] dataOut = new float[dataNew.length];
+    
+    for (int i = 0; i < n; ++i) {
+      for(int j = 0; j < dataNew.length; ++j){
+      dataOut[j] = +dataRecord[i][j]; //painstakingly with java code sum a 2d array of historical data
+      }
+    }
+  return multMat(dataOut,1/n); //normalize (i.e. find average) of historical data
+}
 
 
 
