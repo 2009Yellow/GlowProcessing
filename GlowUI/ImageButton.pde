@@ -11,6 +11,14 @@ public class ImageButton extends SimpleButton {
     img = i;
   }
   
+  public void mousePressed () {
+    super.mousePressed();
+  }
+  
+  public boolean isInside ( float mx, float my ) {
+    return super.isInside (  mx,  my );
+  }
+  
   public void draw() {
     pushStyle();
     if (on) { 

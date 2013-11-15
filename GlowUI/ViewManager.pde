@@ -1,5 +1,8 @@
 public class ViewManager{
   
+  // Static member
+  //private static ViewManager manager;
+  
   // View member variables
   private View currentView;
   private int offset_x;
@@ -7,13 +10,28 @@ public class ViewManager{
   private PApplet papplet;
   
   // ========================== Constructor ==========================
+  /*
+  public static ViewManager make ( PApplet papplet ) {
+    if ( manager == null ) {
+      manager = new ViewManager( papplet );
+    }
+    return manager;
+  }
+  
+  public static ViewManager get() {
+    if ( manager == null ) {
+      System.err.println( "You need to initialize me first with ...\n\n\tInteractive.make(this);\n" );
+    }
+    return manager;
+  }
+  */
   
  public ViewManager(PApplet p) {
     offset_x = 0;
     offset_y = 0;
     papplet = p;
     // Register key events
-    papplet.registerMethod("keyEvent", this);
+    registerEvents(p);
     // Create default view
     initDefaultView();
   }
@@ -22,7 +40,7 @@ public class ViewManager{
     offset_y = off_y;
     papplet = p;
     // Register key events
-    papplet.registerMethod("keyEvent", this);
+    registerEvents(p);
     // Create default view
     initDefaultView();
   }
@@ -31,15 +49,22 @@ public class ViewManager{
     papplet = p;
     offset_x = off_x;
     offset_y = off_y;
-    currentView = view;
+    setView(view);
     // Register key events
-    papplet.registerMethod("keyEvent", this);
+    registerEvents(p);
   }
   
   
+  
+  
   // ========================== Private Methods ==========================
+  private void registerEvents(PApplet papplet) {
+    papplet.registerMethod("keyEvent", this);
+    //papplet.registerMethod( "draw", this );
+  }
+  
   private void initDefaultView() {
-    currentView = new View(width, height, color(255, 255, 0), null);
+    setView(new View(width, height, color(255, 255, 0), null));
     initButtons();
   }
   
@@ -72,7 +97,9 @@ public class ViewManager{
   }
   
   public void destroyCurrentView() {
-    currentView.destroy();
+    if (currentView != null) {
+      currentView.destroy();
+    }
   }
   
   public void setView(View newView) {

@@ -89,7 +89,7 @@ public class View {
       Interactive.remove(e);
       e.destroy();
     }
-    viewManager.setView(null);
+    //viewManager.setView(null);
   }
   
   public void draw() {

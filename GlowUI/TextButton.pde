@@ -29,6 +29,18 @@ public class TextButton extends SimpleButton {
     message = s;
   }
   
+  // called by manager
+  public void mousePressed () {
+    super.mousePressed();
+  }
+  public void mouseReleased() {
+    super.mouseReleased();
+  }
+  
+  public boolean isInside ( float mx, float my ) {
+    return super.isInside (  mx,  my );
+  }
+  
   public void draw() {
     pushStyle();
     textAlign(CENTER, CENTER);

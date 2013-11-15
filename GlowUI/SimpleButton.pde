@@ -15,6 +15,13 @@ public class SimpleButton extends UIElement {
     }
   }
   
+  public void mouseReleased() {
+    if (enabled) {
+       // Activate button callback
+      activateActionCallback();
+    }
+  }
+
   public boolean isInside ( float mx, float my ) {
     return  Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
   }
@@ -24,7 +31,6 @@ public class SimpleButton extends UIElement {
     if ( on ) fill( 200 );
     else fill( 100 );
     rect(x, y, elementWidth, elementHeight);
-
   }
   
   public boolean getState() {

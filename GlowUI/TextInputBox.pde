@@ -19,7 +19,11 @@ public class TextInputBox extends UIElement implements  KeyEventListener {
   public void mousePressed () {
     println("text input hi");
   }
- 
+  
+  public boolean isInside ( float mx, float my ) {
+    return  Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
+  }
+  
   public void keyEvent(KeyEvent e) {
     // If the return key is pressed, save the String and clear it
     if (key == '\n' ) {

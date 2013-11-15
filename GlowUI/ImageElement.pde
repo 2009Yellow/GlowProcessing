@@ -4,4 +4,8 @@ public class ImageElement extends ImageButton {
     super(  xx,  yy,  i);
     enabled = false;
   }
+  
+  public void draw() {
+    super.draw();
+  }
 }

@@ -1,13 +1,13 @@
-import de.bezier.guido.AbstractActiveElement;
+import de.bezier.guido.*;
 
-public abstract class UIElement extends AbstractActiveElement {
+public abstract class UIElement{
   protected int x, y, elementWidth, elementHeight;
-  
   protected View view;
   
+  protected ActionCallback actionCallback;  
+  
   public UIElement(int xx, int yy, int w, int h) {
-    //super();
-    //rInteractive.remove((UIElement)this);
+    //Interactive.remove((UIElement)this);
     x = xx;
     y = yy;
     elementWidth = w;
@@ -28,14 +28,26 @@ public abstract class UIElement extends AbstractActiveElement {
     return view;
   }
   
+  public void setActionCallback(ActionCallback c) {
+    actionCallback = c;
+  }
+  
+  public void activateActionCallback() {
+    if (actionCallback != null) {
+      actionCallback.doAction(this);
+    }
+  }
+  
   // Implemented for AbstractActiveElement
-  public void mousePressed ( ){};
-  public void mousePressed ( float mx, float my ){};
+  /*
+  public abstract void mousePressed ( );
+  //public void mousePressed ( float mx, float my ) {};
   public void mouseDoubleClicked ( ){};
   public void mouseDoubleClicked ( float mx, float my ){};
   public void mouseDragged ( float mx, float my ){};
   public void mouseDragged ( float mx, float my, float dx, float dy ){};
   public void mouseReleased ( ){};
   public void mouseReleased ( float mx, float my ){};
+  */
 
 }
