@@ -7,7 +7,7 @@ public class GlowViews {
     PImage img = loadImage("yellow-background.jpg");
     View view =  new View(width, height,color(255,255,0), img); 
     // Add buttons to view
-    UIElement dogButton = new ImageButton(200, 200, loadImage("dog.jpg"));
+    UIElement dogButton = new ImageButton(200, 200, loadImage("dog.jpg"), loadImage("cat.jpg"));
     view.addUIElement(dogButton);
     UIElement dogElement = new ImageElement(400, 200, loadImage("dog.jpg"));
     view.addUIElement(dogElement);
@@ -37,7 +37,7 @@ public class GlowViews {
     return view;
   }
   
-  public View GlowHome() {
+  public View GlowHomeTest() {
     // Create view
     View view =  new View(width, height,color(255,255,0)); 
     // Create Views
@@ -59,6 +59,47 @@ public class GlowViews {
     };
     // Set Button1 callback
     textButton1.setActionCallback(b1Callback);
+    
+    // Review new view
+    return view;
+  }
+  
+  public View GlowHome() {
+    // Create view
+    View view =  new View(width, height,color(128,128,128), loadImage("GlowHomeView/home_bg.jpg")); 
+    
+    // Create elements
+    UIElement selectProfileButton = new ImageButton(200, 600, loadImage("GlowHomeView/select_profile.png"), loadImage("GlowHomeView/select_profile_hover.png"));
+    view.addUIElement(selectProfileButton);
+    UIElement createProfileButton = new ImageButton(600, 600, loadImage("GlowHomeView/create_profile.png"), loadImage("GlowHomeView/create_profile_hover.png"));
+    view.addUIElement(createProfileButton);
+    
+    // Create and set Select Profile Callback
+    ActionCallback selectCallback = new ActionCallback() {
+      public void doAction(UIElement e) {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.HelloView());
+      }
+    };
+    selectProfileButton.setActionCallback(selectCallback);
+
+    // Create and set Select Profile Callback
+    ActionCallback createCallback = new ActionCallback() {
+      public void doAction(UIElement e) {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view when button is pressed
+        viewManager.setView(glowViews.HelloView());
+      }
+    };
+    createProfileButton.setActionCallback(createCallback);
+    
     
     // Review new view
     return view;

@@ -1,7 +1,7 @@
 public class SimpleButton extends UIElement {
   protected boolean on;
   protected boolean enabled;
-  protected hover = false;
+  protected boolean hover = false;
 
   public SimpleButton ( int xx, int yy, int w, int h ) {
     super(xx, yy, w, h);
@@ -24,7 +24,8 @@ public class SimpleButton extends UIElement {
   }
 
   public boolean isInside ( float mx, float my ) {
-    hoover  Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
+    hover = Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
+    return hover;
   }
   
   // called by manager

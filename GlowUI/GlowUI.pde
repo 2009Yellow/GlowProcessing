@@ -4,17 +4,15 @@ ViewManager viewManager;
 GlowViews glowViews;
 
 void setup () {
-  size(800, 800);
+  size(1000, 800);
 
   // Make the manager
   Interactive.make( this );
   
   // Create ViewManage and views
   glowViews = new GlowViews();
-  //viewManager = new ViewManager(0,0, this,  glowViews.HelloView());
   viewManager = new ViewManager(0,0, this);
   viewManager.setView(glowViews.GlowHome());
-  //viewManager = new ViewManager(0, 0, this, glowViews.GlowHome());
 }
 
 void draw () {

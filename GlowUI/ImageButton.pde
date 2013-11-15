@@ -1,5 +1,6 @@
 public class ImageButton extends SimpleButton {
   protected PImage img;
+  protected PImage hoverImg;
   
   public ImageButton( int xx, int yy, int w, int h, PImage i) {
     super(  xx,  yy,  w,  h );
@@ -9,6 +10,18 @@ public class ImageButton extends SimpleButton {
   public ImageButton( int xx, int yy, PImage i) {
     super(  xx,  yy, i.width, i.height);
     img = i;
+  }
+  
+  public ImageButton( int xx, int yy, int w, int h, PImage i, PImage hi) {
+    super(  xx,  yy,  w,  h );
+    img = i;
+    hoverImg = hi;
+  }
+  
+  public ImageButton( int xx, int yy, PImage i, PImage hi) {
+    super(  xx,  yy, i.width, i.height);
+    img = i;
+    hoverImg = hi;
   }
   
   public void mousePressed () {
@@ -28,7 +41,11 @@ public class ImageButton extends SimpleButton {
     if (on) { 
       tint(128);
     }
-    image(img, x, y, elementWidth, elementHeight);
+    if (hover && hoverImg != null ) {
+      image(hoverImg, x, y, elementWidth, elementHeight);
+    } else { 
+      image(img, x, y, elementWidth, elementHeight);
+    }
     popStyle();
   }
 }
