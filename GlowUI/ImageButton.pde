@@ -15,6 +15,10 @@ public class ImageButton extends SimpleButton {
     super.mousePressed();
   }
   
+  public void mouseReleased() {
+    super.mouseReleased();
+  }
+  
   public boolean isInside ( float mx, float my ) {
     return super.isInside (  mx,  my );
   }
