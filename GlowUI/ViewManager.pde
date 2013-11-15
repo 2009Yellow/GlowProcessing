@@ -7,6 +7,16 @@ public class ViewManager{
   private PApplet papplet;
   
   // ========================== Constructor ==========================
+  
+ public ViewManager(PApplet p) {
+    offset_x = 0;
+    offset_y = 0;
+    papplet = p;
+    // Register key events
+    papplet.registerMethod("keyEvent", this);
+    // Create default view
+    initDefaultView();
+  }
   public ViewManager(int off_x, int off_y, PApplet p) {
     offset_x = off_x;
     offset_y = off_y;

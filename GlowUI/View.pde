@@ -29,6 +29,22 @@ public class View {
     textFont(viewFont);
   }
   
+  public View(int w, int h, color background_c) {
+    // Add to manager
+    super();
+    // Init list of UI elements
+    uiElements = new ArrayList<UIElement>();
+    keyEventListeners = new ArrayList<KeyEventListener>();
+    // Set width /height
+    viewWidth = w;
+    viewHeight = h;
+    // Set background
+    backgroundColor = background_c;
+    backgroundImage = null; 
+    // Set view font
+    textFont(viewFont);
+  }
+  
   // ========================== Private Methods ==========================
  
   
