@@ -13,7 +13,7 @@ long currentTime;
 
 void setup() { 
   pose = new Pose();
-  pose.loadPoseData(2, heightBinNo); //load data for pose #1
+  pose.loadPoseData(1, heightBinNo); //load data for pose #1
   matControl = new MatController(this, pose);
 
   //time in milliseconds
@@ -29,7 +29,7 @@ void draw() {
     //delay to let user get on mat or something
     matControl.getWeight();
   }*/
-  if (currentTime - lastTime >= 250) { //update pressure date every 0.25 seconds
+  if (currentTime - lastTime >= 250) { //update pressure data every 0.25 seconds
     lastTime = currentTime;
     matControl.loadAndProcessData();
   }

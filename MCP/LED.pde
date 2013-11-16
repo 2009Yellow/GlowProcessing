@@ -1,7 +1,7 @@
 class LED {
   float[] pixelNumbers;
   float[] colors;
-  MatIn mat;
+  MatIn matIn;
   Pose pose;
 
   /*
@@ -13,11 +13,17 @@ class LED {
 
   int[] allW;
 
-  LED(MatIn mat, Pose pose) {
-    this.mat = mat;
+  LED(MatIn matIn, Pose pose) {
+    this.matIn = matIn;
     this.pose = pose;
     setLeds();
     colors = new float[pixelNumbers.length];
+    
+    for (int i = 0; i<colors.length; i++) {
+      colors[i] = 1;
+    }
+    
+    matIn.setLights(pixelNumbers, colors);
   }
 
 
@@ -35,6 +41,8 @@ class LED {
     for (int i =0; i<numAreas; i++) {
       colors[i] = 1;  //1 = purple LEDs for start of pose
     }
+    
+    matIn.setLights(pixelNumbers, colors);
   }
 
   void pressureEvent(float[] pressure) {
@@ -42,6 +50,8 @@ class LED {
     for ( int i = 0; i<pressure.length; i++) {
       colors[i] = pressure[i]+2;
     }
+    
+    matIn.setLights(pixelNumbers, colors);
   }
 }
 
