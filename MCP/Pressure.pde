@@ -34,7 +34,7 @@ class Pressure { // Analyzes
     setAreas(pose.getAreas());
   }
 
-  void updateRecord() {
+      void updateRecord() {
     dataRecord = new float[N][poseAreas.length];
   }
 
@@ -59,7 +59,7 @@ class Pressure { // Analyzes
 
   //receives poseAreas (each row contains data about one point of contact with mat)
   float[] sumAndAvgAreas(float [][] rawData) {
-    float[] areaSums = new float[poseAreas.length];
+    float[] areaSums = new float[poseAreas[0].length];
 
     //loop through the different contact areas listed defined by poseAreas
     for (int areaNum = 0; areaNum < poseAreas[0].length; areaNum++)

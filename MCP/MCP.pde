@@ -5,6 +5,7 @@ Balance balance;
 Serial myPort;
 MatController matControl;
 
+int heightBinNo = 2;
 int poseNumber = 2;
 Pose pose;
 long lastTime;
@@ -12,7 +13,7 @@ long currentTime;
 
 void setup() { 
   pose = new Pose();
-  pose.loadPoseData(1); //load data for pose #1
+  pose.loadPoseData(2, heightBinNo); //load data for pose #1
   matControl = new MatController(this, pose);
 
   //time in milliseconds
@@ -23,7 +24,8 @@ void setup() {
 void draw() {
 
   currentTime = System.currentTimeMillis();
-
+  //if UI tells us to get the user's weight
+  //matControl.getWeight();
   if (currentTime - lastTime >= 250) { //update pressure date every 0.25 seconds
     lastTime = currentTime;
     matControl.loadAndProcessData();

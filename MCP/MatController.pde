@@ -20,6 +20,10 @@ public class MatController {
     lastPressure = new float[balance.getBinaryFeedback().length];
   }
 
+  void getWeight() {
+    balance.getWeight();
+  }
+  
   void loadAndProcessData() {
     matIn.update();
     float[] currentPressure = balance.getBinaryFeedback();
