@@ -7,7 +7,7 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
   Pose() {
   }
 
-  void loadPoseData(int poseNumber) { //call this once when a new pose begins to load in all of the new pose refernce data. pose = the number of the new pose
+  void loadPoseData(int poseNumber, int heightBin) { //call this once when a new pose begins to load in all of the new pose refernce data. pose = the number of the new pose
     String fileName = "Pose"+poseNumber+"Data.csv"; // sets the pose data file for poseNumber
     String lines[] = loadStrings(fileName); //loads data from .csv as strings
     int csvWidth=0; //intialize the width of the data matrix
@@ -31,20 +31,20 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
 
   float[][] getAreas() { //returns columns formated as: [i1 j1 i2 j2] where i1 & j1 define two corners of a rectangle on the mat encompassing a pressure sensing area relevant to the pose 
     float[][] areaData = {
-      allPoseData[2], allPoseData[3], allPoseData[4], allPoseData[5]
+      allPoseData[2+heightBin*4], allPoseData[3+heightBin*4], allPoseData[4+heightBin*4], allPoseData[5+heightBin*4]
     };
     return areaData;
   }
 
 
   float[] getPressures() { //returns an array where element n is the normalized reference pressure for sensing area n
-    float[] pressure = allPoseData[PRESSUREROW];
+    float[] pressure = allPoseData[PRESSUREROW+heightBin*4];
     return pressure;
   }
 
 
   float[] getLeds() { // returns an array where element n is the the LED number that is associated with the sensing area n
-    float[] leds = allPoseData[LEDROW];
+    float[] leds = allPoseData[LEDROW+heightBin*4];
     return leds;
   }
 }
