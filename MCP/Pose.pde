@@ -34,6 +34,7 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
 
   float[] onPressureMat() {
     float[] onMat = allPoseData[ONMATROW+heightBin*7];
+    return onMat;
   }
 
   float[][] getAreas() { //returns columns formated as: [i1 j1 i2 j2] where i1 & j1 define two corners of a rectangle on the mat encompassing a pressure sensing area relevant to the pose 

@@ -3,7 +3,7 @@ class Pressure { // Analyzes
   int mat_h; //number of rows of sensors in the mat
   int mat_w; // number of coumns of sensors in the mat
   float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
-  int weight = 1;
+  float weight = 100;
   
   MatIn matIn;
   float[][] poseAreas;
@@ -41,7 +41,7 @@ class Pressure { // Analyzes
   
   void getWeight(){
     float[] areaWeights = sumAndAvgAreas(matIn.getPressureDataMatrix());
-    int weight = 0;
+    float weight = 0;
     
     for(int i = 0; i<areaWeights.length; i++){
       weight+= areaWeights[i];
@@ -72,23 +72,32 @@ class Pressure { // Analyzes
   //receives poseAreas (each row contains data about one point of contact with mat)
   float[] sumAndAvgAreas(float [][] rawData) {
     float[] areaSums = new float[poseAreas[0].length];
-
+    float[] onMat = pose.onPressureMat();
     //loop through the different contact areas listed defined by poseAreas
     for (int areaNum = 0; areaNum < poseAreas[0].length; areaNum++)
     {
-      int sum = 0;
+      float sum = 0;
+      
+      if(onMat[areaNum] == 0) {
+        sum = weight-areaSums[areaNum-1];
+        println("imaginary area!");
+        areaSums[areaNum] = sum;
+        break;
+      }
       for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
         for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
           float temp = rawData[i][j];
           sum+=rawData[i][j];
         }
       }
-
+    
       areaSums[areaNum] = sum;
     }
 
     float[] averagedAreaSums = averageData(areaSums); //average data over N historical data sets
     //println(averagedAreaSums[0]);
+    
+    println(averagedAreaSums);
     return averagedAreaSums;
   }
 
