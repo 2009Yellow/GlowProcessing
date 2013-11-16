@@ -26,6 +26,7 @@ void draw() {
   currentTime = System.currentTimeMillis();
   /*if( UI tells us to get the user's weight){
     pose.loadPoseData(1, heightBinNo);
+    //delay to let user get on mat or something
     matControl.getWeight();
   }*/
   if (currentTime - lastTime >= 250) { //update pressure date every 0.25 seconds

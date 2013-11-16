@@ -40,7 +40,18 @@ class Pressure { // Analyzes
   }
   
   void getWeight(){
-    float[] areaWeights = sumAndAvgAreas(matIn.getPressureDataMatrix());
+    float[] areaWeights = new float[poseAreas.length];
+    for(int i =0; i<N; i++) {
+      areaWeights = sumAndAvgAreas(matIn.getPressureDataMatrix());
+      
+      //implementing a 250ms delay so we can fill the buffer in a time-averaging function
+      long lastTime = System.currentTimeMillis();
+      long currentTime = System.currentTimeMillis();
+      while(currentTime-lastTime <250){
+        currentTime = System.currentTimeMillis();
+      }
+    }
+    
     float weight = 0;
     
     for(int i = 0; i<areaWeights.length; i++){
@@ -100,6 +111,10 @@ class Pressure { // Analyzes
     println(averagedAreaSums);
     return averagedAreaSums;
   }
+  
+  
+  
+  
 
   //normalizes the data
   float[] normAreas(float[] input) {
@@ -111,6 +126,9 @@ class Pressure { // Analyzes
     float[] output = multMat(input, 1.0/mass);
     return output;
   }
+  
+  
+  
 
   float[] averageData(float[] dataNew) { //dataNew is array of summed pressures from sensing areas on the mat and n is the number of time steps to average over
 
