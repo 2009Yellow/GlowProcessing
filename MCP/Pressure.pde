@@ -3,7 +3,8 @@ class Pressure { // Analyzes
   int mat_h; //number of rows of sensors in the mat
   int mat_w; // number of coumns of sensors in the mat
   float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
-
+  int weight = 1;
+  
   MatIn matIn;
   float[][] poseAreas;
   //This is part of a .csv file containing all nessecary info about a given pose
@@ -34,10 +35,21 @@ class Pressure { // Analyzes
     setAreas(pose.getAreas());
   }
 
-      void updateRecord() {
+  void updateRecord() {
     dataRecord = new float[N][poseAreas.length];
   }
-
+  
+  void getWeight(){
+    float[] areaWeights = sumAndAvgAreas(matIn.getPressureDataMatrix());
+    int weight = 0;
+    
+    for(int i = 0; i<areaWeights.length; i++){
+      weight+= areaWeights[i];
+    }
+    
+    this.weight = weight;
+  }
+  
   //gives total normalized pressure in each area
   float[] getNormPressDist() {  
     float[][] rawData = matIn.getPressureDataMatrix();
