@@ -10,6 +10,8 @@ void setup () {
   // Make the manager
   Interactive.make( this );
   
+  println(PFont.list());
+  
   // Set the global papplet
   GlobalPApplet.papplet = this;
   

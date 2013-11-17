@@ -4,7 +4,7 @@ public class CheckBox extends UIElement
     int x, y, width, height;
     String label;
     float padx = 7;
-    PFont font;
+    //PFont font;
     CheckBox (int xx, int yy, int ww, int hh, String l )
     {
         super(xx, yy, ww, hh);

@@ -6,12 +6,12 @@ public class View {
   private int viewWidth, viewHeight;
   private ArrayList<UIElement> uiElements;
   private ArrayList<KeyEventListener> keyEventListeners;
-  
+
   ViewManager viewManager;
-  
+
   // Font for this view
-  public final PFont viewFont = createFont("Arial",16,true);
-  
+  private final PFont viewFont = createFont("dosis/Dosis-Medium.ttf", 48);
+
   // ========================== Constructor ==========================
   public View(int w, int h, color background_c, PImage background_i) {
     // Add to manager
@@ -28,7 +28,7 @@ public class View {
     // Set view font
     textFont(viewFont);
   }
-  
+
   public View(int w, int h, color background_c) {
     // Add to manager
     super();
@@ -44,19 +44,23 @@ public class View {
     // Set view font
     textFont(viewFont);
   }
-  
+
   // ========================== Private Methods ==========================
- 
-  
+
+
   // ========================== Public Methods ==========================
   public void setBackgroundColor(color c) {
     backgroundColor = c;
   }
-  
+
+  public PFont getFont() {
+    return viewFont;
+  }
+
   public void setBackgroundImage(PImage image) {
     backgroundImage = image;
   }
-  
+
   public void addUIElement(UIElement element) {
     // register it with the manager
     element.setView(this);
@@ -67,22 +71,22 @@ public class View {
   public void addKeyEventListener(KeyEventListener l) {
     keyEventListeners.add(l);
   }
-  
-  
+
+
   public void setViewManager(ViewManager vm) {
     viewManager = vm;
   }
-  
+
   public ViewManager getViewManager() {
     return viewManager;
   }
-  
+
   public void keyEvent(KeyEvent e) {
     for (KeyEventListener l: keyEventListeners) {
       l.keyEvent(e);
     }
   }
-  
+
   public void destroy() {
     // Destroys all the UIElements in this view
     for (UIElement e: uiElements) {
@@ -91,13 +95,15 @@ public class View {
     }
     //viewManager.setView(null);
   }
-  
+
   public void draw() {
     // Draw the backround image if its not null, else just draw backround color
     if (backgroundImage != null) {
       image(backgroundImage, 0, 0);
-    } else {
+    } 
+    else {
       background(backgroundColor);
     }
   }
 }
+
