@@ -230,39 +230,22 @@ public class GlowViews
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/select_session_bg.jpg"));
 
-    makeTitle("SESSIONS", 200, view);
-    
-    int tmpWidth = 300;
-    UIElement selectSubTitle = new TextButton((width-tmpWidth)/2, 300, tmpWidth, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "Select a Session");
-    view.addUIElement(selectSubTitle);
+    PImage session_1 = loadImage("tmp/session_1.png");
+    PImage session_1Hover = loadImage("tmp/session_1hover.png");
+    PImage session_2 = loadImage("tmp/session_2.png");
+    PImage session_3 = loadImage("tmp/session_3.png");
 
-    // Session 1
-    // Session 1 BUTTON
-    UIElement ses1Button = new TextButton(50, 300, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "Session 1");
+    int offSetX = 170;
+    int offSetY = 250;
+    UIElement ses1Button = new ImageButton(offSetX, offSetY + session_1.height + 20, session_1, session_1Hover);
     view.addUIElement(ses1Button);
-    UIElement ses2Button = new TextButton(50, 350, 150, 40, color(255, 0, 0, 0), color(137, 132, 255), 24, "Session 2");
+
+    UIElement ses2Button = new ImageButton(offSetX, offSetY + 2 *(session_1.height + 20), session_2, session_2);
     view.addUIElement(ses2Button);
-    UIElement ses3Button = new TextButton(50, 400, 150, 40, color(255, 0, 0, 0), color(137, 132, 255), 24, "Session 3");
+    UIElement ses3Button = new ImageButton(offSetX, offSetY + 3 * (session_1.height + 20), session_3, session_3);
     view.addUIElement(ses3Button);
     
     ses1Button.setActionCallback(this.goToSession1);
-
-    // Pose pics
-    int x = 300;
-    int y = 180;
-    UIElement pose01 = new ImageElement(x, 400, loadImage("GlowSessions/pose1.png"));
-    view.addUIElement(pose01);
-    UIElement pose02 = new ImageElement(x + y, 400, loadImage("GlowSessions/pose2.png"));
-    view.addUIElement(pose02);
-    UIElement pose03 = new ImageElement(x + 2 * y, 400, loadImage("GlowSessions/pose3.png"));
-    view.addUIElement(pose03);
-    UIElement pose04 = new ImageElement(x, 600, loadImage("GlowSessions/pose4.png"));
-    view.addUIElement(pose04);
-    UIElement pose05 = new ImageElement(x + y, 600, loadImage("GlowSessions/pose5.png"));
-    view.addUIElement(pose05);
-    UIElement pose06 = new ImageElement(x + 2 * y, 600, loadImage("GlowSessions/pose6.png"));
-    view.addUIElement(pose06);
-    // Review new view
 
     drawBackButton(view);
     return view;
@@ -290,7 +273,7 @@ public class GlowViews
   public View learnNewPoses()
   {
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/bg.jpg"));
+        loadImage("background/bg.jpg"));
 
     makeTitle("Session 1, learn", 400, view);
 
