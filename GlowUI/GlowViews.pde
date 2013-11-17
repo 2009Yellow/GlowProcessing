@@ -206,14 +206,20 @@ public class GlowViews
     // Create view
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/select_profile_bg.jpg"));
-
-    int tmpWidth = 220;
-    int tmpHeight = 40;
-    UIElement userName1Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+    
+    PImage user_1 = loadImage("tmp/user_1.png");
+    PImage user_1Hover = loadImage("tmp/user_1hover.png");
+    PImage user_2 = loadImage("tmp/user_2.png");
+    PImage user_3 = loadImage("tmp/user_3.png");
+    
+    int offSetX = (width-user_1.width)/2;
+    int offSetY = 250;
+    UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
     view.addUIElement(userName1Button);
-    UIElement userName2Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2 + 2 * tmpHeight, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+
+    UIElement userName2Button = new ImageButton(offSetX, offSetY + 2 *(user_1.height + 20), user_2, user_2);
     view.addUIElement(userName2Button);
-    UIElement userName3Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2 + 4 * tmpHeight, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+    UIElement userName3Button = new ImageButton(offSetX, offSetY + 3 * (user_1.height + 20), user_3, user_3);
     view.addUIElement(userName3Button);
     
     userName1Button.setActionCallback(this.sessionsCallback);
