@@ -23,6 +23,24 @@ void setup() {
   currentTime = 0;
 }
 
+void setHeightBin(int heightBinNo){
+  this.heightBinNo = heightbinNo;
+}
+
+void newPose(int poseNumber){
+  this.poseNumber = poseNumber;
+  pose.loadPoseData(poseNumber, heightBinNo);
+  matControl.poseEvent();
+}
+
+void advancePose(){
+  poseNumber = (poseNumber+1) % 6;
+  pose.loadPoseData(poseNumber);
+  matControl.poseEvent();
+}
+
+
+
 void draw() {
 
   currentTime = System.currentTimeMillis();
