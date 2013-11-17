@@ -102,6 +102,10 @@ public class ViewManager{
     }
   }
   
+  public PApplet getPApplet() {
+    return papplet;
+  }
+  
   public void setView(View newView) {
     // Destroy the old view
     if (currentView != null) {

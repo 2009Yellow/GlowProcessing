@@ -1,4 +1,4 @@
-import quicktime.app.ui.UIElement;
+//import quicktime.app.ui.UIElement;
 
 public class GlowViews
 {
@@ -352,6 +352,55 @@ public class GlowViews
     UIElement titleText = new TextButton((width-titleWidth)/2, 200, titleWidth, 40,color(255, 0, 0, 0),color(255, 255, 0), 32,
         title);
     view.addUIElement(titleText);
+  }
+  
+  
+  public View GlowHomeTest() {
+    // Create view
+    View view =  new View(width, height,color(255,255,0)); 
+    // Create Views
+    UIElement textButton1 = new TextButton(100, 100, 100, 80, color(0, 100, 255), color(200, 200, 200), 32, "Pose 1");
+    view.addUIElement(textButton1);
+    UIElement textButton2 = new TextButton(100, 200, 100, 80, color(0, 100, 255), color(128, 128, 128), 32, "Pose 2");
+    view.addUIElement(textButton2);
+    
+    VideoElement videoElement = new VideoElement(200, 200, 400, 400, GlobalPApplet.p, "totoro.mov");
+    // Set the globalv video element so that other buttons can control the video
+    GlobalPApplet.v = videoElement;
+    videoElement.play();
+    videoElement.jump(80.0);
+    view.addUIElement(videoElement);
+    
+    // Create Button1 callback
+    ActionCallback b1Callback = new ActionCallback() {
+      public void doAction(UIElement e) {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.HelloView());
+      }
+    };
+    // Set Button1 callback
+    textButton1.setActionCallback(b1Callback);
+    
+        // Create Button1 callback
+    ActionCallback videoCallback = new ActionCallback() {
+      public void doAction(UIElement e) {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.HelloView());
+      }
+    };
+    // Set Button1 callback
+    videoElement.setActionCallback(videoCallback);
+    
+    // Review new view
+    return view;
   }
 }
 
