@@ -58,3 +58,10 @@ void drawDisplay() {
   }
 }
 
+void keyPressed() {
+  int [] positions = {100, 200, 300, 400};
+  int [] colors = {0, 1, 2, 3};
+  matIn.setLights(positions, colors);
+}
+
+

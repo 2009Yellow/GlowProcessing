@@ -32,7 +32,7 @@ public class MatIn {
     serialInArray = new int[matWidth * matHeight];
     // Print a list of the serial ports, for debugging purposes:
     println(Serial.list());
-    String portName = Serial.list()[0];
+    String portName = Serial.list()[8];
     myPort = new Serial(papplet, portName, 9600);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
@@ -43,6 +43,13 @@ public class MatIn {
   
   // ========================== Private Methods ==========================
   private void establishContact() {
+    // Tripple clear the port. This is a hack to deal with buggy arduinos
+    while (myPort.available() ==0) {
+    }
+    myPort.clear();
+    while (myPort.available() ==0) {
+    }
+    myPort.clear();
     while (myPort.available() ==0) {
     }
     println("Established contact!");
@@ -138,13 +145,15 @@ public class MatIn {
   }
   
   public float[][] getPressureDataMatrix() {
-    float [][] outputMatrix = new float[HEIGHT][WIDTH];
-    for (int j = 0; j<HEIGHT; ++j){
-      for (int i = 0; i < WIDTH; ++i){
+    float [][] outputMatrix = new float[matHeight][matWidth];
+        for (int j = 0; j<matWidth; ++j){
+      for (int i = 0; i <matHeight; ++i){
+
         outputMatrix[i][j] = serialInArray[j * WIDTH + i];
       }
     }
     return outputMatrix;
-  }
+  }  
+  
 }
 
