@@ -9,11 +9,8 @@ public class GlowViews
   ActionCallback goToSession1;
   ActionCallback learnPosesCallback;
   ActionCallback pose1Callback;
-  PImage logo;
   public GlowViews()
   {
-    this.logo = loadImage("logo.jpg");
-    logo.resize(210, 140);
     this.glowHomeCallback = new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -114,7 +111,7 @@ public class GlowViews
     UIElement dogElement = new ImageElement(400, 200, loadImage("dog.jpg"));
     view.addUIElement(dogElement);
     UIElement textButton = new TextButton(100, 200, 100, 100, color(255, 0,
-        0), color(255, 255, 255), 32, "Hi");
+        0), color(0, 0, 0), 32, "Hi");
     view.addUIElement(textButton);
     UIElement textInput = new TextInputBox(300, 200, 300, 80, 32, "Hi");
     view.addUIElement(textInput);
@@ -133,17 +130,16 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
+        loadImage("background/home_bg.jpg"));
     
     // Create elements
-    UIElement selectProfileButton = new ImageButton(200, 600,
-        loadImage("GlowHomeView/select_profile.png"),
-        loadImage("GlowHomeView/select_profile_hover.png"));
+    UIElement selectProfileButton = new ImageButton(200, 470,
+        loadImage("buttons/select_profile.png"),
+        loadImage("buttons/select_profile_hover.png"));
     view.addUIElement(selectProfileButton);
-    UIElement createProfileButton = new ImageButton(600, 600,
-        loadImage("GlowHomeView/create_profile.png"),
-        loadImage("GlowHomeView/create_profile_hover.png"));
+    UIElement createProfileButton = new ImageButton(600, 470,
+        loadImage("buttons/create_profile.png"),
+        loadImage("buttons/create_profile_hover.png"));
     view.addUIElement(createProfileButton);
 
     selectProfileButton.setActionCallback(this.selectProfileCallback);
@@ -157,41 +153,44 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
+        loadImage("background/create_profile_bg.jpg"));
 
-    drawLogo(view);
-    makeTitle("Create a Profile", 350, view);
     // name title
-    UIElement nameTag = new TextButton(50, 300, 140, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Name");
+    UIElement nameTag = new TextButton(320, 290, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
     view.addUIElement(nameTag);
+    UIElement passTag = new TextButton(318, 350, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "PASSWORD:");
+    view.addUIElement(passTag);
+    UIElement weightTag = new TextButton(360, 410, 105, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "WEIGHT:");
+    view.addUIElement(weightTag);
     // name input
     int inputNameWidth = 300;
-    UIElement inputName = new TextInputBox((width-inputNameWidth)/2, 300, 300, 40, 32, "");
+    UIElement inputName = new TextInputBox(600, 300, 200, 40, 32, "name");
     view.addUIElement(inputName);
     view.addKeyEventListener((KeyEventListener) inputName);
 
     // height range title
-    UIElement heightRange = new TextButton(50, 400, 220, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Height Range");
+    UIElement heightRange = new TextButton(365, 470, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
     view.addUIElement(heightRange);
     // height range checkboxes
     int checkboxEdge = 20;
     int ckbFontSize = 22;
     String ckbFontType = "papyrus.vlw";
-    UIElement checkbox1 = new CheckBox( 350, 400, checkboxEdge, checkboxEdge, "5'0 - 5'4");
+    UIElement checkbox1 = new CheckBox( 480, 475, checkboxEdge, checkboxEdge, "Below 5'4");
     view.addUIElement(checkbox1);
-    UIElement checkbox2 = new CheckBox( 350, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
+    UIElement checkbox2 = new CheckBox( 480, 520, checkboxEdge, checkboxEdge, "5'4 - 5'8");
     view.addUIElement(checkbox2);
-    UIElement checkbox3 = new CheckBox( 350, 500, checkboxEdge, checkboxEdge, "5'8 - 6'0");
+    UIElement checkbox3 = new CheckBox( 480, 565, checkboxEdge, checkboxEdge, "5'8 - 6'0");
     view.addUIElement(checkbox3);
-    UIElement checkbox4 = new CheckBox( 350, 550, checkboxEdge, checkboxEdge, "6'0 - 6'4");
+    UIElement checkbox4 = new CheckBox( 480, 610, checkboxEdge, checkboxEdge, "Above 6'0");
     view.addUIElement(checkbox4);
     
     
     // submit button
-    PImage submit = loadImage("GlowCreateProfileView/submit.png");
-    submit.resize(100, 50);
+    PImage submit = loadImage("buttons/submit.png");
+    PImage submitHover = loadImage("buttons/submit_hover.png");
+
     int offSet = 20;
-    UIElement buttonSubmit = new ImageButton(width - submit.width - offSet, height - submit.height - offSet, submit, submit);
+    UIElement buttonSubmit = new ImageButton(480, height - submit.height - 3 * offSet, submit, submitHover);
     view.addUIElement(buttonSubmit);
 
     buttonSubmit.setActionCallback(this.selectProfileCallback);
@@ -206,17 +205,18 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
-
-    drawLogo(view);
-    makeTitle("Select a Profile", 350, view);
+        loadImage("background/select_profile_bg.jpg"));
 
     int tmpWidth = 220;
     int tmpHeight = 40;
-    UIElement userNameButton = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(255, 255, 255), 24, "User Name");
-    view.addUIElement(userNameButton);
-
-    userNameButton.setActionCallback(this.sessionsCallback);
+    UIElement userName1Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+    view.addUIElement(userName1Button);
+    UIElement userName2Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2 + 2 * tmpHeight, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+    view.addUIElement(userName2Button);
+    UIElement userName3Button = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2 + 4 * tmpHeight, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(0, 0, 0), 24, "USER_1");
+    view.addUIElement(userName3Button);
+    
+    userName1Button.setActionCallback(this.sessionsCallback);
 
     drawBackButton(view);
 
@@ -228,18 +228,17 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
+        loadImage("background/select_session_bg.jpg"));
 
-    drawLogo(view);
     makeTitle("SESSIONS", 200, view);
     
     int tmpWidth = 300;
-    UIElement selectSubTitle = new TextButton((width-tmpWidth)/2, 300, tmpWidth, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Select a Session");
+    UIElement selectSubTitle = new TextButton((width-tmpWidth)/2, 300, tmpWidth, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "Select a Session");
     view.addUIElement(selectSubTitle);
 
     // Session 1
     // Session 1 BUTTON
-    UIElement ses1Button = new TextButton(50, 300, 150, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Session 1");
+    UIElement ses1Button = new TextButton(50, 300, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "Session 1");
     view.addUIElement(ses1Button);
     UIElement ses2Button = new TextButton(50, 350, 150, 40, color(255, 0, 0, 0), color(137, 132, 255), 24, "Session 2");
     view.addUIElement(ses2Button);
@@ -271,18 +270,17 @@ public class GlowViews
 
   public View Session1()
   {
-    View view = new View(width, height, color(128, 128, 128), loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
+    View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));
     makeTitle("SESSION 1", 200, view);
 
-    UIElement learnPosesButton = new TextButton(150, 400, 200, 200, color(255, 0, 0, 0), color(255, 255, 255), 32, "Learn new Poses");
+    UIElement learnPosesButton = new TextButton(150, 400, 200, 200, color(255, 0, 0, 0), color(0, 0, 0), 32, "Learn new Poses");
     view.addUIElement(learnPosesButton);
 
     // Set Button1 callback
     learnPosesButton.setActionCallback(this.learnPosesCallback);
 
     UIElement doFullSession = new TextButton(650, 400, 200, 200, color(137,
-        132, 132), color(255, 255, 255), 32, "Do a full Session");
+        132, 132), color(0, 0, 0), 32, "Do a full Session");
     view.addUIElement(doFullSession);
     drawBackButton(view);
 
@@ -292,8 +290,7 @@ public class GlowViews
   public View learnNewPoses()
   {
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
+        loadImage("GlowHomeView/bg.jpg"));
 
     makeTitle("Session 1, learn", 400, view);
 
@@ -307,7 +304,7 @@ public class GlowViews
     {
       // drawPoseButton('Pose ' + i, 20, x+i*50, 250, 40, view);
       UIElement pose01Button = new TextButton(20, x + i * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + i);
+          40, color(255, 0, 0), color(0, 0, 0), 32, "Pose " + i);
       view.addUIElement(pose01Button);
       pose01Button.setActionCallback(this.pose1Callback);
     }
@@ -321,9 +318,11 @@ public class GlowViews
   // Private Functions
   private void drawBackButton(View view)
   {
-    PImage back = loadImage("GlowCreateProfileView/back.png");
+    PImage back = loadImage("buttons/back.png");
+    PImage backHover = loadImage("buttons/back_hover.png");
+    backHover.resize(50, 50);
     back.resize(50, 50);
-    UIElement buttonBack = new ImageButton(20, height - 70, back, back);
+    UIElement buttonBack = new ImageButton(20, height - 90, back, backHover);
     view.addUIElement(buttonBack);
 
     // Create and set Select Profile Callback
@@ -340,12 +339,6 @@ public class GlowViews
       }
     };
     buttonBack.setActionCallback(backCallback);
-  }
-
-  private void drawLogo(View view){
-    // page logo
-    UIElement logo = new ImageElement(20, 20, this.logo);
-    view.addUIElement(logo);
   }
   
   private void makeTitle(String title, int titleWidth, View view){
