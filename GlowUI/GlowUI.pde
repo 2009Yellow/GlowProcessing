@@ -2,6 +2,7 @@ import de.bezier.guido.Interactive;
 
 ViewManager viewManager;
 GlowViews glowViews;
+ProfileManager profileManager;
 
 void setup () {
   size(1000, 800);
@@ -10,7 +11,16 @@ void setup () {
   Interactive.make( this );
   
   // Set the global papplet
-  GlobalPApplet.p = this;
+  GlobalPApplet.papplet = this;
+  
+  // Create and set the profile manager
+  profileManager = new ProfileManager();
+  GlobalPApplet.profileManager = profileManager;
+  //Profile p = profileManager.createNewProfile();
+  //p.profileName = "Jane";
+  //profileManager.setCurrentProfileWeight(200.5);
+  //profileManager.saveProfiles();
+  println(profileManager.listProfiles());
   
   // Create ViewManage and views
   glowViews = new GlowViews();
@@ -25,12 +35,13 @@ void draw () {
   viewManager.draw();
 }
 
-// This class is a hack to allow PApplet to be accessed
-// Anywhere in the program without restrictoin.
-// This is bad programing practice...
+// This class is a hack to allow PApplet and certain variables to be accessed
+// anywhere in the program without restrictoin.
+// This is bad programing practice, please don't replicate this...
 public static class GlobalPApplet {
-  public static PApplet p;
-  public static VideoElement v;
+  public static PApplet papplet;
+  public static ProfileManager profileManager; 
+  public static VideoElement videoElement;
 }
 
 

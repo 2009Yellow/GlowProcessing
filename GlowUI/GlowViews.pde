@@ -364,11 +364,11 @@ public class GlowViews
     UIElement textButton2 = new TextButton(100, 200, 100, 80, color(0, 100, 255), color(128, 128, 128), 32, "Pose 2");
     view.addUIElement(textButton2);
     
-    VideoElement videoElement = new VideoElement(200, 200, 400, 400, GlobalPApplet.p, "totoro.mov");
+    VideoElement videoElement = new VideoElement(200, 200, 400, 400, GlobalPApplet.papplet, "totoro.mov");
     // Set the globalv video element so that other buttons can control the video
-    GlobalPApplet.v = videoElement;
+    GlobalPApplet.videoElement = videoElement;
     videoElement.play();
-    videoElement.jump(80.0);
+    videoElement.setTime(80.0);
     view.addUIElement(videoElement);
     
     // Create Button1 callback
@@ -385,7 +385,7 @@ public class GlowViews
     // Set Button1 callback
     textButton1.setActionCallback(b1Callback);
     
-        // Create Button1 callback
+    // Create Button1 callback
     ActionCallback videoCallback = new ActionCallback() {
       public void doAction(UIElement e) {
         // Get the view manger

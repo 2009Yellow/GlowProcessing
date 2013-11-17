@@ -42,10 +42,13 @@ public class VideoElement extends UIElement {
     return hover;
   }
   
-  public void jump(float where) {
+  public void setTime(float where) {
     movie.jump(where);
   }
-
+  
+  public float getTime() {
+    return movie.time();
+  }
 
   public void play() {
     movie.play();
