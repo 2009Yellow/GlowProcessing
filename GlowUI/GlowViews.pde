@@ -238,14 +238,16 @@ public class GlowViews
 
     PImage session_1 = loadImage("tmp/session_1.png");
     PImage session_1Hover = loadImage("tmp/session_1hover.png");
+    PImage session_1HoverPoses = loadImage("tmp/all_sessions.png");
     PImage session_2 = loadImage("tmp/session_2.png");
     PImage session_3 = loadImage("tmp/session_3.png");
 
-    int offSetX = 170;
-    int offSetY = 250;
+    int offSetX = 130;
+    int offSetY = 240;
     UIElement ses1Button = new ImageButton(offSetX, offSetY + session_1.height + 20, session_1, session_1Hover);
     view.addUIElement(ses1Button);
-
+    UIElement ses1ButtonPoses = new ImageButton(offSetX + session_1.width, offSetY + session_1.height/2 +10, session_1HoverPoses, session_1HoverPoses);
+    view.addUIElement(ses1ButtonPoses);
     UIElement ses2Button = new ImageButton(offSetX, offSetY + 2 *(session_1.height + 20), session_2, session_2);
     view.addUIElement(ses2Button);
     UIElement ses3Button = new ImageButton(offSetX, offSetY + 3 * (session_1.height + 20), session_3, session_3);
@@ -260,8 +262,7 @@ public class GlowViews
   public View Session1()
   {
     View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));
-    makeTitle("SESSION 1", 200, view);
-
+    
     UIElement learnPosesButton = new TextButton(150, 400, 200, 200, color(255, 0, 0, 0), color(0, 0, 0), 32, "Learn new Poses");
     view.addUIElement(learnPosesButton);
 
@@ -280,8 +281,6 @@ public class GlowViews
   {
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/bg.jpg"));
-
-    makeTitle("Session 1, learn", 400, view);
 
     int x = 200;
     int tmpWidth = 200;
