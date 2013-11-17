@@ -29,8 +29,8 @@ class Balance {
   void poseEvent() {
     //update pressure distribution
     stanDist = pose.getPressures(); //the global Pose instance has already been updated
-    pressure.updateRecord();
     pressure.updateAreas();
+    pressure.updateRecord();
   }
 
   //returns a vector of binary pressure differences
@@ -47,7 +47,7 @@ class Balance {
         binary[i] = abs(diff[i])/diff[i];
       }
     }
-    println(binary);
+    //println(binary);
     return binary;
   }
 
@@ -64,26 +64,5 @@ class Balance {
     return differences;
   }
 
-  /*
-int matchFeedback(float[] MatOut, float[][] options) {
-   //println(MatOut);
-   int output = 1;
-   for (int i = 0 ; i < options.length; i++) {
-   float[] temp = options[i];
-   //println(temp);
-   boolean isequal = true;
-   for (int j = 0 ; j < temp.length; j++) {
-   if(temp[j] != MatOut[j]) {
-   isequal = false;
-   
-   }
-   }
-   if(isequal){
-   output = i;
-   }
-   }
-   //println(output);
-   return output;
-   }*/
 }
 

@@ -36,13 +36,21 @@ public class MatIn {
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
     println(serialInArray);
-    update();
+   
     // Update time counters
-    lastTime = System.currentTimeMillis();
+    lastTime = System.currentTimeMillis()-250;
+    update();
   }
    
   // ========================== Private Methods ==========================
   private void establishContact() {
+    // Tripple clear the port. This is a hack to deal with buggy arduinos
+    while (myPort.available() ==0) {
+    }
+    myPort.clear();
+    while (myPort.available() ==0) {
+    }
+    myPort.clear();
     while (myPort.available() ==0) {
     }
     println("Established contact!");
@@ -105,7 +113,9 @@ public class MatIn {
   }
 
   public void setLights(float[] positions, float[] colors) {
+    println("Positions");
     println(positions);
+    println("Colors");
     println(colors);
     
     int[] positionsToWrite = {0, 0, 0, 0};
@@ -124,15 +134,23 @@ public class MatIn {
     
     // Send each position value first in the form of two bytes
     for (int pos : positionsToWrite) {
+      //println(pos);
       // Send high byte
-      int high_byte = pos >> 8;
+      /*int high_byte = pos >> 8;
+      println("high byte " + high_byte);
       myPort.write(high_byte);
       // Send low bytes
       int low_byte = pos & 256;
-      myPort.write(low_byte); 
+      println("low byte " + low_byte);
+      myPort.write(low_byte); */
+      
+      int low_byte = pos % 256;
+      int multiplesOf256 = (pos-low_byte)/256;
+      myPort.write(multiplesOf256);
+      myPort.write(low_byte);
     }
     
-    myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
+    //myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
     
     // Send each color value as a single byte
     for(int c : colorsToWrite) {
