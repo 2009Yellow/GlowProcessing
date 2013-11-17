@@ -4,12 +4,32 @@ public class CheckBox extends UIElement
     int x, y, width, height;
     String label;
     float padx = 7;
+<<<<<<< HEAD
     //PFont font;
     CheckBox (int xx, int yy, int ww, int hh, String l )
+=======
+    PFont font;
+    PImage checkedImage;
+    PImage uncheckedImage;
+    PImage hoverImage;
+    public boolean hover = false;
+    public boolean active;
+    int imageSize;
+    public CheckBox (int xx, int yy, int ww, int hh, String l)
+>>>>>>> fe1bb878c94cce6a8e9dcf969c179d6f54c3284f
     {
         super(xx, yy, ww, hh);
         label = l;
+        this.active = true;
+        this.imageSize = 37;
+        checkedImage = loadImage("buttons/radio_selected.png");
+        uncheckedImage = loadImage("buttons/radio_not_selected.png");
+        hoverImage = loadImage("buttons/radio_not_selected_hover.png");
         x = xx; y = yy; width = ww; height = hh;
+    }
+    
+    public boolean isChecked() {
+        return checked; 
     }
     
     void mouseReleased ()
@@ -17,28 +37,28 @@ public class CheckBox extends UIElement
         checked = !checked;
     }
     
+    public boolean isInside ( float mx, float my ) {
+      hover = Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
+      return hover;
+    }
+    
     void draw ()
     {
         noStroke();
-        fill( 200 );
-        rect( x, y, width, height );
-        if ( checked )
+        image(uncheckedImage, x, y, this.imageSize, this.imageSize);
+        if ( checked && this.active)
         {
-            fill( 80 );
-            rect( x+2, y+2, width-4, height-4 );
+          image(checkedImage, x, y, this.imageSize, this.imageSize);
         }
-        fill( 255 );
+        if ( hover && !checked) 
+        {
+          image(hoverImage, x, y, this.imageSize, this.imageSize);
+        }
+        fill( 55 );
         //font = loadFont("papyrus.vlw");
         //textFont(font, 28);
         textAlign( LEFT );
-        textSize(24); 
-        text( label, x+width+padx, y+height );
-    }
-    
-    // this is a special inside test that includes the label text
-    
-    boolean isInside ( float mx, float my )
-    {
-        return Interactive.insideRect( x,y,width+padx+textWidth(label), height, mx, my );
+        textSize(26); 
+        text( label, x + this.imageSize + padx, y + this.imageSize - 10 );
     }
 }
