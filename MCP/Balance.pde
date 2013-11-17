@@ -18,7 +18,13 @@ class Balance {
     this.pose = pose;
     stanDist = pose.getPressures();
   }
-
+  
+  void getWeight(){
+    this.poseEvent();      //basically just to reset pressure
+    pressure.getWeight();
+  }
+  
+  
   //called whenever the pose changes
   void poseEvent() {
     //update pressure distribution

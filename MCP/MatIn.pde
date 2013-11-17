@@ -11,8 +11,9 @@ public class MatIn {
   
   private final int SERIAL_LIGHT_START_CHAR = 'E';
   private final int SERIAL_LIGHT_FIRST_RECEIVE_CHAR = 'F'; 
-  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'G';
-  private final int SERIAL_LIGHT_ERROR_CHAR = 'H';
+  private final int SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR = 'G';
+  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'H';
+  private final int SERIAL_LIGHT_ERROR_CHAR = 'I';
   
   // Member Variables
   private int matWidth;
@@ -103,7 +104,18 @@ public class MatIn {
     processSerial();
   }
 
-  public void setLights(int[] positions, int[] colors) {
+  public void setLights(float[] positions, float[] colors) {
+    println(positions);
+    println(colors);
+    
+    int[] positionsToWrite = {0, 0, 0, 0};
+    int[] colorsToWrite = {0, 0, 0, 0};
+    
+    for ( int i = 0; i<positions.length; i++){
+      positionsToWrite[i] = (int)positions[i];
+      colorsToWrite[i] = (int)colors[i];
+    }
+      
     // Tell Arduino to begin receiving light info 
     myPort.write(SERIAL_LIGHT_START_CHAR);
     
@@ -111,7 +123,7 @@ public class MatIn {
     myPort.write(SERIAL_LIGHT_FIRST_RECEIVE_CHAR);
     
     // Send each position value first in the form of two bytes
-    for (int pos : positions) {
+    for (int pos : positionsToWrite) {
       // Send high byte
       int high_byte = pos >> 8;
       myPort.write(high_byte);
@@ -120,8 +132,10 @@ public class MatIn {
       myPort.write(low_byte); 
     }
     
+    myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
+    
     // Send each color value as a single byte
-    for(int c : colors) {
+    for(int c : colorsToWrite) {
       myPort.write(c);
     }
     
