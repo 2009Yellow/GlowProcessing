@@ -3,7 +3,7 @@ class Pressure { // Analyzes
   int mat_h; //number of rows of sensors in the mat
   int mat_w; // number of coumns of sensors in the mat
   float[] diff; // after the normalized pressure values have been sumed for each matArea, diff is the difference between these values and the ref values
-  float weight = 100;
+  float weight = 1000;
   
   MatIn matIn;
   float[][] poseAreas;
@@ -43,7 +43,6 @@ class Pressure { // Analyzes
     float[] areaWeights = new float[poseAreas.length];
     for(int i =0; i<N; i++) {
       areaWeights = sumAndAvgAreas(matIn.getPressureDataMatrix());
-      
       //implementing a 250ms delay so we can fill the buffer in a time-averaging function
       long lastTime = System.currentTimeMillis();
       long currentTime = System.currentTimeMillis();
@@ -52,13 +51,14 @@ class Pressure { // Analyzes
       }
     }
     
-    float weight = 0;
+    float sumWeight = 0;
     
     for(int i = 0; i<areaWeights.length; i++){
-      weight+= areaWeights[i];
+      sumWeight+= areaWeights[i];
     }
     
-    this.weight = weight;
+    weight = sumWeight;
+    println("Your weight is " + weight);
   }
   
   //gives total normalized pressure in each area
@@ -108,6 +108,7 @@ class Pressure { // Analyzes
     float[] averagedAreaSums = averageData(areaSums); //average data over N historical data sets
     //println(averagedAreaSums[0]);
     
+    println("Avg area sums");
     println(averagedAreaSums);
     return averagedAreaSums;
   }

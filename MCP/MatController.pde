@@ -17,13 +17,23 @@ public class MatController {
     led = new LED(matIn, pose);
 
     //initialize lastPressure to all zeroes
-    lastPressure = new float[balance.getBinaryFeedback().length];
+    resetLastPressure();
   }
 
   void getWeight() {
+    matIn.update();
     balance.getWeight();
   }
   
+  // so that if we reset to a pose, initially all positions are purple,
+  // and then allows lighting update to change when balance distribution is even 
+  void resetLastPressure(){
+    lastPressure = new float[balance.getBinaryFeedback().length];
+    for(int i = 0; i<lastPressure.length; i++){
+      lastPressure[i] = -1;
+    }
+  }
+       
   void loadAndProcessData() {
     matIn.update();
     float[] currentPressure = balance.getBinaryFeedback();
@@ -39,15 +49,16 @@ public class MatController {
     
     //only talk to LEDs if there was a pressure change
     if (!pressureSame) {
+      println("it changed!");
       led.pressureEvent(currentPressure);
       lastPressure = currentPressure;
-      println("it changed!");
     }
   }
 
   void poseEvent() {
     balance.poseEvent();
-    //led.poseEvent();
+    resetLastPressure();
+    led.poseEvent();
   }
 }
 

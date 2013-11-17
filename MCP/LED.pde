@@ -51,6 +51,9 @@ class LED {
       colors[i] = pressure[i]+2;
     }
     
+    println("new colors");
+    println(colors);
+    
     matIn.setLights(pixelNumbers, colors);
   }
 }
