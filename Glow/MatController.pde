@@ -5,8 +5,8 @@ public class MatController {
   Pose pose;
   LED led;
 
-  int HEIGHT = 4; //Do we still need HEIGHT and WIDTH here? It looks like we don't/it could be replaced with matWidth and matHeight, defined in MatIN
-  int WIDTH = 4;  
+  int HEIGHT = 16; //Do we still need HEIGHT and WIDTH here? It looks like we don't/it could be replaced with matWidth and matHeight, defined in MatIN
+  int WIDTH = 16;  
 
   float[] lastPressure;
 
