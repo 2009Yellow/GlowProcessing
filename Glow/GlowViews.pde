@@ -13,12 +13,11 @@ public class GlowViews
   ActionCallback pose3Callback;
   ActionCallback pose4Callback;
   ActionCallback pose5Callback;
-  
-  PImage logo;
+  ActionCallback pose6Callback;
+  ActionCallback pose7Callback;
+  ActionCallback measureYourWeightCallback;
   public GlowViews()
   {
-    this.logo = loadImage("logo.jpg");
-    logo.resize(210, 140);
     this.glowHomeCallback = new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -93,6 +92,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.getWeight();
       }
     };
     this.pose1Callback = new ActionCallback()
@@ -102,40 +102,68 @@ public class GlowViews
           ViewManager viewManager = e.getView().getViewManager();
           GlowViews glowViews = new GlowViews();
           viewManager.setView(glowViews.learnNewPoses());
-          workoutManager.newPose(1);
         }
       };
-      this.pose3Callback = new ActionCallback()
+      this.pose2Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
       {
-        public void doAction(UIElement e)
-        {
-          ViewManager viewManager = e.getView().getViewManager();
-          GlowViews glowViews = new GlowViews();
-          viewManager.setView(glowViews.learnNewPoses());
-          workoutManager.newPose(3);
-        }
-      };
-      this.pose4Callback = new ActionCallback()
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(2);
+      }
+    };
+    this.pose3Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
       {
-        public void doAction(UIElement e)
-        {
-          ViewManager viewManager = e.getView().getViewManager();
-          GlowViews glowViews = new GlowViews();
-          viewManager.setView(glowViews.learnNewPoses());
-          workoutManager.newPose(4);
-        }
-      };
-      this.pose5Callback = new ActionCallback()
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(3);
+      }
+    };
+    this.pose4Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
       {
-        public void doAction(UIElement e)
-        {
-          ViewManager viewManager = e.getView().getViewManager();
-          GlowViews glowViews = new GlowViews();
-          viewManager.setView(glowViews.learnNewPoses());
-          workoutManager.newPose(5);
-        }
-      };
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(4);
+      }
+    };
+    this.pose5Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(5);
+      }
+    };
+    this.pose7Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(7);//forward bending pose
+      }
+    };
       
+     this.measureYourWeightCallback = new ActionCallback()
+      {
+        public void doAction(UIElement e)
+        {
+          ViewManager viewManager = e.getView().getViewManager();
+          GlowViews glowViews = new GlowViews();
+          viewManager.setView(glowViews.MeasureYourWeight());
+        }
+      };
   }
 
   public View HelloView()
@@ -151,7 +179,7 @@ public class GlowViews
     UIElement dogElement = new ImageElement(400, 200, loadImage("dog.jpg"));
     view.addUIElement(dogElement);
     UIElement textButton = new TextButton(100, 200, 100, 100, color(255, 0,
-        0), color(255, 255, 255), 32, "Hi");
+        0), color(0, 0, 0), 32, "Hi");
     view.addUIElement(textButton);
     UIElement textInput = new TextInputBox(300, 200, 300, 80, 32, "Hi");
     view.addUIElement(textInput);
@@ -170,17 +198,16 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
+        loadImage("background/home_bg.jpg"));
     
     // Create elements
-    UIElement selectProfileButton = new ImageButton(200, 600,
-        loadImage("GlowHomeView/select_profile.png"),
-        loadImage("GlowHomeView/select_profile_hover.png"));
+    UIElement selectProfileButton = new ImageButton(200, 470,
+        loadImage("buttons/select_profile.png"),
+        loadImage("buttons/select_profile_hover.png"));
     view.addUIElement(selectProfileButton);
-    UIElement createProfileButton = new ImageButton(600, 600,
-        loadImage("GlowHomeView/create_profile.png"),
-        loadImage("GlowHomeView/create_profile_hover.png"));
+    UIElement createProfileButton = new ImageButton(600, 470,
+        loadImage("buttons/create_profile.png"),
+        loadImage("buttons/create_profile_hover.png"));
     view.addUIElement(createProfileButton);
 
     selectProfileButton.setActionCallback(this.selectProfileCallback);
@@ -194,41 +221,40 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
+        loadImage("background/create_profile_bg.jpg"));
 
-    drawLogo(view);
-    makeTitle("Create a Profile", 350, view);
     // name title
-    UIElement nameTag = new TextButton(50, 300, 140, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Name");
+    UIElement nameTag = new TextButton(280, 310, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
     view.addUIElement(nameTag);
     // name input
     int inputNameWidth = 300;
-    UIElement inputName = new TextInputBox((width-inputNameWidth)/2, 300, 300, 40, 32, "");
+    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "your user name");
     view.addUIElement(inputName);
     view.addKeyEventListener((KeyEventListener) inputName);
 
     // height range title
-    UIElement heightRange = new TextButton(50, 400, 220, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Height Range");
+    UIElement heightRange = new TextButton(345, 390, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
     view.addUIElement(heightRange);
     // height range checkboxes
     int checkboxEdge = 20;
     int ckbFontSize = 22;
     String ckbFontType = "papyrus.vlw";
-    UIElement checkbox1 = new CheckBox( 350, 400, checkboxEdge, checkboxEdge, "5'0 - 5'4");
+    UIElement checkbox1 = new CheckBox( 480, 405, checkboxEdge, checkboxEdge, "Below 5'4");
     view.addUIElement(checkbox1);
-    UIElement checkbox2 = new CheckBox( 350, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
+    UIElement checkbox2 = new CheckBox( 480, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
     view.addUIElement(checkbox2);
-    UIElement checkbox3 = new CheckBox( 350, 500, checkboxEdge, checkboxEdge, "5'8 - 6'0");
+    UIElement checkbox3 = new CheckBox( 480, 495, checkboxEdge, checkboxEdge, "5'8 - 6'0");
     view.addUIElement(checkbox3);
-    UIElement checkbox4 = new CheckBox( 350, 550, checkboxEdge, checkboxEdge, "6'0 - 6'4");
+    UIElement checkbox4 = new CheckBox( 480, 540, checkboxEdge, checkboxEdge, "Above 6'0");
     view.addUIElement(checkbox4);
     
     
     // submit button
-    PImage submit = loadImage("GlowCreateProfileView/submit.png");
-    submit.resize(100, 50);
+    PImage submit = loadImage("buttons/continue.png");
+    PImage submitHover = loadImage("buttons/continue_hover.png");
+
     int offSet = 20;
-    UIElement buttonSubmit = new ImageButton(width - submit.width - offSet, height - submit.height - offSet, submit, submit);
+    UIElement buttonSubmit = new ImageButton(480, height - submit.height - 6 * offSet, submit, submitHover);
     view.addUIElement(buttonSubmit);
 
     buttonSubmit.setActionCallback(this.selectProfileCallback);
@@ -243,17 +269,24 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
+        loadImage("background/select_profile_bg.jpg"));
+    
+    PImage user_1 = loadImage("tmp/user_1.png");
+    PImage user_1Hover = loadImage("tmp/user_1hover.png");
+    PImage user_2 = loadImage("tmp/user_2.png");
+    PImage user_3 = loadImage("tmp/user_3.png");
+    
+    int offSetX = (width-user_1.width)/2;
+    int offSetY = 250;
+    UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
+    view.addUIElement(userName1Button);
 
-    drawLogo(view);
-    makeTitle("Select a Profile", 350, view);
-
-    int tmpWidth = 220;
-    int tmpHeight = 40;
-    UIElement userNameButton = new TextButton((width-tmpWidth)/2, (height-tmpHeight)/2, tmpWidth, tmpHeight, color(255, 0, 0, 0), color(255, 255, 255), 24, "User Name");
-    view.addUIElement(userNameButton);
-
-    userNameButton.setActionCallback(this.sessionsCallback);
+    UIElement userName2Button = new ImageButton(offSetX, offSetY + 2 *(user_1.height + 20), user_2, user_2);
+    view.addUIElement(userName2Button);
+    UIElement userName3Button = new ImageButton(offSetX, offSetY + 3 * (user_1.height + 20), user_3, user_3);
+    view.addUIElement(userName3Button);
+    
+    userName1Button.setActionCallback(this.sessionsCallback);
 
     drawBackButton(view);
 
@@ -265,61 +298,51 @@ public class GlowViews
   {
     // Create view
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
+        loadImage("background/select_session_bg.jpg"));
 
-    drawLogo(view);
-    makeTitle("SESSIONS", 200, view);
-    
-    int tmpWidth = 300;
-    UIElement selectSubTitle = new TextButton((width-tmpWidth)/2, 300, tmpWidth, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Select a Session");
-    view.addUIElement(selectSubTitle);
-
-    // Session 1
-    // Session 1 BUTTON
-    UIElement ses1Button = new TextButton(50, 300, 150, 40, color(255, 0, 0, 0), color(255, 255, 255), 24, "Session 1");
+    PImage session_1 = loadImage("selections/session1.png");
+    PImage session_1Hover = loadImage("selections/session1_hover.png");
+    PImage session_1HoverPoses = loadImage("buttons/session1_poses.png");
+    PImage session_2 = loadImage("selections/session2_inactive.png");
+    PImage session_3 = loadImage("selections/session3_inactive.png");
+    PImage continueImg = loadImage("buttons/continue.png");
+    PImage continueImgHover = loadImage("buttons/continue_hover.png");
+    int offSetX = 130;
+    int offSetY = 240;
+    UIElement ses1Button = new ImageButton(offSetX, offSetY + session_1.height + 20, session_1, session_1Hover);
     view.addUIElement(ses1Button);
-    UIElement ses2Button = new TextButton(50, 350, 150, 40, color(255, 0, 0, 0), color(137, 132, 255), 24, "Session 2");
+    UIElement ses1ButtonPoses = new ImageButton(offSetX + session_1.width, offSetY + session_1.height/2 +20, session_1HoverPoses, session_1HoverPoses);
+    view.addUIElement(ses1ButtonPoses);
+    UIElement ses2Button = new ImageButton(offSetX, offSetY + 2 *(session_1.height + 20), session_2, session_2);
     view.addUIElement(ses2Button);
-    UIElement ses3Button = new TextButton(50, 400, 150, 40, color(255, 0, 0, 0), color(137, 132, 255), 24, "Session 3");
+    UIElement ses3Button = new ImageButton(offSetX, offSetY + 3 * (session_1.height + 20), session_3, session_3);
     view.addUIElement(ses3Button);
     
     ses1Button.setActionCallback(this.goToSession1);
 
-    // Pose pics
-    int x = 300;
-    int y = 180;
-    UIElement pose01 = new ImageElement(x, 400, loadImage("GlowSessions/pose1.png"));
-    view.addUIElement(pose01);
-    UIElement pose02 = new ImageElement(x + y, 400, loadImage("GlowSessions/pose2.png"));
-    view.addUIElement(pose02);
-    UIElement pose03 = new ImageElement(x + 2 * y, 400, loadImage("GlowSessions/pose3.png"));
-    view.addUIElement(pose03);
-    UIElement pose04 = new ImageElement(x, 600, loadImage("GlowSessions/pose4.png"));
-    view.addUIElement(pose04);
-    UIElement pose05 = new ImageElement(x + y, 600, loadImage("GlowSessions/pose5.png"));
-    view.addUIElement(pose05);
-    UIElement pose06 = new ImageElement(x + 2 * y, 600, loadImage("GlowSessions/pose6.png"));
-    view.addUIElement(pose06);
-    // Review new view
-
+    int offSet = 20;
+    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
+    view.addUIElement(buttonContinue);
+    buttonContinue.setActionCallback(this.goToSession1);
     drawBackButton(view);
     return view;
   }
 
   public View Session1()
   {
-    View view = new View(width, height, color(128, 128, 128), loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
-    makeTitle("SESSION 1", 200, view);
-
-    UIElement learnPosesButton = new TextButton(150, 400, 200, 200, color(255, 0, 0, 0), color(255, 255, 255), 32, "Learn new Poses");
+    View view = new View(width, height, color(128, 128, 128), loadImage("background/select_mode_bg.jpg"));
+    PImage learn = loadImage("selections/learn_mode.png");
+    PImage learnHover = loadImage("selections/learn_mode_hover.png");
+    PImage _do = loadImage("selections/do_mode.png");
+    PImage _doHover = loadImage("selections/do_mode_hover.png");
+    
+    UIElement learnPosesButton = new ImageButton(150, 400, learn, learnHover);
     view.addUIElement(learnPosesButton);
 
     // Set Button1 callback
-    learnPosesButton.setActionCallback(this.learnPosesCallback);
+    learnPosesButton.setActionCallback(this.measureYourWeightCallback);
 
-    UIElement doFullSession = new TextButton(650, 400, 200, 200, color(137,
-        132, 132), color(255, 255, 255), 32, "Do a full Session");
+    UIElement doFullSession = new ImageButton(620, 400, _do, _doHover); 
     view.addUIElement(doFullSession);
     drawBackButton(view);
 
@@ -329,61 +352,113 @@ public class GlowViews
   public View learnNewPoses()
   {
     View view = new View(width, height, color(128, 128, 128),
-        loadImage("GlowHomeView/home_bg.jpg"));
-    drawLogo(view);
-
-    makeTitle("Session 1, learn", 400, view);
-
-    int x = 200;
-    int tmpWidth = 200;
-    UIElement posesTitle = new TextInputBox(20, x, tmpWidth, 40, 32,
-        "The Poses");
-    view.addUIElement(posesTitle);
-
+        loadImage("background/select_pose_bg.jpg"));
     
-      // drawPoseButton('Pose ' + 1, 20, x+1*50, 250, 40, view);
-      UIElement pose01Button = new TextButton(20, x + 1 * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + 1);
-      view.addUIElement(pose01Button);
-      pose01Button.setActionCallback(this.pose1Callback);
-      
-      // drawPoseButton('Pose ' + 2, 20, x+1*50, 250, 40, view);
-      UIElement pose02Button = new TextButton(20, x + 2 * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + 2);
-      view.addUIElement(pose02Button);
-      pose02Button.setActionCallback(this.pose2Callback);
-      
-      // drawPoseButton('Pose ' + 2, 20, x+1*50, 250, 40, view);
-      UIElement pose03Button = new TextButton(20, x + 3 * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + 3);
-      view.addUIElement(pose03Button);
-      pose03Button.setActionCallback(this.pose3Callback);
-      
-      // drawPoseButton('Pose ' + 2, 20, x+1*50, 250, 40, view);
-      UIElement pose04Button = new TextButton(20, x + 4 * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + 4);
-      view.addUIElement(pose04Button);
-      pose04Button.setActionCallback(this.pose4Callback);
-      
-      // drawPoseButton('Pose ' + 2, 20, x+1*50, 250, 40, view);
-      UIElement pose02Button = new TextButton(20, x + 5 * 50, tmpWidth,
-          40, color(255, 0, 0), color(255, 255, 255), 32, "Pose " + 5);
-      view.addUIElement(pose05Button);
-      pose01Button.setActionCallback(this.pose5Callback);
-      
+    PImage pose_mountain = loadImage("poses/pose_mountain.png");
+    PImage pose_mountainHover = loadImage("poses/pose_mountain_hover.png");
 
+    PImage pose_halfmoon = loadImage("poses/pose_halfmoon.png");
+    PImage pose_halfmoonHover = loadImage("poses/pose_halfmoon_hover.png");
+    
+    PImage pose_warrior2 = loadImage("poses/pose_warrior2.png");
+    PImage pose_warrior2Hover = loadImage("poses/pose_warrior2_hover.png");
+    
+    PImage pose_warrior1 = loadImage("poses/pose_warrior1.png");
+    PImage pose_warrior1Hover = loadImage("poses/pose_warrior1_hover.png");
+
+    PImage pose_triangle = loadImage("poses/pose_triangle.png");
+    PImage pose_triangleHover = loadImage("poses/pose_triangle_hover.png");
+    
+    PImage pose_mudra = loadImage("poses/pose_mudra.png");
+    PImage pose_mudraHover = loadImage("poses/pose_mudra_hover.png");
+    
+    PImage pose_dog = loadImage("poses/pose_dog.png");
+    PImage pose_dogHover = loadImage("poses/pose_dog_hover.png");
+    
+    int x = 200;
+    int offSet = 80;
+    int y = 300;
+
+    UIElement pose_mountainButton = new ImageButton(x, y, pose_mountain, pose_mountainHover);
+    view.addUIElement(pose_mountainButton);
+    pose_mountainButton.setActionCallback(this.pose1Callback);
+    
+    UIElement pose_halfmoonButton = new ImageButton(x, y + offSet, pose_halfmoon, pose_halfmoonHover);
+    view.addUIElement(pose_halfmoonButton);
+    pose_halfmoonButton.setActionCallback(this.pose2Callback);
+    
+    UIElement pose_warrior1Button = new ImageButton(x, y + 2 * offSet, pose_warrior1, pose_warrior1Hover);
+    view.addUIElement(pose_warrior1Button);
+    pose_warrior1Button.setActionCallback(this.pose3Callback);
+    
+    UIElement pose_warrior2Button = new ImageButton(x, y + 3 * offSet, pose_warrior2, pose_warrior2Hover);
+    view.addUIElement(pose_warrior2Button);
+    pose_warrior2Button.setActionCallback(this.pose4Callback);
+    
+    UIElement pose_triangleButton = new ImageButton(x + pose_mountain.width + offSet/2, y, pose_triangle, pose_triangleHover);
+    view.addUIElement(pose_triangleButton);
+    pose_triangleButton.setActionCallback(this.pose5Callback);
+    
+    
+    UIElement pose_mudraButton = new ImageButton(x + pose_mountain.width + offSet/2, y + offSet, pose_mudra, pose_mudraHover);
+    view.addUIElement(pose_mudraButton);
+    pose_mudraButton.setActionCallback(this.pose7Callback);
+    
+    UIElement pose_dogButton = new ImageButton(x + pose_mountain.width + offSet/2, y + 2 * offSet, pose_dog, pose_dogHover);
+    view.addUIElement(pose_dogButton);
+    //this.workoutSummaryCallback
     drawBackButton(view);
+    // submit button
+    PImage continueIMG = loadImage("buttons/continue.png");
+    PImage continueIMGHover = loadImage("buttons/continue_hover.png");
+
+    int offSetY = 20;
+    UIElement buttonContinue = new ImageButton(480, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    view.addUIElement(buttonContinue);
+
+    buttonContinue.setActionCallback(this.measureYourWeightCallback);
+
 
     return view;
   }
 
+  public View MeasureYourWeight()
+  {
+    // Create view
+    View view = new View(width, height, color(128, 128, 128),
+        loadImage("background/ui_02_weight.jpg"));
+    
+    PImage continueIMG = loadImage("buttons/continue.png");
+    PImage continueIMGHover = loadImage("buttons/continue_hover.png");
+    int offSetY = 20;
+    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 + 30, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    view.addUIElement(buttonContinue);
+
+    //    Action Callback measureCallback = new ActionCallback()
+    //      {
+    //        public void doAction(UIElement e)
+    //        {
+    //             
+    //        }
+    //      };
+    //    
+    buttonContinue.setActionCallback(this.learnPosesCallback);
+
+
+    drawBackButton(view);
+
+    // Review new view
+    return view;
+  }
 
   // Private Functions
   private void drawBackButton(View view)
   {
-    PImage back = loadImage("GlowCreateProfileView/back.png");
+    PImage back = loadImage("buttons/back.png");
+    PImage backHover = loadImage("buttons/back_hover.png");
+    backHover.resize(50, 50);
     back.resize(50, 50);
-    UIElement buttonBack = new ImageButton(20, height - 70, back, back);
+    UIElement buttonBack = new ImageButton(20, height - 90, back, backHover);
     view.addUIElement(buttonBack);
 
     // Create and set Select Profile Callback
@@ -400,12 +475,6 @@ public class GlowViews
       }
     };
     buttonBack.setActionCallback(backCallback);
-  }
-
-  private void drawLogo(View view){
-    // page logo
-    UIElement logo = new ImageElement(20, 20, this.logo);
-    view.addUIElement(logo);
   }
   
   private void makeTitle(String title, int titleWidth, View view){

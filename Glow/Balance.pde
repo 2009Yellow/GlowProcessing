@@ -21,6 +21,12 @@ class Balance {
   
   void getWeight(){
     this.poseEvent();      //basically just to reset pressure
+    long beginWeightGetting = System.currentTimeMillis();
+    long currentTime = System.currentTimeMillis();
+    while( currentTime - beginWeightGetting < 6000){ //give user 6 seconds to get on the mat
+      currentTime = System.currentTimeMillis();
+    }
+    
     pressure.getWeight();
   }
   

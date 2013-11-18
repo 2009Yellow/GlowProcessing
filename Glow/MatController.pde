@@ -22,7 +22,9 @@ public class MatController {
 
   void getWeight() {
     matIn.update();
+    led.poseEvent();
     balance.getWeight();
+    stopPose();
   }
   
   // so that if we reset to a pose, initially all positions are purple,
@@ -56,9 +58,14 @@ public class MatController {
   }
 
   void poseEvent() {
-    balance.poseEvent();
+    balance.poseEvent(); //pose already updated to new pose by WorkoutManager
     resetLastPressure();
     led.poseEvent();
+  }
+  
+  void stopPose() {
+    pose.stopPose();
+    balance.poseEvent();
   }
 }
 

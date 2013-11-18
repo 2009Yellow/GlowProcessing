@@ -31,6 +31,10 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
       }
     }
   }
+  
+  void stopPose() {
+    loadPoseData(100, 1); //posenumber 100 is a blank csv file
+  }
 
   float[] onPressureMat() {
     float[] onMat = allPoseData[ONMATROW+heightBin*7];

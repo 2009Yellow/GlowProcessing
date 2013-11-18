@@ -23,7 +23,7 @@ void setup() {
   currentTime = 0;
 }
 
-void setHeightBin(int heightBinNo){
+/*void setHeightBin(int heightBinNo){
   this.heightBinNo = heightbinNo;
 }
 
@@ -37,7 +37,7 @@ void advancePose(){
   poseNumber = (poseNumber+1) % 6;
   pose.loadPoseData(poseNumber);
   matControl.poseEvent();
-}
+}*/
 
 
 
@@ -49,6 +49,7 @@ void draw() {
     //delay to let user get on mat or something
     matControl.getWeight();
   }*/
+  
   if (numLoops==0){
     pose.loadPoseData(1, heightBinNo);
     matControl.poseEvent();
@@ -60,7 +61,7 @@ void draw() {
     matControl.loadAndProcessData();
     numLoops++;
   }
-  
+  /*
   if(numLoops == 10){
     pose.loadPoseData(0, heightBinNo);
     matControl.getWeight();
@@ -71,7 +72,7 @@ void draw() {
     pose.loadPoseData(3, heightBinNo);
     matControl.poseEvent();
     numLoops ++;
-  }
+  }*/
   
 
   //  checkUI();
