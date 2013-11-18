@@ -49,10 +49,14 @@ public class TextButton extends SimpleButton {
     } else {
       fill(backgroundColor);
     }
+    //noStroke();
     rect(x, y, elementWidth, elementHeight);
     fill(textColor);
     textSize(messageSize);
-    text(message, x + messageBorder, y + messageBorder, elementWidth - messageBorder, elementHeight - messageBorder);
+    //println(getView().getFont());
+    textFont(getView().getFont());
+    //text(message, x + messageBorder, y + messageBorder, elementWidth - messageBorder, elementHeight - messageBorder);
+    text(message, x + elementWidth/2, y + elementHeight/2);
     
     popStyle();
   }
