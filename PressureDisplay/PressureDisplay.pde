@@ -2,10 +2,10 @@ import java.lang.System;
 
 
 // Display Constants
-final int SQUARE_SIZE = 85;
-final int WIDTH = 4;
-final int HEIGHT = 4;
-final int TEXT_SIZE = 35;
+final int SQUARE_SIZE = 50;
+final int WIDTH = 16;
+final int HEIGHT = 16;
+final int TEXT_SIZE = 30;
 
 // Member variables
 int[] displayColors = new int[HEIGHT * WIDTH];  // Values for running display

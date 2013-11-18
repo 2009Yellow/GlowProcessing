@@ -10,7 +10,8 @@ public class View {
   ViewManager viewManager;
 
   // Font for this view
-  private final PFont viewFont = createFont("dosis/Dosis-Medium.ttf", 48);
+  public final PFont viewFont = createFont("dosis/Dosis-Medium.ttf", 48);
+  public final PFont viewFont = createFont("helvetica/Dosis-Medium.ttf", 48);
 
   // ========================== Constructor ==========================
   public View(int w, int h, color background_c, PImage background_i) {

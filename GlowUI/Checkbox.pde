@@ -4,10 +4,6 @@ public class CheckBox extends UIElement
     int x, y, width, height;
     String label;
     float padx = 7;
-<<<<<<< HEAD
-    //PFont font;
-    CheckBox (int xx, int yy, int ww, int hh, String l )
-=======
     PFont font;
     PImage checkedImage;
     PImage uncheckedImage;
@@ -16,7 +12,6 @@ public class CheckBox extends UIElement
     public boolean active;
     int imageSize;
     public CheckBox (int xx, int yy, int ww, int hh, String l)
->>>>>>> fe1bb878c94cce6a8e9dcf969c179d6f54c3284f
     {
         super(xx, yy, ww, hh);
         label = l;
