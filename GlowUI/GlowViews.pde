@@ -9,7 +9,6 @@ public class GlowViews
   ActionCallback goToSession1;
   ActionCallback learnPosesCallback;
   ActionCallback pose1Callback;
-  ActionCallback workoutSummaryCallback;
   ActionCallback measureYourWeightCallback;
   public GlowViews()
   {
@@ -99,15 +98,6 @@ public class GlowViews
         }
       };
       
-    this.workoutSummaryCallback = new ActionCallback()
-      {
-        public void doAction(UIElement e)
-        {
-          ViewManager viewManager = e.getView().getViewManager();
-          GlowViews glowViews = new GlowViews();
-          viewManager.setView(glowViews.WorkoutSummary());
-        }
-      };
      this.measureYourWeightCallback = new ActionCallback()
       {
         public void doAction(UIElement e)
@@ -293,7 +283,7 @@ public class GlowViews
     view.addUIElement(learnPosesButton);
 
     // Set Button1 callback
-    learnPosesButton.setActionCallback(this.learnPosesCallback);
+    learnPosesButton.setActionCallback(this.measureYourWeightCallback);
 
     UIElement doFullSession = new ImageButton(620, 400, _do, _doHover); 
     view.addUIElement(doFullSession);
@@ -357,23 +347,9 @@ public class GlowViews
     UIElement buttonContinue = new ImageButton(480, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
     view.addUIElement(buttonContinue);
 
-    buttonContinue.setActionCallback(this.workoutSummaryCallback);
+    //buttonContinue.setActionCallback(this.measureYourWeightCallback);
 
 
-    return view;
-  }
-
-  public View WorkoutSummary()
-  {
-    // Create view
-    View view = new View(width, height, color(128, 128, 128),
-        loadImage("background/summary_bg.jpg"));
-
-
-
-    drawBackButton(view);
-
-    // Review new view
     return view;
   }
 
@@ -382,7 +358,22 @@ public class GlowViews
     // Create view
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/ui_02_weight.jpg"));
+    
+    PImage continueIMG = loadImage("buttons/continue.png");
+    PImage continueIMGHover = loadImage("buttons/continue_hover.png");
+    int offSetY = 20;
+    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 + 30, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    view.addUIElement(buttonContinue);
 
+    //    Action Callback measureCallback = new ActionCallback()
+    //      {
+    //        public void doAction(UIElement e)
+    //        {
+    //          // MEASURE WEIGHT CODE GOES HERE
+    //        }
+    //      };
+    //    
+    buttonContinue.setActionCallback(this.learnPosesCallback);
 
 
     drawBackButton(view);
