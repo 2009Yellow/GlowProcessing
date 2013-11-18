@@ -1,4 +1,4 @@
-GlowPsoc
+GlowProcessing
 ========
 
-Psoc code for pressure sensing on Glow. 
+Processing code for pressure sensing on Glow. 
