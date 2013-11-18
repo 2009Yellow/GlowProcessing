@@ -17,8 +17,10 @@ public class VideoElement extends UIElement {
     if (movie.available()) {
       movie.read();
     }
+    pushStyle();
+    imageMode(CENTER);
     image(movie, x, y, elementWidth, elementHeight);
-    
+    popStyle();
     // call action callback if movie is finished
     if (isDone()) {
       activateActionCallback();

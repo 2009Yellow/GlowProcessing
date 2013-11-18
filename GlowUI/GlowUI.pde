@@ -5,7 +5,7 @@ GlowViews glowViews;
 ProfileManager profileManager;
 
 void setup () {
-  size(1000, 800);
+  size(1100, 800);
 
   // Make the manager
   Interactive.make( this );
@@ -28,6 +28,7 @@ void setup () {
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
   viewManager.setView(glowViews.GlowHome());
+  //viewManager.setView(glowViews.learnNewPoses());
   //viewManager.setView(glowViews.GlowHomeTest());
 }
 

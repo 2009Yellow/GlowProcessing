@@ -519,44 +519,45 @@ public class GlowViews
   
   public View mountainPoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("Mountain.mov");
+    //return drawVideoPoseView("totoro.mov");
   
   }
     
   public View halfmoonPoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("HalfMoon.mov");
   
   }
   
     
   public View warrior2PoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("Warrior2Right.mov");
   
   }
     
   public View warrior1PoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("Warrior1Right.mov");
   
   }
     
   public View trianglePoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("TriangleRight.mov");
   
   }
     
   public View standingYogaPoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("StandingBend.mov");
   
   }
     
   public View dogPoseView(){
   
-    return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView("DownwardDog.mov");
   
   }
   
@@ -568,11 +569,12 @@ public class GlowViews
     
     int offSetX = 400;
     int offSetYY = 400;
-    VideoElement videoElement = new VideoElement((width - offSetX)/2, (height - offSetYY)/2, 400, 400, GlobalPApplet.papplet, posevideo);
+    println("hi i played here");
+    VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
     // Set the globalv video element so that other buttons can control the video
     GlobalPApplet.videoElement = videoElement;
     videoElement.play();
-    videoElement.setTime(80.0);
+    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
 
 
@@ -580,7 +582,7 @@ public class GlowViews
     PImage continueIMG = loadImage("buttons/continue.png");
     PImage continueIMGHover = loadImage("buttons/continue_hover.png");
     int offSetY = 20;
-    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 +24, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 +20, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
     view.addUIElement(buttonContinue);
 
     buttonContinue.setActionCallback(this.learnPosesCallback);
