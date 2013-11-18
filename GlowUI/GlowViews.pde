@@ -156,32 +156,28 @@ public class GlowViews
         loadImage("background/create_profile_bg.jpg"));
 
     // name title
-    UIElement nameTag = new TextButton(320, 290, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
+    UIElement nameTag = new TextButton(280, 310, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
     view.addUIElement(nameTag);
-    UIElement passTag = new TextButton(318, 350, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "PASSWORD:");
-    view.addUIElement(passTag);
-    UIElement weightTag = new TextButton(360, 410, 105, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "WEIGHT:");
-    view.addUIElement(weightTag);
     // name input
     int inputNameWidth = 300;
-    UIElement inputName = new TextInputBox(600, 300, 200, 40, 32, "name");
+    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "your user name");
     view.addUIElement(inputName);
     view.addKeyEventListener((KeyEventListener) inputName);
 
     // height range title
-    UIElement heightRange = new TextButton(365, 470, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
+    UIElement heightRange = new TextButton(345, 390, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
     view.addUIElement(heightRange);
     // height range checkboxes
     int checkboxEdge = 20;
     int ckbFontSize = 22;
     String ckbFontType = "papyrus.vlw";
-    UIElement checkbox1 = new CheckBox( 480, 475, checkboxEdge, checkboxEdge, "Below 5'4");
+    UIElement checkbox1 = new CheckBox( 480, 405, checkboxEdge, checkboxEdge, "Below 5'4");
     view.addUIElement(checkbox1);
-    UIElement checkbox2 = new CheckBox( 480, 520, checkboxEdge, checkboxEdge, "5'4 - 5'8");
+    UIElement checkbox2 = new CheckBox( 480, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
     view.addUIElement(checkbox2);
-    UIElement checkbox3 = new CheckBox( 480, 565, checkboxEdge, checkboxEdge, "5'8 - 6'0");
+    UIElement checkbox3 = new CheckBox( 480, 495, checkboxEdge, checkboxEdge, "5'8 - 6'0");
     view.addUIElement(checkbox3);
-    UIElement checkbox4 = new CheckBox( 480, 610, checkboxEdge, checkboxEdge, "Above 6'0");
+    UIElement checkbox4 = new CheckBox( 480, 540, checkboxEdge, checkboxEdge, "Above 6'0");
     view.addUIElement(checkbox4);
     
     
@@ -190,7 +186,7 @@ public class GlowViews
     PImage submitHover = loadImage("buttons/submit_hover.png");
 
     int offSet = 20;
-    UIElement buttonSubmit = new ImageButton(480, height - submit.height - 3 * offSet, submit, submitHover);
+    UIElement buttonSubmit = new ImageButton(480, height - submit.height - 6 * offSet, submit, submitHover);
     view.addUIElement(buttonSubmit);
 
     buttonSubmit.setActionCallback(this.selectProfileCallback);
@@ -236,11 +232,11 @@ public class GlowViews
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/select_session_bg.jpg"));
 
-    PImage session_1 = loadImage("tmp/session_1.png");
-    PImage session_1Hover = loadImage("tmp/session_1hover.png");
+    PImage session_1 = loadImage("selections/session1.png");
+    PImage session_1Hover = loadImage("selections/session1_hover.png");
     PImage session_1HoverPoses = loadImage("tmp/all_sessions.png");
-    PImage session_2 = loadImage("tmp/session_2.png");
-    PImage session_3 = loadImage("tmp/session_3.png");
+    PImage session_2 = loadImage("selections/session2_inactive.png");
+    PImage session_3 = loadImage("selections/session3_inactive.png");
 
     int offSetX = 130;
     int offSetY = 240;
@@ -261,16 +257,19 @@ public class GlowViews
 
   public View Session1()
   {
-    View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));
+    View view = new View(width, height, color(128, 128, 128), loadImage("selections/select_mode_bg.jpg"));
+    PImage learn = loadImage("selections/learn_mode.png");
+    PImage learnHover = loadImage("selections/learn_mode_hover.png");
+    PImage _do = loadImage("selections/do_mode.png");
+    PImage _doHover = loadImage("selections/do_mode_hover.png");
     
-    UIElement learnPosesButton = new TextButton(150, 400, 200, 200, color(255, 0, 0, 0), color(0, 0, 0), 32, "Learn new Poses");
+    UIElement learnPosesButton = new ImageButton(150, 400, learn, learnHover);
     view.addUIElement(learnPosesButton);
 
     // Set Button1 callback
     learnPosesButton.setActionCallback(this.learnPosesCallback);
 
-    UIElement doFullSession = new TextButton(650, 400, 200, 200, color(137,
-        132, 132), color(0, 0, 0), 32, "Do a full Session");
+    UIElement doFullSession = new ImageButton(650, 400, _do, _doHover); 
     view.addUIElement(doFullSession);
     drawBackButton(view);
 
@@ -281,7 +280,7 @@ public class GlowViews
   {
     View view = new View(width, height, color(128, 128, 128),
         loadImage("background/bg.jpg"));
-
+    
     int x = 200;
     int tmpWidth = 200;
     UIElement posesTitle = new TextInputBox(20, x, tmpWidth, 40, 32,
