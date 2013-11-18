@@ -92,9 +92,14 @@ public class View {
     // Destroys all the UIElements in this view
     for (UIElement e: uiElements) {
       Interactive.remove(e);
-      e.destroy();
+      //e.destroy();
     }
     //viewManager.setView(null);
+  }
+  
+  public void remove(UIElement e) {
+    uiElements.remove(e);
+    Interactive.remove(e);
   }
 
   public void draw() {
