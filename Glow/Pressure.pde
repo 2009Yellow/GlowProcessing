@@ -117,8 +117,8 @@ class Pressure { // Analyzes
     float[] averagedAreaSums = averageData(areaSums); //average data over N historical data sets
     //println(averagedAreaSums[0]);
     
-    //println("Avg area sums");
-    //println(averagedAreaSums);
+    println("Avg area sums");
+    println(averagedAreaSums);
     return averagedAreaSums;
   }
   

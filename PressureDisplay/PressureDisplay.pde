@@ -49,7 +49,7 @@ void drawDisplay() {
   noStroke();
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
-      int brightness = displayColors[i * WIDTH + j];
+      int brightness = displayColors[(HEIGHT-1-i) * WIDTH + j];
       fill(brightness);
       rect(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
       fill(0, 102, 153);

@@ -32,7 +32,7 @@ public class MatIn {
     serialInArray = new int[matWidth * matHeight];
     // Print a list of the serial ports, for debugging purposes:
     println(Serial.list());
-    String portName = Serial.list()[8];
+    String portName = Serial.list()[0];
     myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
@@ -149,7 +149,7 @@ public class MatIn {
         for (int j = 0; j<matWidth; ++j){
       for (int i = 0; i <matHeight; ++i){
 
-        outputMatrix[i][j] = serialInArray[j * WIDTH + i];
+        outputMatrix[matHeight-i-1][j] = serialInArray[j * WIDTH + i];
       }
     }
     return outputMatrix;

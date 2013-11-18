@@ -32,7 +32,7 @@ public class MatIn {
     matHeight = mat_h;
     serialInArray = new int[matWidth * matHeight];
     String portName = Serial.list()[0];
-    myPort = new Serial(papplet, portName, 9600);
+    myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
     println(serialInArray);
@@ -145,9 +145,9 @@ public class MatIn {
       myPort.write(low_byte); */
       
       int low_byte = pos % 128;
-      println("Low byte " + low_byte);
+     // println("Low byte " + low_byte);
       int multiplesOf128 = (pos-low_byte)/128+1;
-      println("Multiplier " + multiplesOf128);
+      //println("Multiplier " + multiplesOf128);
       myPort.write(low_byte);
       myPort.write(multiplesOf128);
       
@@ -177,7 +177,7 @@ public class MatIn {
         for (int j = 0; j<matWidth; ++j){
       for (int i = 0; i <matHeight; ++i){
 
-        outputMatrix[i][j] = serialInArray[j * WIDTH + i];
+        outputMatrix[matHeight-i-1][j] = serialInArray[j * WIDTH + i];
       }
     }
     return outputMatrix;
