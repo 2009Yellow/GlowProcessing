@@ -102,6 +102,7 @@ public class GlowViews
           ViewManager viewManager = e.getView().getViewManager();
           GlowViews glowViews = new GlowViews();
           viewManager.setView(glowViews.learnNewPoses());
+          workoutManager.newPose(1);
         }
       };
       this.pose2Callback = new ActionCallback()
@@ -142,6 +143,16 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         viewManager.setView(glowViews.learnNewPoses());
         workoutManager.newPose(5);
+      }
+    };
+    this.pose6Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        ViewManager viewManager = e.getView().getViewManager();
+        GlowViews glowViews = new GlowViews();
+        viewManager.setView(glowViews.learnNewPoses());
+        workoutManager.newPose(6);//forward bending pose
       }
     };
     this.pose7Callback = new ActionCallback()
@@ -406,6 +417,8 @@ public class GlowViews
     
     UIElement pose_dogButton = new ImageButton(x + pose_mountain.width + offSet/2, y + 2 * offSet, pose_dog, pose_dogHover);
     view.addUIElement(pose_dogButton);
+    pose_dogButton.setActionCallback(this.pose6Callback);
+    
     //this.workoutSummaryCallback
     drawBackButton(view);
     // submit button

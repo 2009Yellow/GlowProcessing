@@ -90,9 +90,18 @@ class Pressure { // Analyzes
       float sum = 0;
       
       if(onMat[areaNum] == 0) {
-        sum = weight-areaSums[areaNum-1];
         println("imaginary area!");
-        areaSums[areaNum] = sum;
+        
+        if(areaSums.length == 2){
+          sum = weight-areaSums[areaNum-1];
+          areaSums[areaNum] = sum;
+        }
+        
+        else{ //assuming there are 4 contact points for now
+          sum = (weight-(areaSums[0]+areaSums[1]))/2;
+          areaSums[areaNum] = sum;
+          areaSums[areaNum+1] = sum;
+        }
         break;
       }
       for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
@@ -108,8 +117,8 @@ class Pressure { // Analyzes
     float[] averagedAreaSums = averageData(areaSums); //average data over N historical data sets
     //println(averagedAreaSums[0]);
     
-    println("Avg area sums");
-    println(averagedAreaSums);
+    //println("Avg area sums");
+    //println(averagedAreaSums);
     return averagedAreaSums;
   }
   

@@ -144,10 +144,13 @@ public class MatIn {
       println("low byte " + low_byte);
       myPort.write(low_byte); */
       
-      int low_byte = pos % 256;
-      int multiplesOf256 = (pos-low_byte)/256;
-      myPort.write(multiplesOf256);
+      int low_byte = pos % 128;
+      println("Low byte " + low_byte);
+      int multiplesOf128 = (pos-low_byte)/128+1;
+      println("Multiplier " + multiplesOf128);
       myPort.write(low_byte);
+      myPort.write(multiplesOf128);
+      
     }
     
     //myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
@@ -166,12 +169,7 @@ public class MatIn {
     int[] ans = new int[serialInArray.length];
     System.arraycopy(serialInArray, 0, ans, 0, serialInArray.length);
     return ans;
-    
-    
-    
-    
-    
-    
+     
   }
   
   public float[][] getPressureDataMatrix() {
