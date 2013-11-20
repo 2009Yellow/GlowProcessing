@@ -17,7 +17,7 @@ public abstract class UIElement{
   }
   
   public void destroy() {
-    view.remove(this);
+    //view.remove(this);
     //Interactive.remove(this);
   }
   

@@ -68,6 +68,12 @@ public class VideoElement extends UIElement {
     isPlaying = true;
   }
   
+  public void destroy() {
+    super.destroy();
+    movie.stop();
+    //movie = null;
+  }
+  
   public boolean isDone() {
     return (movie.duration() <= movie.time());
   }

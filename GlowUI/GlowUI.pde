@@ -28,6 +28,7 @@ void setup () {
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
   viewManager.setView(glowViews.GlowHome());
+  //viewManager.setView(glowViews.mountainPoseView());
   //viewManager.setView(glowViews.learnNewPoses());
   //viewManager.setView(glowViews.GlowHomeTest());
 }
