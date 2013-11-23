@@ -49,7 +49,7 @@ class Balance {
 
     for (int i = 0; i<diff.length; i++) {
       //arbitrary tolerance value
-      if (abs(diff[i]) > 0.2) { 
+      if (abs(diff[i]) > 0.04) { 
         binary[i] = abs(diff[i])/diff[i];
       }
     }

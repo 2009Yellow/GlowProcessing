@@ -107,7 +107,9 @@ class Pressure { // Analyzes
       for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
         for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
           float temp = rawData[i][j];
-          sum+=rawData[i][j];
+          //if( temp >=100){  //added a threshold value to get rid of noise
+            sum+=temp;
+          //} 
         }
       }
     

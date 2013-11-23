@@ -63,9 +63,9 @@ class WorkoutManager {
       matControl.loadAndProcessData();
     }
     
-    if (currentTime - poseStartTime > POSETIMEOUT) {
+    /*if (currentTime - poseStartTime > POSETIMEOUT) {
       stopPose();
-    }
+    }*/
   }
 }
 

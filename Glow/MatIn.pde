@@ -146,10 +146,11 @@ public class MatIn {
       
       int low_byte = pos % 128;
      // println("Low byte " + low_byte);
-      int multiplesOf128 = (pos-low_byte)/128+1;
+      int multiplesOf128 = (pos-low_byte)/128;
       //println("Multiplier " + multiplesOf128);
-      myPort.write(low_byte);
       myPort.write(multiplesOf128);
+      myPort.write(low_byte);
+      
       
     }
     

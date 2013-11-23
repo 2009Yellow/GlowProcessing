@@ -24,15 +24,27 @@ public class MatIn {
   
   // Time update members
   private long lastTime;
-  private final long TIMEOUT = 250; // In mills, update at most 4 times a second
+  private final long TIMEOUT = 200; // In mills, update at most 4 times a second
+  
+  //a record of previous pressure states
+  int[][] dataRecord;
+  int N = 3; //number of data sets to store and time-average
+  
+  // Helper class for arithmetic and such
+  Helpers help;
+  //To show the data visually
+  MatGraphics matGraphics;
   
   // ========================== Constructor ==========================
   public MatIn(int mat_w, int mat_h, PApplet papplet ){
     matWidth = mat_w;
     matHeight = mat_h;
+    help = new Helpers();
+    matGraphics = new MatGraphics(matWidth, matHeight);
     serialInArray = new int[matWidth * matHeight];
+    dataRecord = new int[N][serialInArray.length];
     String portName = Serial.list()[0];
-    myPort = new Serial(papplet, portName, 9600);
+    myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
     println(serialInArray);
@@ -44,7 +56,7 @@ public class MatIn {
    
   // ========================== Private Methods ==========================
   private void establishContact() {
-    // Tripple clear the port. This is a hack to deal with buggy arduinos
+    // Triple clear the port. This is a hack to deal with buggy arduinos
     while (myPort.available() ==0) {
     }
     myPort.clear();
@@ -90,10 +102,17 @@ public class MatIn {
      // println("Error receiving final char");
       return;
     }
-    // Update display array
-    //println("Data success!");
+    
+    updateDataRecord(serialInArray);
   }
   
+  private void updateDataRecord(int[] dataNew) {
+    
+    for (int i = 0; i < N-1; ++i) {
+      dataRecord[i] = dataRecord[i+1]; //delete oldest data, shift to make room for new data
+    }
+    dataRecord[N-1] = dataNew; //add new data
+  }
   
   // ========================== Public Methods ==========================
   /*
@@ -144,10 +163,14 @@ public class MatIn {
       println("low byte " + low_byte);
       myPort.write(low_byte); */
       
-      int low_byte = pos % 256;
-      int multiplesOf256 = (pos-low_byte)/256;
-      myPort.write(multiplesOf256);
+      int low_byte = pos % 128;
+     // println("Low byte " + low_byte);
+      int multiplesOf128 = (pos-low_byte)/128;
+      //println("Multiplier " + multiplesOf128);
+      myPort.write(multiplesOf128);
       myPort.write(low_byte);
+      
+      
     }
     
     //myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
@@ -162,30 +185,32 @@ public class MatIn {
     
   }
   
-  public int[] getPressureDataRaw() {
-    int[] ans = new int[serialInArray.length];
-    System.arraycopy(serialInArray, 0, ans, 0, serialInArray.length);
-    return ans;
-    
-    
-    
-    
-    
-    
+  public float[] getTimeAveragedData() {
+    float[] timeAveragedData = new float[serialInArray.length];
+    for(int j = 0; j<serialInArray.length; j++){
+      float sum = 0;
+      for(int i = 0; i< N; i++){
+        sum+=dataRecord[i][j];
+      }
+      timeAveragedData[j] = sum/N;
+    }
+    matGraphics.drawDisplay(timeAveragedData);
+    return timeAveragedData;
   }
   
   public float[][] getPressureDataMatrix() {
     float [][] outputMatrix = new float[matHeight][matWidth];
-        for (int j = 0; j<matWidth; ++j){
-      for (int i = 0; i <matHeight; ++i){
-
-        outputMatrix[i][j] = serialInArray[j * WIDTH + i];
+    float[] timeAveragedData = getTimeAveragedData();
+    
+     for (int j = 0; j<matWidth; ++j){
+       for (int i = 0; i <matHeight; ++i){
+         outputMatrix[i][j] = timeAveragedData[(matHeight-1-i) * matWidth + j];
+         
       }
     }
+   // matGraphics.drawDisplay(outputMatrix);
     return outputMatrix;
   }  
-  
-  
 
 }
 

@@ -4,6 +4,7 @@ import processing.serial.*;
 Balance balance;
 Serial myPort;
 MatController matControl;
+Helpers help;
 
 int heightBinNo = 2;
 int poseNumber = 1;
@@ -15,8 +16,10 @@ int numLoops = 0;
 
 void setup() { 
   pose = new Pose();
+  help = new Helpers();
   pose.loadPoseData(poseNumber, heightBinNo); //load data for pose #1
   matControl = new MatController(this, pose);
+ 
 
   //time in milliseconds
   lastTime = 0;
@@ -42,25 +45,8 @@ void advancePose(){
 
 
 void draw() {
-
-  currentTime = System.currentTimeMillis();
-  /*if( UI tells us to get the user's weight){
-    pose.loadPoseData(0, heightBinNo);
-    //delay to let user get on mat or something
-    matControl.getWeight();
-  }*/
   
-  if (numLoops==0){
-    pose.loadPoseData(1, heightBinNo);
-    matControl.poseEvent();
-    numLoops++;
-  }
-  
-  if (currentTime - lastTime > 250) { //update pressure data every 0.25 seconds
-    lastTime = currentTime;
-    matControl.loadAndProcessData();
-    numLoops++;
-  }
+  matControl.loadAndProcessData();
   /*
   if(numLoops == 10){
     pose.loadPoseData(0, heightBinNo);
