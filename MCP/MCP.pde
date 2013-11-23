@@ -19,15 +19,14 @@ void setup() {
   help = new Helpers();
   pose.loadPoseData(poseNumber, heightBinNo); //load data for pose #1
   matControl = new MatController(this, pose);
- 
 
   //time in milliseconds
   lastTime = 0;
   currentTime = 0;
 }
 
-/*void setHeightBin(int heightBinNo){
-  this.heightBinNo = heightbinNo;
+void setHeightBin(int heightBinNo){
+  this.heightBinNo = heightBinNo;
 }
 
 void newPose(int poseNumber){
@@ -37,14 +36,22 @@ void newPose(int poseNumber){
 }
 
 void advancePose(){
-  poseNumber = (poseNumber+1) % 6;
-  pose.loadPoseData(poseNumber);
+  poseNumber = (poseNumber+1) % 7;
+  pose.loadPoseData(poseNumber, heightBinNo);
   matControl.poseEvent();
-}*/
-
+}
 
 
 void draw() {
+  numLoops++;
+  
+  if(numLoops == 100){
+      matControl.getWeight();
+      newPose(3);
+  }
+  
+  currentTime = System.currentTimeMillis();
+
   
   matControl.loadAndProcessData();
   /*

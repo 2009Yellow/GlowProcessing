@@ -37,23 +37,9 @@ class Pressure { // Analyzes
   
   void getWeight(){
     float[] areaWeights = new float[poseAreas.length];
-    for(int i =0; i<N; i++) {
-      areaWeights = sumAreas(matIn.getPressureDataMatrix());
-      //implementing a 250ms delay so we can fill the buffer in a time-averaging function
-      long lastTime = System.currentTimeMillis();
-      long currentTime = System.currentTimeMillis();
-      while(currentTime-lastTime <250){
-        currentTime = System.currentTimeMillis();
-      }
-    }
+    areaWeights = sumAreas(matIn.getPressureDataMatrix());
     
-    float sumWeight = 0;
-    
-    for(int i = 0; i<areaWeights.length; i++){
-      sumWeight+= areaWeights[i];
-    }
-    
-    weight = sumWeight;
+    weight = help.sumVector(areaWeights);
     println("Your weight is " + weight);
   }
   
@@ -72,6 +58,7 @@ class Pressure { // Analyzes
 
   //receives poseAreas (each row contains data about one point of contact with mat)
   float[] sumAreas(float [][] rawData) {
+    float[][] thresholdData = help.thresholdMatrix(rawData);
     float[] areaSums = new float[poseAreas[0].length];
     float[] onMat = pose.onPressureMat();
     //loop through the different contact areas listed defined by poseAreas
@@ -80,7 +67,7 @@ class Pressure { // Analyzes
       float sum = 0;
       
       if(onMat[areaNum] == 0) {
-        println("imaginary area!");
+       // println("imaginary area!");
         
         if(areaSums.length == 2){
           sum = weight-areaSums[areaNum-1];
@@ -96,10 +83,8 @@ class Pressure { // Analyzes
       }
       for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
         for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
-          float temp = rawData[i][j];
-          //if( temp >=100){  //added a threshold value to get rid of noise
+          float temp = thresholdData[i][j];
             sum+=temp;
-          //} 
         }
       }
     
@@ -118,6 +103,12 @@ class Pressure { // Analyzes
     }
     float[] output = help.multMat(input, 1.0/mass);
     return output;
+  }
+  
+  boolean isWeightSignificant(){
+    float currentPressureTotal = help.sumVector(sumAreas(matIn.getPressureDataMatrix()));
+    
+    return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*40;
   }
   
 }

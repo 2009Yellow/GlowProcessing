@@ -43,6 +43,12 @@ class Balance {
   //1.0 if too much pressure in an area
   //0.0 if the pressure is as expected
   float[] getBinaryFeedback() {
+    
+    //method that tells whether or not a significant amount of weight is on the mat
+    if(!pressure.isWeightSignificant()){
+      return new float[stanDist.length];
+    }
+    
     float[] diff = getDiff();
     float binary[] = new float[diff.length];
 

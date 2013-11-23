@@ -28,7 +28,7 @@ public class MatIn {
   
   //a record of previous pressure states
   int[][] dataRecord;
-  int N = 3; //number of data sets to store and time-average
+  int N = 5; //number of data sets to store and time-average
   
   // Helper class for arithmetic and such
   Helpers help;
@@ -194,7 +194,7 @@ public class MatIn {
       }
       timeAveragedData[j] = sum/N;
     }
-    matGraphics.drawDisplay(timeAveragedData);
+    matGraphics.drawDisplay(help.thresholdArray(timeAveragedData));
     return timeAveragedData;
   }
   
@@ -205,7 +205,6 @@ public class MatIn {
      for (int j = 0; j<matWidth; ++j){
        for (int i = 0; i <matHeight; ++i){
          outputMatrix[i][j] = timeAveragedData[(matHeight-1-i) * matWidth + j];
-         
       }
     }
    // matGraphics.drawDisplay(outputMatrix);
