@@ -58,6 +58,10 @@ public class VideoElement extends UIElement {
   }
 
   public void play() {
+    // Show the movie if you try to play it. 
+    if (!show) {
+      setShow(true);
+    }
     movie.play();
     isPlaying = true;
   }
@@ -71,6 +75,11 @@ public class VideoElement extends UIElement {
     movie.stop();
     movie.play();
     isPlaying = true;
+  }
+  
+  ppublic void stop() {
+    movie.stop();
+    isPlaying = false;
   }
   
   public void setShow(boolean s) {
