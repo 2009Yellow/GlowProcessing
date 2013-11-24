@@ -11,9 +11,9 @@ public class MatIn {
   
   private final int SERIAL_LIGHT_START_CHAR = 'E';
   private final int SERIAL_LIGHT_FIRST_RECEIVE_CHAR = 'F'; 
-  private final int SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR = 'G';
-  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'H';
-  private final int SERIAL_LIGHT_ERROR_CHAR = 'I';
+  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'G';
+  private final int SERIAL_LIGHT_ERROR_CHAR = 'H';
+  private final int SERIAL_LIGHT_FINISHED_RECEIVING_CHAR = 'I';
   
   // Member Variables
   private int matWidth;
@@ -172,8 +172,7 @@ public class MatIn {
       
       
     }
-    
-    //myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
+   
     
     // Send each color value as a single byte
     for(int c : colorsToWrite) {
@@ -182,6 +181,8 @@ public class MatIn {
     
     // Ending char
     myPort.write(SERIAL_LIGHT_FINAL_RECEIVE_CHAR);
+    
+    int arduinoIsFinished = waitToRead();
     
   }
   
