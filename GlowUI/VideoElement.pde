@@ -75,7 +75,7 @@ public class VideoElement extends UIElement {
   
   public void setShow(boolean s) {
     show = s;
-    if ( == true) {
+    if ( s == true) {
     }
     // pause the video when its no longer being shown
     else if (s == false) {

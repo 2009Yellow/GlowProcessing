@@ -52,8 +52,6 @@ class WorkoutManager {
     matControl.stopPose();
   }
   
-
-  
   void draw() {
 
     currentTime = System.currentTimeMillis();
