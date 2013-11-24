@@ -4,11 +4,13 @@ public class VideoElement extends UIElement {
   private Movie movie;
   public boolean isPlaying;
   protected boolean hover = false;
+  protected boolean show = false;
 
   public VideoElement( int xx, int yy, int w, int h, PApplet p, String fileName) {
     super(xx, yy, w, h);
     movie = new Movie(p, fileName);
     isPlaying = false;
+    show = true;
     //movie.loop();
   }
 
@@ -17,10 +19,13 @@ public class VideoElement extends UIElement {
     if (movie.available()) {
       movie.read();
     }
-    pushStyle();
-    imageMode(CENTER);
-    image(movie, x, y, elementWidth, elementHeight);
-    popStyle();
+    // Show the video if show is active
+    if (show) {
+      pushStyle();
+      imageMode(CENTER);
+      image(movie, x, y, elementWidth, elementHeight);
+      popStyle();
+    }
     // call action callback if movie is finished
     if (isDone()) {
       activateActionCallback();
@@ -68,9 +73,20 @@ public class VideoElement extends UIElement {
     isPlaying = true;
   }
   
+  public void setShow(boolean s) {
+    show = s;
+    if ( == true) {
+    }
+    // pause the video when its no longer being shown
+    else if (s == false) {
+      this.pause();
+    }
+  }
+  
   public void destroy() {
     super.destroy();
     movie.stop();
+    isPlaying = false;
     //movie = null;
   }
   
