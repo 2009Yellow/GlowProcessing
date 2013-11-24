@@ -1,8 +1,4 @@
-import processing.serial.*;
-
 class WorkoutManager {
-  Balance balance;
-  Serial myPort;
   MatController matControl;
   
   long POSETIMEOUT = 20000; //20 second timeout? this can be changed
@@ -38,7 +34,7 @@ class WorkoutManager {
   }
 
   void advancePose() {
-    poseNumber = (poseNumber+1) % 6;
+    poseNumber = (poseNumber+1) % 7;
     pose.loadPoseData(poseNumber, heightBinNo);
     matControl.poseEvent();
     poseStartTime = System.currentTimeMillis();
@@ -59,7 +55,7 @@ class WorkoutManager {
 
     currentTime = System.currentTimeMillis();
 
-    if (currentTime - lastTime > 250) { //update pressure data every 0.25 seconds
+    if (currentTime - lastTime > 200) { //update pressure data every 0.25 seconds
       lastTime = currentTime;
       matControl.loadAndProcessData();
     }
