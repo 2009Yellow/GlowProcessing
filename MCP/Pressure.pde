@@ -108,7 +108,7 @@ class Pressure { // Analyzes
   boolean isWeightSignificant(){
     float currentPressureTotal = help.sumVector(sumAreas(matIn.getPressureDataMatrix()));
     
-    return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*40;
+    return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*0;
   }
   
 }
