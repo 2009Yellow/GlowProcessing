@@ -14,17 +14,18 @@ void setup () {
   // Set the global papplet
   GlobalPApplet.papplet = this;
   
-  // Make the workout manager
-  workoutManager = new WorkoutManager(this);
-  
   // Create and set the profile manager
   profileManager = new ProfileManager();
   GlobalPApplet.profileManager = profileManager;
-  //Profile p = profileManager.createNewProfile();
-  //p.profileName = "Jane";
-  //profileManager.setCurrentProfileWeight(200.5);
-  //profileManager.saveProfiles();
+  
+  Profile p = profileManager.createNewProfile();
+  p.profileName = "Jane";
+  profileManager.setCurrentProfileWeight(200.5);
+  profileManager.saveProfiles();
   println(profileManager.listProfiles());
+  
+  // Make the workout manager
+  workoutManager = new WorkoutManager(this);
   
   // Create ViewManage and views
   glowViews = new GlowViews();

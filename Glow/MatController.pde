@@ -1,20 +1,26 @@
 public class MatController {
 
   MatIn matIn;
+  Helpers help;
   Balance balance;
   Pose pose;
   LED led;
 
   int HEIGHT = 16; //Do we still need HEIGHT and WIDTH here? It looks like we don't/it could be replaced with matWidth and matHeight, defined in MatIN
   int WIDTH = 16;  
+  int TIMEOUT = 200;
 
   float[] lastPressure;
+  long lastTime;
+  
 
   MatController(PApplet papplet, Pose pose) {
     matIn = new MatIn(HEIGHT, WIDTH, papplet);
+    help = new Helpers();
     this.pose  = pose;
     balance = new Balance(HEIGHT, WIDTH, matIn, pose);
     led = new LED(matIn, pose);
+    lastTime = System.currentTimeMillis();
 
     //initialize lastPressure to all zeroes
     resetLastPressure();
@@ -38,6 +44,14 @@ public class MatController {
        
   void loadAndProcessData() {
     matIn.update();
+    matIn.getTimeAveragedData();
+    
+    long currentTime = System.currentTimeMillis();
+    
+    /*if(currentTime - lastTime < 200){
+      return;
+    }*/
+    
     float[] currentPressure = balance.getBinaryFeedback();
     
     //detect possible change in pressure state
@@ -48,6 +62,7 @@ public class MatController {
         pressureSame = false;
       }
     }
+    
     
     //only talk to LEDs if there was a pressure change
     if (!pressureSame) {
