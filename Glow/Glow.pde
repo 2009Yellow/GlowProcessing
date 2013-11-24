@@ -2,11 +2,11 @@ import de.bezier.guido.Interactive;
 
 ViewManager viewManager;
 GlowViews glowViews;
-ProfileManager profileManager;
+ProfileManager profileManager;    
 WorkoutManager workoutManager;
 
 void setup () {
-  size(1000, 800);
+  size(1100, 800);
 
   // Make the manager
   Interactive.make( this );

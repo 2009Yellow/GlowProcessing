@@ -1,14 +1,19 @@
 class WorkoutManager {
-  MatController matControl;
-  
-  long POSETIMEOUT = 20000; //20 second timeout? this can be changed
 
-  int heightBinNo = 2;
+  MatController matControl;
+  long POSETIMEOUT = 20000; //20 second timeout? this can be changed
+  long LENGTH_OF_PAUSE = 10000; //length of pause and pressure feedback (in milliseconds)
+
+  int heightBinNo = 2;//aribtrarily set for now
   int poseNumber = 0;//don't light up anything
+  
+  
   Pose pose;
   long lastTime;
   long currentTime;
-  long poseStartTime;
+  long pauseStartTime;
+  boolean isMoviePlaying;
+
 
   WorkoutManager(PApplet papplet) { 
     pose = new Pose();
@@ -19,7 +24,8 @@ class WorkoutManager {
     //time in milliseconds
     lastTime = 0;
     currentTime = 0;
-    poseStartTime = 0;
+    pauseStartTime = 0;
+    isMoviePlaying = false;
   }
 
   void setHeightBin(int heightBinNo) {
@@ -30,37 +36,55 @@ class WorkoutManager {
     this.poseNumber = poseNumber;
     pose.loadPoseData(poseNumber, heightBinNo);
     matControl.poseEvent();
-    poseStartTime = System.currentTimeMillis();
+    pauseStartTime = System.currentTimeMillis();
+    
+    isMoviePlaying = true;
+    
   }
 
   void advancePose() {
     poseNumber = (poseNumber+1) % 7;
     pose.loadPoseData(poseNumber, heightBinNo);
     matControl.poseEvent();
-    poseStartTime = System.currentTimeMillis();
+    pauseStartTime = System.currentTimeMillis();
+    isMoviePlaying = true;
   }
 
   void getWeight() {
     pose.loadPoseData(0, heightBinNo);
     matControl.getWeight();
   }
-  
+
   void stopPose() {
     matControl.stopPose();
   }
-  
+
+
+
   void draw() {
 
     currentTime = System.currentTimeMillis();
-
-    if (currentTime - lastTime > 200) { //update pressure data every 0.25 seconds
-      lastTime = currentTime;
+    
+    if(GlobalPApplet.videoElement == null){return;}
+    
+    //allow video to continue playing if it hasn't reached the pause time yet
+    if ( isMoviePlaying && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
+      println("pause time " + pose.getTimes());
+      GlobalPApplet.videoElement.pause();
+      isMoviePlaying = false;
+      pauseStartTime = currentTime;
+    }
+    
+    //if the movie is paused, give pressure feedback
+    else if( !isMoviePlaying && (currentTime - pauseStartTime < LENGTH_OF_PAUSE )){
       matControl.loadAndProcessData();
     }
     
-    /*if (currentTime - poseStartTime > POSETIMEOUT) {
-      stopPose();
-    }*/
+    //if the movie has been paused for a certain amount of time, resume playing
+    else if( !isMoviePlaying && (currentTime - pauseStartTime >= LENGTH_OF_PAUSE )){
+        GlobalPApplet.videoElement.play();
+    }
+    
   }
 }
 

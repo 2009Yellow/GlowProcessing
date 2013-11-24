@@ -96,6 +96,11 @@ public class View {
     }
     //viewManager.setView(null);
   }
+  
+  public void remove(UIElement e) {
+    uiElements.remove(e);
+    Interactive.remove(e);
+  }
 
   public void draw() {
     // Draw the backround image if its not null, else just draw backround color
