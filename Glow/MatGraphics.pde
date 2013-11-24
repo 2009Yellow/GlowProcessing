@@ -2,11 +2,14 @@ class MatGraphics {
 
 
   // Display Constants
-  final int SQUARE_SIZE = 85;
-  final int TEXT_SIZE = 35;
+  final int SQUARE_SIZE = 40;
+  final int TEXT_SIZE = 20;
 
   PFont myFont;
   int[] displayColors;
+  
+  int matHeight;
+  int matWidth;
 
   MatGraphics(int HEIGHT, int WIDTH) {
 
@@ -21,21 +24,34 @@ class MatGraphics {
     textSize(TEXT_SIZE);
 
     background(0, 0, 0);
+    
+    matHeight = HEIGHT;
+    matWidth = WIDTH;
   }
 
-
-  void drawDisplay(float[][] matData/*, float[] diff*/) {
+  void drawDisplay(float[] matData) {
     noStroke();
-    //draw raw data
-    for (int i = 0; i < matData.length; ++i) {
-      for (int j = 0; j < matData[0].length; ++j) {
-        int brightness = (int)matData[i][j];
+    for (int i = 0; i < matHeight; ++i) {
+      for (int j = 0; j < matWidth; ++j) {
+        int brightness = (int)matData[(matHeight-1-i) * matWidth + j];
         fill(brightness);
         rect(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
         fill(0, 102, 153);
         text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
       }
     }
+    
+    /*for (int i = 0; i < matHeight; ++i) {
+      for (int j = 0; j < matWidth; ++j) {
+        int brightness = (int)matData[i][j];
+        fill(brightness);
+        rect(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+        fill(0, 102, 153);
+        text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
+      }
+    }*/
+    
+   }
 
     //draw normalized data
     /*
@@ -46,7 +62,7 @@ class MatGraphics {
      fill(0, 102, 153);
      text("" + (-brightness+128), (j+0.5)*SQUARE_SIZE,  2.5 * SQUARE_SIZE);
      }*/
-  }
+  
 }
 
 

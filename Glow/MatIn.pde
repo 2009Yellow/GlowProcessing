@@ -11,9 +11,9 @@ public class MatIn {
   
   private final int SERIAL_LIGHT_START_CHAR = 'E';
   private final int SERIAL_LIGHT_FIRST_RECEIVE_CHAR = 'F'; 
-  private final int SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR = 'G';
-  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'H';
-  private final int SERIAL_LIGHT_ERROR_CHAR = 'I';
+  private final int SERIAL_LIGHT_FINAL_RECEIVE_CHAR = 'G';
+  private final int SERIAL_LIGHT_ERROR_CHAR = 'H';
+  private final int SERIAL_LIGHT_FINISHED_RECEIVING_CHAR = 'I';
   
   // Member Variables
   private int matWidth;
@@ -24,13 +24,28 @@ public class MatIn {
   
   // Time update members
   private long lastTime;
-  private final long TIMEOUT = 250; // In mills, update at most 4 times a second
+  private final long TIMEOUT = 200; // In mills, update at most 4 times a second
+  
+  //a record of previous pressure states
+  int[][] dataRecord;
+  int N = 5; //number of data sets to store and time-average
+  
+  // Helper class for arithmetic and such
+  Helpers help;
+  //To show the data visually
+  MatGraphics matGraphics;
   
   // ========================== Constructor ==========================
   public MatIn(int mat_w, int mat_h, PApplet papplet ){
     matWidth = mat_w;
     matHeight = mat_h;
+    help = new Helpers();
+    
+    // for debugging
+    //matGraphics = new MatGraphics(matWidth, matHeight);
+    
     serialInArray = new int[matWidth * matHeight];
+    dataRecord = new int[N][serialInArray.length];
     String portName = Serial.list()[0];
     myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
@@ -44,7 +59,7 @@ public class MatIn {
    
   // ========================== Private Methods ==========================
   private void establishContact() {
-    // Tripple clear the port. This is a hack to deal with buggy arduinos
+    // Triple clear the port. This is a hack to deal with buggy arduinos
     while (myPort.available() ==0) {
     }
     myPort.clear();
@@ -90,10 +105,17 @@ public class MatIn {
      // println("Error receiving final char");
       return;
     }
-    // Update display array
-    //println("Data success!");
+    
+    updateDataRecord(serialInArray);
   }
   
+  private void updateDataRecord(int[] dataNew) {
+    
+    for (int i = 0; i < N-1; ++i) {
+      dataRecord[i] = dataRecord[i+1]; //delete oldest data, shift to make room for new data
+    }
+    dataRecord[N-1] = dataNew; //add new data
+  }
   
   // ========================== Public Methods ==========================
   /*
@@ -125,7 +147,7 @@ public class MatIn {
       positionsToWrite[i] = (int)positions[i];
       colorsToWrite[i] = (int)colors[i];
     }
-      
+    myPort.clear(); //Clear old pressure data from buffer
     // Tell Arduino to begin receiving light info 
     myPort.write(SERIAL_LIGHT_START_CHAR);
     
@@ -153,8 +175,7 @@ public class MatIn {
       
       
     }
-    
-    //myPort.write(SERIAL_LIGHT_SWITCH_TO_COLOR_CHAR);
+   
     
     // Send each color value as a single byte
     for(int c : colorsToWrite) {
@@ -164,27 +185,36 @@ public class MatIn {
     // Ending char
     myPort.write(SERIAL_LIGHT_FINAL_RECEIVE_CHAR);
     
+    int arduinoIsFinished = waitToRead();
+    println("Finished theoretically"+arduinoIsFinished);
+    
   }
   
-  public int[] getPressureDataRaw() {
-    int[] ans = new int[serialInArray.length];
-    System.arraycopy(serialInArray, 0, ans, 0, serialInArray.length);
-    return ans;
-     
+  public float[] getTimeAveragedData() {
+    float[] timeAveragedData = new float[serialInArray.length];
+    for(int j = 0; j<serialInArray.length; j++){
+      float sum = 0;
+      for(int i = 0; i< N; i++){
+        sum+=dataRecord[i][j];
+      }
+      timeAveragedData[j] = sum/N;
+    }
+    //matGraphics.drawDisplay(help.thresholdArray(timeAveragedData));
+    return timeAveragedData;
   }
   
   public float[][] getPressureDataMatrix() {
     float [][] outputMatrix = new float[matHeight][matWidth];
-        for (int j = 0; j<matWidth; ++j){
-      for (int i = 0; i <matHeight; ++i){
-
-        outputMatrix[matHeight-i-1][j] = serialInArray[j * WIDTH + i];
+    float[] timeAveragedData = getTimeAveragedData();
+    
+     for (int j = 0; j<matWidth; ++j){
+       for (int i = 0; i <matHeight; ++i){
+         outputMatrix[i][j] = timeAveragedData[(matHeight-1-i) * matWidth + j];
       }
     }
+   // matGraphics.drawDisplay(outputMatrix);
     return outputMatrix;
   }  
-  
-  
 
 }
 
