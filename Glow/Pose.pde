@@ -59,5 +59,17 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
     float[] leds = allPoseData[LEDROW+heightBin*7];
     return leds;
   }
+  
+  float[] getTimes() {
+    float[] times = allPoseData[30];
+    return times;   
+  }
+  
+  float[] getDirections() {
+   float[] direction = allPoseData[29];
+   return direction;
+  }
+  
+  
 }
 

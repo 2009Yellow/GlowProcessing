@@ -7,7 +7,8 @@ static class ProfileHeight {
 
 
 public class Profile {
-  public String profileName = "Joe";
+  public String profileName = "Joe Yoga";
+  public String profilePass = "Password";
   public int profileHeight = ProfileHeight.HEIGHT_54_TO_58;
   public float profileWeight = 182.5;
   
@@ -68,6 +69,16 @@ public class ProfileManager {
     Profile p = profiles.get(profileIndex);
     currentProfile = p;
     return p;
+  }
+  
+  public boolean loginCurrentProfile(int profileIndex, String pass) {
+    Profile p = profiles.get(profileIndex);
+    if ( pass == p.profilePass) {
+      currentProfile = p;
+      return true;
+    } else {
+      return false;
+    }
   }
   
   public Profile createNewProfile() {
