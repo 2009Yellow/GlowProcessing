@@ -28,6 +28,7 @@ void setup () {
   // Create ViewManage and views
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
+  GlobalPApplet.viewManager = viewManager;
   //viewManager.setView(glowViews.GlowHome());
   viewManager.setView(glowViews.GlowHomeSplash());
 }
@@ -45,7 +46,7 @@ public static class GlobalPApplet {
   public static PApplet papplet;
   public static ProfileManager profileManager; 
   public static VideoElement videoElement;
-  /public static ViewManager viewManager;
+  public static ViewManager viewManager;
 }
 
 

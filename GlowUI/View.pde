@@ -118,9 +118,10 @@ public class View {
 public class SplashView extends View {
   private PImage logo;
   private long lastTime;
-  private boolean isFadeIn;
-  private long fadeInTime = 3000;
-  private long fadeOutTime = 3000;
+  private int fadeState;
+  private long fadeInTime = 1000;
+  private long fadeHoldTime = 1000;
+  private long fadeOutTime = 1000;
   
   //private View nextView;
   private ActionCallback nextViewCallback;
@@ -129,9 +130,8 @@ public class SplashView extends View {
   public SplashView(int w, int h, color background_c, PImage background_i, PImage l, ActionCallback nvc) {
     super(w,h, background_c, background_i);
     logo = l;
-    nextView = nv;
     lastTime = -1;
-    isFadeIn = true;
+    fadeState = 0;
     nextViewCallback = nvc;
   }
   
@@ -145,15 +145,23 @@ public class SplashView extends View {
     long timeDiff = System.currentTimeMillis() - lastTime;
     // Fade in or fade out logo
     float weight;
-    if(isFadeIn) {
+    if(fadeState == 0) {
       weight = (float)timeDiff/fadeInTime;
       // Change to fade out if past time
       if (timeDiff > fadeInTime) {
         isFadeIn = false;
         lastTime = System.currentTimeMillis();
       }
+    } else if (fadeState == 1) {
+      weight = 1.0;
+      if (timeDiff > fadeHoldTime) {
+        fadeState = 2;
+        lastTime = System.currentTimeMillis();
+      }
     } else {
       weight = 1.0 - (float)timeDiff/fadeOutTime;
+      // Check to see if we should bring up next view
+      checkNextView(timeDiff);
     }
     
     pushStyle();
@@ -161,13 +169,10 @@ public class SplashView extends View {
     tint(255, 255 * weight);
     image(logo, width/2, height/2);
     popStyle();
-    
-    // Check to see if we should bring up next view
-    checkNextView(timeDiff);
   }
   
   public void checkNextView(long timeDiff) {
-    if (isFadeIn == true) {
+    if (isFadeIn == false) {
       if (timeDiff >= fadeOutTime) {
         nextViewCallback.doAction(null);
       }

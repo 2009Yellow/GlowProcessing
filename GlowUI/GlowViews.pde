@@ -253,7 +253,7 @@ public class GlowViews
   }
   
   public View GlowHomeSplash() {
-    PImage logo = loadImage("logo.jpg");
+    PImage logo = loadImage("logo.png");
     ActionCallback nextViewCallback = new ActionCallback() {
       public void doAction(UIElement e) {
         glowViews = new GlowViews();
@@ -262,7 +262,7 @@ public class GlowViews
       }
     };
     // Create view
-    View view = new SplashView(width, height, color(128, 128, 128), loadImage("background/home_bg.jpg"), logo, nextViewCallback );
+    View view = new SplashView(width, height, color(128, 128, 128), loadImage("background/bg_blank.jpg"), logo, nextViewCallback );
 
     // Review new view
     return view;
