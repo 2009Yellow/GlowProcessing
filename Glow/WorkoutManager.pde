@@ -5,7 +5,7 @@ class WorkoutManager {
   long LENGTH_OF_PAUSE = 10000; //length of pause and pressure feedback (in milliseconds)
 
   int heightBinNo = 2;//aribtrarily set for now
-  int poseNumber = 0;//don't light up anything
+  int poseNumber = 100;//don't light up anything
   
   
   Pose pose;
@@ -48,7 +48,7 @@ class WorkoutManager {
   }
 
   void advancePose() { //call to advance to the next pose in a set workout
-    workoutPoseNumber = (workoutPoseNumber+1) % 4; //todo this mod should be repalced with an if statement that takes you back to the workout selection menu when the workout is complete
+    workoutPoseNumber = (workoutPoseNumber+1) % 4; //todo this mod should be repalced with an if statement that takes you back to the workout selection menu when the workout is complete and call stopPose
     poseNumber = WORKOUT_LIST[workout][workOutPoseNumber]; //pulls pose from list of workouts
     pose.loadPoseData(poseNumber, heightBinNo); //loads new pose data
     matControl.poseEvent(); //updates a number of things

@@ -79,6 +79,7 @@ public class MatController {
   void stopPose() {
     pose.stopPose();
     balance.poseEvent();
+    led.poseEvent();
   }
 }
 
