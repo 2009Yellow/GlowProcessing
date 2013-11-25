@@ -530,7 +530,7 @@ public class GlowViews
     drawBackButton(view);
     // submit button
     PImage endSession = loadImage("newbuttons/end_session.png");
-    PImage endSessionHover = loadImage("buttons/end_session_hover.png");
+    PImage endSessionHover = loadImage("newbuttons/end_session_hover.png");
 
     int offSetY = 20;
 // Instead of continue it will be pose menu button
@@ -607,36 +607,36 @@ public class GlowViews
   
   public View mountainPoseView(){
   
-    return drawVideoPoseView("Mountain.mov", this.mountainPoseCallback);
+    return drawVideoPoseView("posvid/Mountain.mov", this.mountainPoseCallback);
     //return drawVideoPoseView("totoro.mov");
   
   }  
   public View halfmoonPoseView(){
   
-    return drawVideoPoseView("HalfMoon.mov", this.halfMoonPoseCallback);
+    return drawVideoPoseView("posvid/HalfMoon.mov", this.halfMoonPoseCallback);
   }
     
   public View warrior2PoseView(){
   
-    return drawVideoPoseView("Warrior2Right.mov", this.warrior2PoseCallback);
+    return drawVideoPoseView("posvid/Warrior2Right.mov", this.warrior2PoseCallback);
   }
   public View warrior1PoseView(){
   
-    return drawVideoPoseView("Warrior1Right.mov", this.warrior1PoseCallback);
+    return drawVideoPoseView("posvid/Warrior1Right.mov", this.warrior1PoseCallback);
   
   } 
   public View trianglePoseView(){
   
-    return drawVideoPoseView("TriangleRight.mov", this.trianglePoseCallback);
+    return drawVideoPoseView("posvid/TriangleRight.mov", this.trianglePoseCallback);
   }
   public View standingYogaPoseView(){
   
-    return drawVideoPoseView("StandingBend.mov", this.standingYogaMudraCallback);
+    return drawVideoPoseView("posvid/StandingBend.mov", this.standingYogaMudraCallback);
   
   }
   public View dogPoseView(){
   
-    return drawVideoPoseView("DownwardDog.mov", this.dogPoseCallback);
+    return drawVideoPoseView("posvid/DownwardDog.mov", this.dogPoseCallback);
   
   }
   
