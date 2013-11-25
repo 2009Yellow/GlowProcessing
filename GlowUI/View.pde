@@ -149,7 +149,7 @@ public class SplashView extends View {
       weight = (float)timeDiff/fadeInTime;
       // Change to fade out if past time
       if (timeDiff > fadeInTime) {
-        isFadeIn = false;
+        fadeState = 1;
         lastTime = System.currentTimeMillis();
       }
     } else if (fadeState == 1) {
@@ -172,7 +172,7 @@ public class SplashView extends View {
   }
   
   public void checkNextView(long timeDiff) {
-    if (isFadeIn == false) {
+    if (fadeState == 2) {
       if (timeDiff >= fadeOutTime) {
         nextViewCallback.doAction(null);
       }
