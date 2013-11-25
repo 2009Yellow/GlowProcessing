@@ -42,15 +42,19 @@ public class ProfileManager {
     // Get the current profile index
     currentProfileIndex = Integer.parseInt(lines[0]);
     // Get the rest of the profile information
-    lines = Arrays.copyOfRange(lines, 1, lines.length-1);
+    lines = Arrays.copyOfRange(lines, 1, lines.length);
     println(lines.length);
     for (String line: lines) {
+      if(line.length() < 3) {
+        continue;
+      }
       profiles.add(parseLine(line));
     }
   }
   
   private Profile parseLine(String line) {
     Profile p = new Profile();
+    println("line: " + line);
     String words[] = line.split(",");
     p.profileName = words[0];
     p.profileHeight = parseInt(words[1]);
@@ -61,7 +65,7 @@ public class ProfileManager {
   public void saveProfiles() {
     ArrayList<String> lines = new ArrayList<String>();
     // Add the current profile index
-    lines.add("" + currentProfileIndex + "\n");
+    lines.add("" + currentProfileIndex);
     // Add each profile info
     for (Profile p: profiles) {
       lines.add(p.serialize());
@@ -103,6 +107,10 @@ public class ProfileManager {
     //currentProfile = p;
     saveProfiles();
     return p;
+  }
+  
+  public boolean isProfileLoaded() {
+    return currentProfileIndex != -1;
   }
   
   public int getNumProfiles() {

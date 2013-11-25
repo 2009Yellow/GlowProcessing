@@ -308,9 +308,17 @@ public class GlowViews
     PImage logo = loadImage("logo.png");
     ActionCallback nextViewCallback = new ActionCallback() {
       public void doAction(UIElement e) {
+        // Create glow views
         glowViews = new GlowViews();
+        // Get the profile manager
+        ProfileManager p = GlobalPApplet.profileManager;
+        // if there is a profile, loging, else go to create profile screen
+        if (p.isProfileLoaded()) {
+          viewManager.setView(glowViews.GlowHome());
+        } else {
+          viewManager.setView(glowViews.SelectProfile());
+        }
         // Set new view
-        viewManager.setView(glowViews.GlowHome());
       }
     };
     // Create view
@@ -375,27 +383,60 @@ public class GlowViews
         loadImage("background/select_profile_bg.jpg"));
     
     PImage user_1 = loadImage("tmp/user_1.png");
-    PImage user_1Hover = loadImage("tmp/user_1hover.png");
-    PImage user_2 = loadImage("tmp/user_2.png");
-    PImage user_3 = loadImage("tmp/user_3.png");
-    
-    int offSetX = (width-user_1.width)/2;
-    int offSetY = 250;
+    //PImage user_1Hover = loadImage("tmp/user_1hover.png");
+    //PImage user_2 = loadImage("tmp/user_2.png");
+    //PImage user_3 = loadImage("tmp/user_3.png");
     //UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
     //view.addUIElement(userName1Button);
     
+    int offSetX = (width-user_1.width)/2;
+    int offSetY = 200;
+
+    // Get profile manager
+    ProfileManager p = GlobalPApplet.profileManager;
+
+    // Load the first 3 profiles available
+    String[] profileNames = p.listProfiles();
+    //if (profileNames.length >3) {
+    //}
+    
+    for ( int i = 0; i < profileNames.length; ++i) {
+      final int ii = i;
+      String profileName = profileNames[i];
+      // Create the button
+      UIElement userNameButton = new GlowTextButton(offSetX, offSetY + (i + 1) * (user_1.height + 20), 461, 65,  48, profileName);
+      view.addUIElement(userNameButton);
+      userNameButton.setActionCallback( new ActionCallback() {
+        public void doAction(UIElement e) {
+          GlobalPApplet.profileManager.setCurrentProfile(ii);
+          // Get the view manger
+          ViewManager viewManager = e.getView().getViewManager();
+          // Create glow views object
+          GlowViews glowViews = new GlowViews();
+          // Set new view GO TO SESSIONS
+          viewManager.setView(glowViews.Sessions());
+        }
+      });
+      
+      // Don't do more than 3 profiles
+      if (i == 2) {
+        break;
+      }
+    }
+    
+    /*
     UIElement userName1Button = new GlowTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "Demetra");
     view.addUIElement(userName1Button);
 
     UIElement userName2Button = new GlowTextButton(offSetX, offSetY + 2 * (user_1.height + 20), 461, 65,  48, "Kojo");
     view.addUIElement(userName2Button);
-    
-    UIElement userName3Button = new GlowTextButton(offSetX, offSetY + 3 * (user_1.height + 20), 461, 65,  48, "New User");
+    */
+    UIElement userName3Button = new GlowTextButton(offSetX, offSetY + 4 * (user_1.height + 20), 461, 65,  48, "<New User>");
     view.addUIElement(userName3Button);
+    userName3Button.setActionCallback(this.createProfileCallback); 
     
-    userName1Button.setActionCallback(this.sessionsCallback);
-    userName2Button.setActionCallback(this.sessionsCallback);
-    userName3Button.setActionCallback(this.createProfileCallback);
+    //userName1Button.setActionCallback(this.sessionsCallback);
+    //userName2Button.setActionCallback(this.sessionsCallback);
     drawBackButton(view);
 
     // Review new view
