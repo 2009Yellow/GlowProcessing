@@ -62,7 +62,8 @@ class WorkoutManager {
 
 
   void draw() {
-
+  
+    matControl.loadData();
     currentTime = System.currentTimeMillis();
     
     if(GlobalPApplet.videoElement == null){return;}
@@ -77,7 +78,7 @@ class WorkoutManager {
     
     //if the movie is paused, give pressure feedback
     else if( !isMoviePlaying && (currentTime - pauseStartTime < LENGTH_OF_PAUSE )){
-      matControl.loadAndProcessData();
+      matControl.processBalanceData();
     }
     
     //if the movie has been paused for a certain amount of time, resume playing
