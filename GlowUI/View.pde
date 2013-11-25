@@ -1,11 +1,11 @@
 
 public class View {
   // View member variabls
-  private color backgroundColor;
-  private PImage backgroundImage;
-  private int viewWidth, viewHeight;
-  private ArrayList<UIElement> uiElements;
-  private ArrayList<KeyEventListener> keyEventListeners;
+  protected color backgroundColor;
+  protected PImage backgroundImage;
+  protected int viewWidth, viewHeight;
+  protected ArrayList<UIElement> uiElements;
+  protected ArrayList<KeyEventListener> keyEventListeners;
 
   ViewManager viewManager;
 
@@ -110,6 +110,23 @@ public class View {
     else {
       background(backgroundColor);
     }
+  }
+}
+
+
+
+public class SplashView extends View {
+  PImage logo;
+  long currentTime;
+  long fadeInTime = 3000;
+  long fadeOutTime = 3000;
+  
+  public SplashView(int w, int h, color background_c, PImage background_i, PImage logo) {
+    super(w,h, background_c, background_i);
+    logo = l;
+  }
+  
+  public void draw() {
   }
 }
 

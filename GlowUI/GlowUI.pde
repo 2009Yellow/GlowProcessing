@@ -10,7 +10,7 @@ void setup () {
   // Make the manager
   Interactive.make( this );
   
-  println(PFont.list());
+  //println(PFont.list());
   
   // Set the global papplet
   GlobalPApplet.papplet = this;
@@ -23,6 +23,7 @@ void setup () {
   //profileManager.setCurrentProfileWeight(200.5);
   //profileManager.saveProfiles();
   println(profileManager.listProfiles());
+  println(profileManager.getCurrentProfileIndex());
   
   // Create ViewManage and views
   glowViews = new GlowViews();
