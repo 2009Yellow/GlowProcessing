@@ -13,6 +13,11 @@ class WorkoutManager {
   long currentTime;
   long pauseStartTime;
   boolean isMoviePlaying;
+  
+  
+  int WORKOUT_LIST[][] = {{1, 2, 3, 4, 5},{1, 2, 3, 2, 1},{1, 3, 4, 2, 1}}; //rows are sequences of poses to form a single workout sequence
+  int workout = 0; // the workout that we want to use, in the future this will be set by a UI callback
+  int workoutPoseNumber = 0;
 
 
   WorkoutManager(PApplet papplet) { 
@@ -42,11 +47,12 @@ class WorkoutManager {
     
   }
 
-  void advancePose() {
-    poseNumber = (poseNumber+1) % 7;
-    pose.loadPoseData(poseNumber, heightBinNo);
-    matControl.poseEvent();
-    pauseStartTime = System.currentTimeMillis();
+  void advancePose() { //call to advance to the next pose in a set workout
+    workoutPoseNumber = (workoutPoseNumber+1) % 4; //todo this mod should be repalced with an if statement that takes you back to the workout selection menu when the workout is complete
+    poseNumber = WORKOUT_LIST[workout][workOutPoseNumber]; //pulls pose from list of workouts
+    pose.loadPoseData(poseNumber, heightBinNo); //loads new pose data
+    matControl.poseEvent(); //updates a number of things
+    pauseStartTime = System.currentTimeMillis(); //starts timer to track when to pause in video for pressure feedback
     isMoviePlaying = true;
   }
 
