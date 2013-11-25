@@ -276,6 +276,22 @@ public class GlowViews
     // Review new view
      return view;
   }
+  
+  public View GlowHomeSplash() {
+    PImage logo = loadImage("logo.png");
+    ActionCallback nextViewCallback = new ActionCallback() {
+      public void doAction(UIElement e) {
+        glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.GlowHome());
+      }
+    };
+    // Create view
+    View view = new SplashView(width, height, color(128, 128, 128), loadImage("background/bg_blank.jpg"), logo, nextViewCallback );
+
+    // Review new view
+    return view;
+  }
 
   public View CreateProfile()
   {
