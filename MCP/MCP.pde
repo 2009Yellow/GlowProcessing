@@ -7,7 +7,7 @@ MatController matControl;
 Helpers help;
 
 int heightBinNo = 2;
-int poseNumber = 1;
+int poseNumber = 100;
 Pose pose;
 long lastTime;
 long currentTime;
@@ -47,13 +47,14 @@ void draw() {
   
   if(numLoops == 100){
       matControl.getWeight();
-      newPose(1);
+      newPose(3);
   }
   
   currentTime = System.currentTimeMillis();
 
   
-  matControl.loadAndProcessData();
+  matControl.loadData();
+  matControl.processBalanceData();
   /*
   if(numLoops == 10){
     pose.loadPoseData(0, heightBinNo);
