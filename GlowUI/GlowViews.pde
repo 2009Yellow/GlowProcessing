@@ -537,7 +537,7 @@ public class GlowViews
     
     UIElement pose_halfmoonButton = new ImageButton(x, y + offSet, pose_halfmoon, pose_halfmoonHover);
     view.addUIElement(pose_halfmoonButton);
-    pose_mountainButton.setActionCallback(this.halfMoonPoseCallback);
+    pose_halfmoonButton.setActionCallback(this.halfMoonPoseCallback);
     
     UIElement pose_warrior2Button = new ImageButton(x, y + 2 * offSet, pose_warrior2, pose_warrior2Hover);
     view.addUIElement(pose_warrior2Button);
