@@ -18,6 +18,9 @@ public class GlowViews
   ActionCallback standingYogaMudraCallback;
   ActionCallback dogPoseCallback;
   ActionCallback summaryCallback;
+  ActionCallback sessionsdoCallback;
+  ActionCallback fullSession1Callback;
+  
   public GlowViews()
   {
     this.glowHomeCallback = new ActionCallback()
@@ -213,6 +216,30 @@ public class GlowViews
         viewManager.setView(glowViews.summaryView());
       }
     };
+     this.sessionsdoCallback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.SessionsDo());
+      }
+    };
+     this.fullSession1Callback = new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view GO TO SESSIONS
+        viewManager.setView(glowViews.fullSession1());
+      }
+    };
   }
   
   
@@ -271,7 +298,7 @@ public class GlowViews
      view.addUIElement(logoutButton);
      
      logoutButton.setActionCallback(this.selectProfileCallback);
-   // doFullSession.setActionCallback(this.sessionsCallback); new view similar to the other one only buttonof each session lead to one video 
+     doFullSession.setActionCallback(this.sessionsdoCallback);  
   //add logout button 
     // Review new view
      return view;
@@ -357,16 +384,17 @@ public class GlowViews
     //UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
     //view.addUIElement(userName1Button);
     
-    UIElement userName1Button = new GlowTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "USER_1");
+    UIElement userName1Button = new GlowTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "Demetra");
     view.addUIElement(userName1Button);
 
-    UIElement userName2Button = new ImageButton(offSetX, offSetY + 2 *(user_1.height + 20), user_2, user_2);
+    UIElement userName2Button = new GlowTextButton(offSetX, offSetY + 2 * (user_1.height + 20), 461, 65,  48, "Kojo");
     view.addUIElement(userName2Button);
     
-    UIElement userName3Button = new ImageButton(offSetX, offSetY + 3 * (user_1.height + 20), user_3, user_3);
+    UIElement userName3Button = new GlowTextButton(offSetX, offSetY + 3 * (user_1.height + 20), 461, 65,  48, "New User");
     view.addUIElement(userName3Button);
     
     userName1Button.setActionCallback(this.sessionsCallback);
+    userName2Button.setActionCallback(this.sessionsCallback);
     userName3Button.setActionCallback(this.createProfileCallback);
     drawBackButton(view);
 
@@ -400,10 +428,10 @@ public class GlowViews
     
     ses1Button.setActionCallback(this.learnPosesCallback);
 
-    int offSet = 20;
-    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
-    view.addUIElement(buttonContinue);
-    buttonContinue.setActionCallback(this.learnPosesCallback);
+//    int offSet = 20;
+//    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
+//    view.addUIElement(buttonContinue);
+//    buttonContinue.setActionCallback(this.learnPosesCallback);
     drawBackButton(view);
     return view;
   }
@@ -433,7 +461,7 @@ public class GlowViews
     UIElement ses3Button = new ImageButton(offSetX, offSetY + 3 * (session_1.height + 20), session_3, session_3);
     view.addUIElement(ses3Button);
     
-    ses1Button.setActionCallback(this.learnPosesCallback);
+    ses1Button.setActionCallback(this.fullSession1Callback);
 
 //    int offSet = 20;
 //    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
@@ -610,41 +638,48 @@ public class GlowViews
   
   public View mountainPoseView(){
   
-    return drawVideoPoseView("posvid/Mountain.mov", this.mountainPoseCallback);
+    return drawVideoPoseView("posvid/Mountain.mov", this.mountainPoseCallback, true);
     //return drawVideoPoseView("totoro.mov");
   
   }  
   public View halfmoonPoseView(){
   
-    return drawVideoPoseView("posvid/HalfMoon.mov", this.halfMoonPoseCallback);
+    return drawVideoPoseView("posvid/HalfMoon.mov", this.halfMoonPoseCallback, true);
   }
     
   public View warrior2PoseView(){
   
-    return drawVideoPoseView("posvid/Warrior2Right.mov", this.warrior2PoseCallback);
+    return drawVideoPoseView("posvid/Warrior2Right.mov", this.warrior2PoseCallback, true);
   }
   public View warrior1PoseView(){
   
-    return drawVideoPoseView("posvid/Warrior1Right.mov", this.warrior1PoseCallback);
+    return drawVideoPoseView("posvid/Warrior1Right.mov", this.warrior1PoseCallback, true);
   
   } 
   public View trianglePoseView(){
   
-    return drawVideoPoseView("posvid/TriangleRight.mov", this.trianglePoseCallback);
+    return drawVideoPoseView("posvid/TriangleRight.mov", this.trianglePoseCallback, true);
   }
   public View standingYogaPoseView(){
   
-    return drawVideoPoseView("posvid/StandingBend.mov", this.standingYogaMudraCallback);
+    return drawVideoPoseView("posvid/StandingBend.mov", this.standingYogaMudraCallback, true);
   
   }
   public View dogPoseView(){
   
-    return drawVideoPoseView("posvid/DownwardDog.mov", this.dogPoseCallback);
+    return drawVideoPoseView("posvid/DownwardDog.mov", this.dogPoseCallback, true);
   
   }
   
-  public View drawVideoPoseView(String posevideo, ActionCallback action ) {
+  public View fullSession1(){
+    
+    return drawVideoPoseView("posvid/FullSession.mov", this.fullSession1Callback, false);
+  }
+  
+  public View drawVideoPoseView(String posevideo, ActionCallback action, Boolean learnmode ) {
     // Create view
+    
+    if (learnmode){
     View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));    // Create Views
     
     int offSetX = 400;
@@ -674,6 +709,39 @@ public class GlowViews
     
     // Review new view
     return view;
+    }
+    else {
+    View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));    // Create Views
+    
+    int offSetX = 400;
+    int offSetYY = 400;
+    println("hi i played here");
+    VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
+    // Set the globalv video element so that other buttons can control the video
+    GlobalPApplet.videoElement = videoElement;
+    videoElement.play();
+    //videoElement.setTime(30.0);
+    view.addUIElement(videoElement);
+
+    PImage continueIMG = loadImage("newbuttons/session_menu.png");
+    PImage continueIMGHover = loadImage("newbuttons/session_menu_hover.png");
+    int offSetY = 20;
+    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 +250, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    view.addUIElement(buttonContinue);
+    
+//    PImage retryIMG = loadImage("newbuttons/retry.png");
+//    PImage retryIMGHover = loadImage("newbuttons/retry_hover.png");
+//    UIElement retryButton = new ImageButton( (width - retryIMG.width)/2 - 300, height - retryIMG.height - 3 * offSetY, retryIMG, retryIMGHover);
+//    view.addUIElement(retryButton);
+//    retryButton.setActionCallback(action);
+
+    buttonContinue.setActionCallback(this.sessionsdoCallback);
+    drawBackButton(view);
+    
+    // Review new view
+    return view;
+      
+    }
   }
 }
 

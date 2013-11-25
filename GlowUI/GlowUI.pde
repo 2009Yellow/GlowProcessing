@@ -29,8 +29,8 @@ void setup () {
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
   //GlobalPApplet.viewManager = viewManager;
-  viewManager.setView(glowViews.GlowHome());
-  //viewManager.setView(glowViews.GlowHomeSplash());
+  //viewManager.setView(glowViews.GlowHome());
+  viewManager.setView(glowViews.GlowHomeSplash());
 }
 
 void draw () {
