@@ -2,7 +2,7 @@ import de.bezier.guido.Interactive;
 
 ViewManager viewManager;
 GlowViews glowViews;
-ProfileManager profileManager;    
+ProfileManager profileManager;
 WorkoutManager workoutManager;
 
 void setup () {

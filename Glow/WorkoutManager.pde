@@ -19,7 +19,6 @@ class WorkoutManager {
   int workout = 0; // the workout that we want to use, in the future this will be set by a UI callback
   int workoutPoseNumber = 0;
 
-
   WorkoutManager(PApplet papplet) { 
     pose = new Pose();
     pose.loadPoseData(poseNumber, heightBinNo); //load data for pose #1
