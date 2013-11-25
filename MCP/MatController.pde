@@ -30,6 +30,7 @@ public class MatController {
   }
 
   void getWeight() {
+    pose.loadPoseData(0, 2);
     matIn.update();
     led.poseEvent();
     balance.getWeight();

@@ -112,6 +112,7 @@ class Helpers {
     
     for (int areaNum = 0; areaNum < poseAreas[0].length; areaNum++){ 
       
+      int sum = 0; 
       for (int i = (int)poseAreas[0][areaNum]; i <= (int)poseAreas[2][areaNum]; ++i) {
         for (int j = (int)poseAreas[1][areaNum]; j <= (int)poseAreas[3][areaNum]; ++j) {
           float temp = thresholdData[i][j];

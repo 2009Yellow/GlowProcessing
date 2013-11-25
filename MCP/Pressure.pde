@@ -37,7 +37,7 @@ class Pressure { // Analyzes
   
   void getWeight(){
     float[] areaWeights = new float[poseAreas.length];
-    areaWeights = help.sumAreas(matIn.getPressureDataMatrix(), poseAreas, pose.onPressureMat(), weight);
+    areaWeights = help.sumAreas(matIn.getPressureDataMatrix(), poseAreas);
     
     weight = help.sumVector(areaWeights);
     println("Your weight is " + weight);
