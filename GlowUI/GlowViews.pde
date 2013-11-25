@@ -329,7 +329,10 @@ public class GlowViews
     
     int offSetX = (width-user_1.width)/2;
     int offSetY = 250;
-    UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
+    //UIElement userName1Button = new ImageButton(offSetX, offSetY + user_1.height + 20, user_1, user_1Hover);
+    //view.addUIElement(userName1Button);
+    
+    UIElement userName1Button = new GlowTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "USER_1");
     view.addUIElement(userName1Button);
 
     UIElement userName2Button = new ImageButton(offSetX, offSetY + 2 *(user_1.height + 20), user_2, user_2);

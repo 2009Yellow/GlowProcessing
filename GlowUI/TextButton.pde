@@ -66,17 +66,17 @@ public class TextButton extends SimpleButton {
 public class GlowTextButton extends SimpleButton {
   // TextButton members
   protected color backgroundColor = color(153,204,205);
+  protected color backgroundPushColor = color(76, 102, 102);
   protected color bottomBarColor = color(51, 152, 155);
+  protected color bottomBarPushColor = color(25, 76, 77);
   protected color textColor = color(255,255,255);
   protected String message;
   protected int messageSize;
-  protected int messageBorder;
   
-  public GlowTextButton( int xx, int yy, int w, int h, int ts, int tb,  String s) {
+  public GlowTextButton( int xx, int yy, int w, int h, int ts,  String s) {
     super(  xx,  yy,  w,  h );
     message = s;
     messageSize = ts;
-    messageBorder = tb;
   }
   
   public void setText(String s) {
@@ -99,18 +99,27 @@ public class GlowTextButton extends SimpleButton {
     pushStyle();
     textAlign(CENTER, CENTER);
     noStroke();
+    // Fill in button background
     if (on) {
-      fill(128);
+      fill(backgroundPushColor);
     } else {
       fill(backgroundColor);
     }
-    //noStroke();
     rect(x, y, elementWidth, elementHeight);
+    // Fill in the botom bar
+    if (hover) {
+      if (on) {
+        fill(bottomBarPushColor);
+      } else {
+        fill(bottomBarColor);
+      }
+      rect(x, y + elementHeight - 6, elementWidth, 6);
+    }
+    // Draw button text
     fill(textColor);
-    textSize(messageSize);
     textFont(getView().getFont());
-    text(message, x + elementWidth/2, y + elementHeight/2);
-    
+    textSize(messageSize);
+    text(message, x + elementWidth/2, y + elementHeight/2 - 6);
     popStyle();
   }
 }
