@@ -40,7 +40,7 @@ class Pressure { // Analyzes
     areaWeights = help.sumAreas(matIn.getPressureDataMatrix(), poseAreas);
     
     weight = help.sumVector(areaWeights);
-    println("Your weight is " + weight);
+    //println("Your weight is " + weight);
   }
   
   //gives total normalized pressure in each area
@@ -67,7 +67,7 @@ class Pressure { // Analyzes
   }
   
   boolean isWeightSignificant(){
-    float[] areaSums = help.sumAreas(matIn.getPressureDataMatrix(),poseAreas, pose.onPressureMat(), weight);
+    float[] areaSums = help.sumAreas(matIn.getPressureDataMatrix(),poseAreas);
     float currentPressureTotal = help.sumVector(areaSums);
     
     return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*10;

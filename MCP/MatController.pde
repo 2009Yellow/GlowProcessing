@@ -50,6 +50,7 @@ public class MatController {
   void loadData() {
     matIn.update();
     matIn.getTimeAveragedData();
+    pressureButtons.getButtonAction();
   }
 
   void processBalanceData() {
@@ -68,7 +69,7 @@ public class MatController {
 
     //only talk to LEDs if there was a pressure change
     if (!pressureSame) {
-      println("it changed!");
+      //println("it changed!");
       led.pressureEvent(currentPressure);
       lastPressure = currentPressure;
     }

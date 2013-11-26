@@ -46,7 +46,7 @@ void draw() {
   numLoops++;
   
   if(numLoops == 100){
-      matControl.getWeight();
+      //matControl.getWeight();
       newPose(1);
   }
   
