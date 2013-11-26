@@ -47,7 +47,7 @@ void draw() {
   
   if(numLoops == 100){
       matControl.getWeight();
-      newPose(3);
+      newPose(1);
   }
   
   currentTime = System.currentTimeMillis();
