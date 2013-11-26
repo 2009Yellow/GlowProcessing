@@ -63,7 +63,7 @@ public class TextButton extends SimpleButton {
 }
 
 
-public class GlowTextButton extends SimpleButton {
+public class GlowBlueTextButton extends SimpleButton {
   // TextButton members
   protected color backgroundColor = color(153,204,205);
   protected color backgroundPushColor = color(76, 102, 102);
@@ -73,7 +73,7 @@ public class GlowTextButton extends SimpleButton {
   protected String message;
   protected int messageSize;
   
-  public GlowTextButton( int xx, int yy, int w, int h, int ts,  String s) {
+  public GlowBlueTextButton( int xx, int yy, int w, int h, int ts,  String s) {
     super(  xx,  yy,  w,  h );
     message = s;
     messageSize = ts;

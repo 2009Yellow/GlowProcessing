@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 static class ProfileHeight {
   public static int HEIGHT_50_TO_54 = 0;
   public static int HEIGHT_54_TO_58 = 1;
@@ -17,14 +19,14 @@ public class Profile {
   }
 }
 
-
 public class ProfileManager {
   private final String PROFILES_FILE_NAME = "profiles.txt";
   private ArrayList<Profile> profiles;
-  private Profile currentProfile;
+  private int currentProfileIndex;
+  //private Profile currentProfile;
   
   public ProfileManager() {
-    profiles = new ArrayList<Profile>();
+    //profiles = new ArrayList<Profile>();
     loadProfiles();
   }
   
@@ -32,16 +34,27 @@ public class ProfileManager {
     profiles = new ArrayList<Profile>();
     String lines[] = loadStrings(PROFILES_FILE_NAME);
     if (lines == null) {
-      // There is no profile data, so just return. 
+      // There is no profile data, so create a new profile file.
+      currentProfileIndex = -1;
+      saveProfiles();
       return;
     }
+    // Get the current profile index
+    currentProfileIndex = Integer.parseInt(lines[0]);
+    // Get the rest of the profile information
+    lines = Arrays.copyOfRange(lines, 1, lines.length);
+    println(lines.length);
     for (String line: lines) {
+      if(line.length() < 3) {
+        continue;
+      }
       profiles.add(parseLine(line));
     }
   }
   
   private Profile parseLine(String line) {
     Profile p = new Profile();
+    println("line: " + line);
     String words[] = line.split(",");
     p.profileName = words[0];
     p.profileHeight = parseInt(words[1]);
@@ -51,6 +64,9 @@ public class ProfileManager {
   
   public void saveProfiles() {
     ArrayList<String> lines = new ArrayList<String>();
+    // Add the current profile index
+    lines.add("" + currentProfileIndex);
+    // Add each profile info
     for (Profile p: profiles) {
       lines.add(p.serialize());
     }
@@ -66,15 +82,18 @@ public class ProfileManager {
   }
   
   public Profile setCurrentProfile(int profileIndex) {
+    currentProfileIndex = profileIndex;
     Profile p = profiles.get(profileIndex);
-    currentProfile = p;
+    //currentProfile = p;
+    saveProfiles();
     return p;
   }
   
   public boolean loginCurrentProfile(int profileIndex, String pass) {
     Profile p = profiles.get(profileIndex);
     if ( pass == p.profilePass) {
-      currentProfile = p;
+      //currentProfile = p;
+      currentProfileIndex = profileIndex;
       return true;
     } else {
       return false;
@@ -83,24 +102,46 @@ public class ProfileManager {
   
   public Profile createNewProfile() {
     Profile p = new Profile();
+    currentProfileIndex = profiles.size();
     profiles.add(p);
-    currentProfile = p;
+    //currentProfile = p;
+    saveProfiles();
     return p;
+  }
+  
+  public boolean isProfileLoaded() {
+    return currentProfileIndex != -1;
   }
   
   public int getNumProfiles() {
     return profiles.size();
   }
   
+  public int getCurrentProfileIndex() {
+    return currentProfileIndex;
+  }
+  
+  public String getCurrentProfileName(){
+    return profiles.get(currentProfileIndex).profileName;
+  }
+  
   public void setCurrentProfileName(String n) {
-    currentProfile.profileName = n;
+    profiles.get(currentProfileIndex).profileName = n;
+  }
+  
+  public int getCurrentProfileHeight() {
+    return profiles.get(currentProfileIndex).profileHeight;
   }
   
   public void setCurrentProfileHeight(int ph ) {
-    currentProfile.profileHeight = ph;
+    profiles.get(currentProfileIndex).profileHeight = ph;
+  }
+  
+  public float getCurrentProfileWeight() {
+    return profiles.get(currentProfileIndex).profileWeight;
   }
   
   public void setCurrentProfileWeight(float w) {
-    currentProfile.profileWeight = w;
+    profiles.get(currentProfileIndex).profileWeight = w;
   }
 }
