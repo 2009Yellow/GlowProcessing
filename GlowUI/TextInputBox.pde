@@ -52,6 +52,10 @@ public class TextInputBox extends UIElement implements  KeyEventListener {
     popStyle();
   }
   
+  public String getTypingMessage() {
+    return typing;
+  }
+  
   
   public String getSavedMessage() {
     return saved;

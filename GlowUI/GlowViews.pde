@@ -404,7 +404,7 @@ public class GlowViews
       final int ii = i;
       String profileName = profileNames[i];
       // Create the button
-      UIElement userNameButton = new GlowTextButton(offSetX, offSetY + (i + 1) * (user_1.height + 20), 461, 65,  48, profileName);
+      UIElement userNameButton = new GlowBlueTextButton(offSetX, offSetY + (i + 1) * (user_1.height + 20), 461, 65,  48, profileName);
       view.addUIElement(userNameButton);
       userNameButton.setActionCallback( new ActionCallback() {
         public void doAction(UIElement e) {
@@ -425,13 +425,13 @@ public class GlowViews
     }
     
     /*
-    UIElement userName1Button = new GlowTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "Demetra");
+    UIElement userName1Button = new GlowBlueTextButton(offSetX, offSetY + user_1.height + 20, 461, 65,  48, "Demetra");
     view.addUIElement(userName1Button);
 
-    UIElement userName2Button = new GlowTextButton(offSetX, offSetY + 2 * (user_1.height + 20), 461, 65,  48, "Kojo");
+    UIElement userName2Button = new GlowBlueTextButton(offSetX, offSetY + 2 * (user_1.height + 20), 461, 65,  48, "Kojo");
     view.addUIElement(userName2Button);
     */
-    UIElement userName3Button = new GlowTextButton(offSetX, offSetY + 4 * (user_1.height + 20), 461, 65,  48, "<New User>");
+    UIElement userName3Button = new GlowBlueTextButton(offSetX, offSetY + 4 * (user_1.height + 20), 461, 65,  48, "<New User>");
     view.addUIElement(userName3Button);
     userName3Button.setActionCallback(this.createProfileCallback); 
     
