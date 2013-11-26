@@ -46,7 +46,14 @@ public class MatIn {
     
     serialInArray = new int[matWidth * matHeight];
     dataRecord = new int[N][serialInArray.length];
-    String portName = Serial.list()[0];
+    String portName;
+    
+    if ( System.getProperty("os.name") == "OS X") {
+      portName = Serial.list()[8];
+    } else {
+      portName = Serial.list()[0];
+    }
+
     myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
