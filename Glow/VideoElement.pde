@@ -107,4 +107,8 @@ public class VideoElement extends UIElement {
     return (movie.duration() <= movie.time());
   }
   
+  public boolean getIsPlaying() {
+    return isPlaying;
+  }
+  
 }
