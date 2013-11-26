@@ -47,8 +47,8 @@ public class MatIn {
     serialInArray = new int[matWidth * matHeight];
     dataRecord = new int[N][serialInArray.length];
     String portName;
-    
-    if ( System.getProperty("os.name") == "OS X") {
+    System.out.println(System.getProperty("os.name"));
+    if ( System.getProperty("os.name").startsWith("Mac OS X")) {
       portName = Serial.list()[8];
     } else {
       portName = Serial.list()[0];
