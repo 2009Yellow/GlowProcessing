@@ -48,7 +48,7 @@ class WorkoutManager {
 
   void advancePose() { //call to advance to the next pose in a set workout
     workoutPoseNumber = (workoutPoseNumber+1) % 4; //todo this mod should be repalced with an if statement that takes you back to the workout selection menu when the workout is complete and call stopPose
-    poseNumber = WORKOUT_LIST[workout][workOutPoseNumber]; //pulls pose from list of workouts
+    poseNumber = WORKOUT_LIST[workout][workoutPoseNumber]; //pulls pose from list of workouts
     pose.loadPoseData(poseNumber, heightBinNo); //loads new pose data
     matControl.poseEvent(); //updates a number of things
     pauseStartTime = System.currentTimeMillis(); //starts timer to track when to pause in video for pressure feedback

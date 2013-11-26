@@ -23,6 +23,10 @@ public class VideoElement extends UIElement {
     if (show) {
       pushStyle();
       imageMode(CENTER);
+      if (!isPlaying) {
+        // Darken the video when its not playing
+        tint(128);
+      }
       image(movie, x, y, elementWidth, elementHeight);
       popStyle();
     }
@@ -78,7 +82,6 @@ public class VideoElement extends UIElement {
   }
   
   public void stop() {
-    println("stop");
     movie.stop();
     isPlaying = false;
   }
