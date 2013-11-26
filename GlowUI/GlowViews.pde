@@ -369,8 +369,13 @@ public class GlowViews
     view.addUIElement(buttonSubmit);
 
     buttonSubmit.setActionCallback(this.glowHomeCallback);
-
-    drawBackButton(view);
+    View GlowHome = new View(width, height, color(128, 128, 128),
+        loadImage("background/create_profile_bg.jpg"));
+    
+    drawBackButton(view).setActionCallback(this.selectProfileCallback);
+    
+    
+    drawGlowHomeButton(view);
 
     // Review new view
     return view;
@@ -437,7 +442,8 @@ public class GlowViews
     
     //userName1Button.setActionCallback(this.sessionsCallback);
     //userName2Button.setActionCallback(this.sessionsCallback);
-    drawBackButton(view);
+    //drawBackButton(view).setActionCallback(this.sessionsCallback); 
+    drawGlowHomeButton(view);
 
     // Review new view
     return view;
@@ -467,13 +473,16 @@ public class GlowViews
     UIElement ses3Button = new ImageButton(offSetX, offSetY + 3 * (session_1.height + 20), session_3, session_3);
     view.addUIElement(ses3Button);
     
+    
+    
     ses1Button.setActionCallback(this.learnPosesCallback);
 
 //    int offSet = 20;
 //    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
 //    view.addUIElement(buttonContinue);
 //    buttonContinue.setActionCallback(this.learnPosesCallback);
-    drawBackButton(view);
+    drawBackButton(view).setActionCallback(this.glowHomeCallback); 
+    drawGlowHomeButton(view);
     return view;
   }
   
@@ -508,7 +517,8 @@ public class GlowViews
 //    UIElement buttonContinue = new ImageButton((width - continueImg.width)/2 , height - continueImg.height - 3 * offSet, continueImg, continueImgHover);
 //    view.addUIElement(buttonContinue);
 //    buttonContinue.setActionCallback(this.learnPosesCallback);
-    drawBackButton(view);
+    drawGlowHomeButton(view);
+    drawBackButton(view).setActionCallback(this.glowHomeCallback); 
     return view;
   }
 
@@ -528,8 +538,8 @@ public class GlowViews
 
     UIElement doFullSession = new ImageButton(620, 400, _do, _doHover); 
     view.addUIElement(doFullSession);
-    drawBackButton(view);
-
+    drawBackButton(view).setActionCallback(this.sessionsCallback); 
+    drawGlowHomeButton(view);
     return view;
   }
   
@@ -537,8 +547,8 @@ public class GlowViews
   {
     View view = new View(width, height, color(128, 128, 128),
         loadImage("newbuttons/summary_bg.jpg"));
-    
-    drawBackButton(view);
+    drawGlowHomeButton(view);
+         drawBackButton(view).setActionCallback(this.learnPosesCallback); 
     return view; 
   }
 
@@ -599,7 +609,8 @@ public class GlowViews
     pose_dogButton.setActionCallback(this.dogPoseCallback);
     view.addUIElement(pose_dogButton);
     //this.workoutSummaryCallback
-    drawBackButton(view);
+    drawGlowHomeButton(view);
+    drawBackButton(view).setActionCallback(this.sessionsCallback); 
     // submit button
     PImage endSession = loadImage("newbuttons/end_session.png");
     PImage endSessionHover = loadImage("newbuttons/end_session_hover.png");
@@ -639,24 +650,21 @@ public class GlowViews
     buttonContinue.setActionCallback(this.learnPosesCallback);
 
 
-    drawBackButton(view);
+         drawBackButton(view).setActionCallback(this.sessionsCallback); 
 
     // Review new view
     return view;
   }
-
-  // Private Functions
-  private void drawBackButton(View view)
+  
+  private void drawGlowHomeButton(View view)
   {
-    PImage back = loadImage("buttons/back.png");
-    PImage backHover = loadImage("buttons/back_hover.png");
-    backHover.resize(50, 50);
-    back.resize(50, 50);
-    UIElement buttonBack = new ImageButton(20, height - 90, back, backHover);
-    view.addUIElement(buttonBack);
-
-    // Create and set Select Profile Callback
-    ActionCallback backCallback = new ActionCallback()
+  
+    PImage logo = loadImage("background/logo.png");
+  
+    UIElement homeButton = new ImageButton (width/2-logo.width/2 + 16, 26, logo, logo);
+    view.addUIElement(homeButton);
+    
+    ActionCallback homeCallback = new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -668,7 +676,22 @@ public class GlowViews
         viewManager.setView(glowViews.GlowHome());
       }
     };
-    buttonBack.setActionCallback(backCallback);
+    homeButton.setActionCallback(homeCallback);
+  }
+  
+
+  // Private Functions
+  private UIElement drawBackButton(View view)
+  {
+    
+    PImage back = loadImage("buttons/back.png");
+    PImage backHover = loadImage("buttons/back_hover.png");
+    backHover.resize(50, 50);
+    back.resize(50, 50);
+    UIElement buttonBack = new ImageButton(20, height - 90, back, backHover);
+    view.addUIElement(buttonBack);
+    return buttonBack;
+
   }
   
   private void makeTitle(String title, int titleWidth, View view){
@@ -746,7 +769,7 @@ public class GlowViews
     retryButton.setActionCallback(action);
 
     buttonContinue.setActionCallback(this.learnPosesCallback);
-    drawBackButton(view);
+    drawBackButton(view).setActionCallback(this.learnPosesCallback);
     
     // Review new view
     return view;
@@ -777,8 +800,7 @@ public class GlowViews
 //    retryButton.setActionCallback(action);
 
     buttonContinue.setActionCallback(this.sessionsdoCallback);
-    drawBackButton(view);
-    
+    drawBackButton(view).setActionCallback(this.sessionsdoCallback);
     // Review new view
     return view;
       
