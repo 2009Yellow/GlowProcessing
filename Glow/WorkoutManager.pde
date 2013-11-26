@@ -23,7 +23,7 @@ class WorkoutManager {
     pose = new Pose();
     pose.loadPoseData(poseNumber, heightBinNo); //load data for pose #1
     matControl = new MatController(papplet, pose);
-    setHeightBin(profileManager.currentProfile.profileHeight);
+    setHeightBin(profileManager.getCurrentProfileHeight());
 
     //time in milliseconds
     lastTime = 0;

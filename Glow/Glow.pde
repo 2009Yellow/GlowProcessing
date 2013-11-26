@@ -30,8 +30,9 @@ void setup () {
   // Create ViewManage and views
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
-  viewManager.setView(glowViews.GlowHome());
+  //viewManager.setView(glowViews.GlowHome());
   //viewManager.setView(glowViews.GlowHomeTest());
+  viewManager.setView(glowViews.GlowHomeSplash());
 }
 
 void draw () {
