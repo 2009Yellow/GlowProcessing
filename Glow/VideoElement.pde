@@ -32,15 +32,18 @@ public class VideoElement extends UIElement {
     }
     // call action callback if movie is finished
     if (isDone()) {
+      isPlaying = false;
       activateActionCallback();
     }
   }
   
  // called by manager
   public void mousePressed () {
+    println("video element pressed");
   }
   
   public void mouseReleased() {
+    println("Video element released");
     if (isPlaying) {
       pause();
     } else {

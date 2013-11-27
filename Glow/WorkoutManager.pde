@@ -7,11 +7,11 @@ class WorkoutManager {
   int heightBinNo = 2;//aribtrarily set for now
   int poseNumber = 100;//don't light up anything
   
-  
   Pose pose;
   long lastTime;
   long currentTime;
   long pauseStartTime;
+  boolean donePressureSensing;
   
   
   int WORKOUT_LIST[][] = {{1, 2, 3, 4, 5},{1, 2, 3, 2, 1},{1, 3, 4, 2, 1}}; //rows are sequences of poses to form a single workout sequence
@@ -39,7 +39,7 @@ class WorkoutManager {
     pose.loadPoseData(poseNumber, heightBinNo);
     matControl.poseEvent();
     pauseStartTime = System.currentTimeMillis();
-    
+    donePressureSensing = false;
   }
 
   void advancePose() { //call to advance to the next pose in a set workout
@@ -48,6 +48,7 @@ class WorkoutManager {
     pose.loadPoseData(poseNumber, heightBinNo); //loads new pose data
     matControl.poseEvent(); //updates a number of things
     pauseStartTime = System.currentTimeMillis(); //starts timer to track when to pause in video for pressure feedback
+    donePressureSensing = false;
   }
 
   void getWeight() {
@@ -62,28 +63,35 @@ class WorkoutManager {
 
 
   void draw() {
-  
     matControl.loadData();
     currentTime = System.currentTimeMillis();
     
-    if(GlobalPApplet.videoElement == null){return;}
+    if(GlobalPApplet.videoElement == null) {
+      return;
+    }
+    
+    println("I play:" + GlobalPApplet.videoElement.getIsPlaying());
     
     //allow video to continue playing if it hasn't reached the pause time yet
-    if ( GlobalPApplet.videoElement.getIsPlaying() && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
+    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
       println("pause time " + pose.getTimes());
       GlobalPApplet.videoElement.pause();
-      isMoviePlaying = false;
       pauseStartTime = currentTime; //to keep track of when the movie paused
+      println("I'm pausing the video now");
     }
     
     //if the movie is paused, give pressure feedback
     else if( !GlobalPApplet.videoElement.getIsPlaying() && (currentTime - pauseStartTime < LENGTH_OF_PAUSE )){
       matControl.processBalanceData();
+      println("I'm pressure sening now");
     }
     
     //if the movie has been paused for a certain amount of time, resume playing
     else if( !GlobalPApplet.videoElement.getIsPlaying() && (currentTime - pauseStartTime >= LENGTH_OF_PAUSE )){
         GlobalPApplet.videoElement.play();
+        donePressureSensing = true;
+        println("I'm resuming the video now");
+    } else {
     }
     
   }
