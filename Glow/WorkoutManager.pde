@@ -72,7 +72,6 @@ class WorkoutManager {
     if ( GlobalPApplet.videoElement.getIsPlaying() && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
       println("pause time " + pose.getTimes());
       GlobalPApplet.videoElement.pause();
-      isMoviePlaying = false;
       pauseStartTime = currentTime; //to keep track of when the movie paused
     }
     
