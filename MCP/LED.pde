@@ -1,6 +1,7 @@
 class LED {
   float[] pixelNumbers;
   float[] colors;
+  float[] directions;
   MatIn matIn;
   Pose pose;
 
@@ -23,12 +24,13 @@ class LED {
       colors[i] = 1;
     }
     
-    matIn.setLights(pixelNumbers, colors);
+    matIn.setLights(pixelNumbers, colors, directions);
   }
 
 
   void setLeds() {
     pixelNumbers = pose.getLeds();
+    directions = pose.getDirections();
   }
 
   void poseEvent() {
@@ -42,7 +44,7 @@ class LED {
       colors[i] = 1;  //1 = purple LEDs for start of pose
     }
     
-    matIn.setLights(pixelNumbers, colors);
+    matIn.setLights(pixelNumbers, colors, directions);
   }
 
   void pressureEvent(float[] pressure) {
@@ -54,7 +56,7 @@ class LED {
     //println("new colors");
     //println(colors);
     
-    matIn.setLights(pixelNumbers, colors);
+    matIn.setLights(pixelNumbers, colors, directions);
   }
 }
 

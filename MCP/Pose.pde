@@ -59,5 +59,19 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
     float[] leds = allPoseData[LEDROW+heightBin*7];
     return leds;
   }
+  
+    int getTimes() {
+    //array of times for video to pause
+    float[] times = allPoseData[29];
+    //currently, only the first value in this array is relevant
+    return (int)times[0];   
+  }
+  
+  float[] getDirections() {
+   float[] direction = allPoseData[28];
+   return direction;
+  }
+  
+  
 }
 
