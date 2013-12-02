@@ -739,6 +739,13 @@ public class GlowViews
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
+    /*
+    videoElement.setActionCallback( new ActionCallback{
+       public void doAction(UIElement e) {
+         
+       }
+     });
+     */
 
     PImage continueIMG = loadImage("newbuttons/session_menu.png");
     PImage continueIMGHover = loadImage("newbuttons/session_menu_hover.png");

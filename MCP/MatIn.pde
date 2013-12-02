@@ -131,7 +131,7 @@ public class MatIn {
     processSerial();
   }
 
-  public void setLights(float[] positions, float[] colors) {
+  public void setLights(float[] positions, float[] colors, float[] directions) {
     /*
     println("Positions");
     println(positions);
@@ -141,10 +141,12 @@ public class MatIn {
     
     int[] positionsToWrite = {0, 0, 0, 0};
     int[] colorsToWrite = {0, 0, 0, 0};
+    int[] directionsToWrite = {0, 0, 0, 0};
     
     for ( int i = 0; i<positions.length; i++){
       positionsToWrite[i] = (int)positions[i];
       colorsToWrite[i] = (int)colors[i];
+      directionsToWrite[i] = (int)directions[i];
     }
     myPort.clear(); //Clear old pressure data from buffer
     // Tell Arduino to begin receiving light info 
@@ -181,6 +183,9 @@ public class MatIn {
       myPort.write(c);
     }
     
+    for(int d : directionsToWrite) {
+      myPort.write(d);      
+    }
     // Ending char
     myPort.write(SERIAL_LIGHT_FINAL_RECEIVE_CHAR);
     
