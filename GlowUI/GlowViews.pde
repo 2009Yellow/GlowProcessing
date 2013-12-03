@@ -20,9 +20,11 @@ public class GlowViews
   ActionCallback summaryCallback;
   ActionCallback sessionsdoCallback;
   ActionCallback fullSession1Callback;
-  
+  ProfManager manager;
+
   public GlowViews()
   {
+    this.manager = new ProfManager();
     this.glowHomeCallback = new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -282,6 +284,9 @@ public class GlowViews
     PImage learnHover = loadImage("selections/learn_mode_hover.png");
     PImage _do = loadImage("selections/do_mode.png");
     PImage _doHover = loadImage("selections/do_mode_hover.png");
+    // name title
+    UIElement nameTag = new TextButton((width-200)/2, (height-60)/2, 200, 60, color(255, 0, 0, 0), color(0, 0, 0), 24, this.manager.getUserProfile(0).profileName);
+    view.addUIElement(nameTag);
     
     // Create elements
     UIElement learnPosesButton = new ImageButton(200, 470,
@@ -291,6 +296,7 @@ public class GlowViews
     view.addUIElement(doFullSession);
 
     learnPosesButton.setActionCallback(this.sessionsCallback);
+   
     
      PImage logout = loadImage("newbuttons/logout.png");
      PImage logoutHover = loadImage("newbuttons/logout_hover.png");
@@ -298,7 +304,8 @@ public class GlowViews
      view.addUIElement(logoutButton);
      
      logoutButton.setActionCallback(this.selectProfileCallback);
-     doFullSession.setActionCallback(this.sessionsdoCallback);  
+     doFullSession.setActionCallback(this.sessionsdoCallback); 
+    
   //add logout button 
     // Review new view
      return view;
@@ -311,9 +318,10 @@ public class GlowViews
         // Create glow views
         glowViews = new GlowViews();
         // Get the profile manager
-        ProfileManager p = GlobalPApplet.profileManager;
+        ProfManager p = new ProfManager();
         // if there is a profile, loging, else go to create profile screen
-        if (p.isProfileLoaded()) {
+        println(p.getUserProfile(0).isLoggedIn);
+        if (p.getUserProfile(0).isLoggedIn) {
           viewManager.setView(glowViews.GlowHome());
         } else {
           viewManager.setView(glowViews.SelectProfile());
@@ -337,12 +345,15 @@ public class GlowViews
     // name title
     UIElement nameTag = new TextButton(280, 310, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
     view.addUIElement(nameTag);
+    
+    
     // name input
     int inputNameWidth = 300;
-    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "your user name");
+    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "enter user name");
     view.addUIElement(inputName);
     view.addKeyEventListener((KeyEventListener) inputName);
-
+    //String cas = inputName.getSavedMessage();
+    //println(cas);
     // height range title
     UIElement heightRange = new TextButton(345, 390, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
     view.addUIElement(heightRange);
@@ -658,7 +669,6 @@ public class GlowViews
   
   private void drawGlowHomeButton(View view)
   {
-  
     PImage logo = loadImage("background/logo.png");
   
     UIElement homeButton = new ImageButton (width/2-logo.width/2 + 16, 26, logo, logo);
@@ -803,7 +813,6 @@ public class GlowViews
     drawBackButton(view).setActionCallback(this.sessionsdoCallback);
     // Review new view
     return view;
-      
     }
   }
 }

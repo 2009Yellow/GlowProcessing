@@ -11,6 +11,7 @@ public class TextInputBox extends UIElement implements  KeyEventListener {
     backgroundColor = color(255,255,255);
     textColor = color(0,0,0);
     typing = initialTyping;
+    saved = typing;
     messageSize = ts;
     // Sets the text border to 1 pixel by default
     messageBorder = 1;  
