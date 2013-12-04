@@ -14,8 +14,7 @@ class WorkoutManager {
   boolean donePressureSensing;
   
   
-  int WORKOUT_LIST[][] = {{1, 2, 3, 4, 5},{1, 2, 3, 2, 1},{1, 3, 4, 2, 1}}; //rows are sequences of poses to form a single workout sequence
-  int workout = 0; // the workout that we want to use, in the future this will be set by a UI callback
+  int WORKOUT_LIST[] = {1, 2, 4, 3, 5, 7, 6}; //workout sequence: mountain, halfmoon, warrior2, warrior1, triangle, forwardbend, downwarddog
   int workoutPoseNumber = 0;
 
   WorkoutManager(PApplet papplet) { 
@@ -43,12 +42,13 @@ class WorkoutManager {
   }
 
   void advancePose() { //call to advance to the next pose in a set workout
-    workoutPoseNumber = (workoutPoseNumber+1) % 4; //todo this mod should be repalced with an if statement that takes you back to the workout selection menu when the workout is complete and call stopPose
-    poseNumber = WORKOUT_LIST[workout][workoutPoseNumber]; //pulls pose from list of workouts
-    pose.loadPoseData(poseNumber, heightBinNo); //loads new pose data
-    matControl.poseEvent(); //updates a number of things
-    pauseStartTime = System.currentTimeMillis(); //starts timer to track when to pause in video for pressure feedback
-    donePressureSensing = false;
+    if ( workoutPoseNumber >= WORKOUT_LIST.length - 1){
+      stopPose();
+      //TODO figure out whether we need to say to go back to home screen here
+      return;
+    }
+    workoutPoseNumber++;
+    newPose( WORKOUT_LIST[workoutPoseNumber]); // update the pose
   }
 
   void getWeight() {
@@ -57,6 +57,7 @@ class WorkoutManager {
   }
 
   void stopPose() {
+    poseNumber = 100;
     matControl.stopPose();
   }
 
@@ -72,7 +73,9 @@ class WorkoutManager {
     
     println("I play:" + GlobalPApplet.videoElement.getIsPlaying());
     
-    //allow video to continue playing if it hasn't reached the pause time yet
+    
+    
+    //pause the video if we haven't pressure sensed yet and we've passed the pause time (pose.getTimes());
     if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
       println("pause time " + pose.getTimes());
       GlobalPApplet.videoElement.pause();
@@ -91,7 +94,13 @@ class WorkoutManager {
         GlobalPApplet.videoElement.play();
         donePressureSensing = true;
         println("I'm resuming the video now");
-    } else {
+        stopPose();
+    } 
+    
+    //TODO when video is done playing, what happens? (need pressure feedback)
+    
+    else {
+      //allow video to continue playing if it hasn't reached the pause time yet
     }
     
   }
