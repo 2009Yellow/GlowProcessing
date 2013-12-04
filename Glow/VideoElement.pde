@@ -32,18 +32,15 @@ public class VideoElement extends UIElement {
     }
     // call action callback if movie is finished
     if (isDone()) {
-      isPlaying = false;
       activateActionCallback();
     }
   }
   
  // called by manager
   public void mousePressed () {
-    println("video element pressed");
   }
   
   public void mouseReleased() {
-    println("Video element released");
     if (isPlaying) {
       pause();
     } else {
@@ -61,6 +58,7 @@ public class VideoElement extends UIElement {
   }
   
   public float getTime() {
+    println("movie time " + movie.time());
     return movie.time();
   }
 
@@ -106,12 +104,13 @@ public class VideoElement extends UIElement {
     //movie = null;
   }
   
+  public boolean getIsPlaying() {
+     return isPlaying;
+  }
+
+  
   public boolean isDone() {
     return (movie.duration() <= movie.time());
-  }
-  
-  public boolean getIsPlaying() {
-    return isPlaying;
   }
   
 }

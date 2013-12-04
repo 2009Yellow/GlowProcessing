@@ -3,13 +3,14 @@ import de.bezier.guido.*;
 public abstract class UIElement{
   protected int x, y, elementWidth, elementHeight;
   protected View view;
-  
+  protected boolean checked;
   protected ActionCallback actionCallback;  
   
   public UIElement(int xx, int yy, int w, int h) {
     //Interactive.remove((UIElement)this);
     x = xx;
     y = yy;
+    checked = false;
     elementWidth = w;
     elementHeight = h;
     // register it with the manager

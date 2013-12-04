@@ -11,6 +11,7 @@ class WorkoutManager {
   long lastTime;
   long currentTime;
   long pauseStartTime;
+  int timeToStartPause;
   boolean donePressureSensing;
   
   
@@ -27,6 +28,7 @@ class WorkoutManager {
     lastTime = 0;
     currentTime = 0;
     pauseStartTime = 0;
+    timeToStartPause = pose.getTimes();
   }
 
   void setHeightBin(int heightBinNo) {
@@ -38,6 +40,7 @@ class WorkoutManager {
     pose.loadPoseData(poseNumber, heightBinNo);
     matControl.poseEvent();
     pauseStartTime = System.currentTimeMillis();
+    timeToStartPause = pose.getTimes();
     donePressureSensing = false;
   }
 
@@ -61,8 +64,14 @@ class WorkoutManager {
     matControl.stopPose();
   }
 
+  void startWorkout(){
+    // reset array of pose data
+  }
 
-
+  void getWorkoutInfo(){
+    // give list of workout data
+  }
+  
   void draw() {
     matControl.loadData();
     currentTime = System.currentTimeMillis();
@@ -75,8 +84,8 @@ class WorkoutManager {
     
     
     
-    //pause the video if we haven't pressure sensed yet and we've passed the pause time (pose.getTimes());
-    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing && GlobalPApplet.videoElement.getTime() > pose.getTimes() ){
+    //pause the video if we haven't pressure sensed yet and we've passed the pause time 
+    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing && GlobalPApplet.videoElement.getTime() > timeToStartPause ){
       println("pause time " + pose.getTimes());
       GlobalPApplet.videoElement.pause();
       pauseStartTime = currentTime; //to keep track of when the movie paused
@@ -86,7 +95,7 @@ class WorkoutManager {
     //if the movie is paused, give pressure feedback
     else if( !GlobalPApplet.videoElement.getIsPlaying() && (currentTime - pauseStartTime < LENGTH_OF_PAUSE )){
       matControl.processBalanceData();
-      println("I'm pressure sening now");
+      println("I'm pressure sensing now");
     }
     
     //if the movie has been paused for a certain amount of time, resume playing
@@ -97,7 +106,8 @@ class WorkoutManager {
         stopPose();
     } 
     
-    //TODO when video is done playing, what happens? (need pressure feedback)
+    //TODO when video is done playing, what happens? (need pressure feedback, etc.)
+    //TODO pressure buttons!
     
     else {
       //allow video to continue playing if it hasn't reached the pause time yet

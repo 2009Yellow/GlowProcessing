@@ -4,11 +4,10 @@ class Balance {
 
   Pressure pressure;
   Pose pose;
-
+  
   //MatGraphics matGraphics; //for testing purposes
 
   float[] stanDist;
-
 
   Balance(int mat_h, int mat_w, MatIn matIn, Pose pose) {
 
