@@ -9,5 +9,16 @@ public class TextElement extends TextButton {
    super(xx,  yy,  w,  h,  bc,  tc,  ts, tb, s); 
    enabled = false;
   }
+  
+    public void draw() {
+    pushStyle();
+    textAlign(CENTER, CENTER);
+    fill(backgroundColor);
+    fill(textColor);
+    textSize(messageSize);
+    textFont(getView().getFont());
+    text(message, x + elementWidth/2, y + elementHeight/2);
+    popStyle();
+  }
 }
 

@@ -21,7 +21,25 @@ public class GlowViews
   ActionCallback sessionsdoCallback;
   ActionCallback fullSession1Callback;
   ProfManager manager;
+  final ProfManager p = new ProfManager();
+  final String[] videos = {
+    "posvid/Mountain.mov",
 
+    "posvid/HalfMoon.mov",
+
+    "posvid/Warrior2Right.mov",
+
+    "posvid/Warrior1Right.mov",
+
+    "posvid/TrianglePoseRight.mov",
+
+    "posvid/StandingBend.mov",
+  
+    "posvid/DownwardDog.mov",
+
+    "posvid/FullSession.mov"
+  };
+  
   public GlowViews()
   {
     this.manager = new ProfManager();
@@ -285,7 +303,7 @@ public class GlowViews
     PImage _do = loadImage("selections/do_mode.png");
     PImage _doHover = loadImage("selections/do_mode_hover.png");
     // name title
-    UIElement nameTag = new TextButton((width-200)/2, (height-60)/2, 200, 60, color(255, 0, 0, 0), color(0, 0, 0), 24, this.manager.getUserProfile(0).profileName);
+    UIElement nameTag = new TextElement((width-200)/2, (height-60)/2, 200, 60, color(255, 0, 0, 0), color(0, 0, 0), 24, this.manager.getUserProfile(0).profileName);
     view.addUIElement(nameTag);
     
     // Create elements
@@ -303,7 +321,20 @@ public class GlowViews
      UIElement logoutButton = new ImageButton(950, logout.height +130, logout, logoutHover);
      view.addUIElement(logoutButton);
      
-     logoutButton.setActionCallback(this.selectProfileCallback);
+     logoutButton.setActionCallback(new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        p.json.setBoolean("logged_in", false);
+        saveJSONObject(p.json, "profiles.json");
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.SelectProfile());
+      }
+    });
      doFullSession.setActionCallback(this.sessionsdoCallback); 
     
   //add logout button 
@@ -317,7 +348,7 @@ public class GlowViews
       public void doAction(UIElement e) {
         // Create glow views
         glowViews = new GlowViews();
-        // Get the profile manager
+        // Get the ile manager
         ProfManager p = new ProfManager();
         // if there is a profile, loging, else go to create profile screen
         println(p.getUserProfile(0).isLoggedIn);
@@ -343,32 +374,69 @@ public class GlowViews
         loadImage("background/create_profile_bg.jpg"));
 
     // name title
-    UIElement nameTag = new TextButton(280, 310, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
+    UIElement nameTag = new TextElement(280, 310, 150, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "USERNAME:");
     view.addUIElement(nameTag);
     
     
     // name input
     int inputNameWidth = 300;
-    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "enter user name");
+    UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "enter user name", p);
     view.addUIElement(inputName);
+    //String cas = inputName.getTypingMessage();
     view.addKeyEventListener((KeyEventListener) inputName);
-    //String cas = inputName.getSavedMessage();
+    
     //println(cas);
     // height range title
-    UIElement heightRange = new TextButton(345, 390, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
+    UIElement heightRange = new TextElement(345, 390, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 24, "HEIGHT:");
     view.addUIElement(heightRange);
     // height range checkboxes
     int checkboxEdge = 20;
     int ckbFontSize = 22;
     String ckbFontType = "papyrus.vlw";
-    UIElement checkbox1 = new CheckBox( 480, 405, checkboxEdge, checkboxEdge, "Below 5'4");
+    final UIElement checkbox1 = new CheckBox( 480, 405, checkboxEdge, checkboxEdge, "Below 5'4");
     view.addUIElement(checkbox1);
-    UIElement checkbox2 = new CheckBox( 480, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
+    final UIElement checkbox2 = new CheckBox( 480, 450, checkboxEdge, checkboxEdge, "5'4 - 5'8");
     view.addUIElement(checkbox2);
-    UIElement checkbox3 = new CheckBox( 480, 495, checkboxEdge, checkboxEdge, "5'8 - 6'0");
+    final UIElement checkbox3 = new CheckBox( 480, 495, checkboxEdge, checkboxEdge, "5'8 - 6'0");
     view.addUIElement(checkbox3);
-    UIElement checkbox4 = new CheckBox( 480, 540, checkboxEdge, checkboxEdge, "Above 6'0");
+    final UIElement checkbox4 = new CheckBox( 480, 540, checkboxEdge, checkboxEdge, "Above 6'0");
     view.addUIElement(checkbox4);
+    checkbox1.setActionCallback(new ActionCallback() {
+      public void doAction(UIElement e) {
+        checkbox2.checked = false;
+        checkbox3.checked = false;
+        checkbox4.checked = false;
+        p.json.setString("height", "Below 5'4");
+        saveJSONObject(p.json, "profiles.json");
+      }
+    });
+    checkbox2.setActionCallback(new ActionCallback() {
+      public void doAction(UIElement e) {
+        checkbox1.checked = false;
+        checkbox3.checked = false;
+        checkbox4.checked = false;
+        p.json.setString("height", "5'4 - 5'8");
+        saveJSONObject(p.json, "profiles.json");
+      }
+    });
+    checkbox3.setActionCallback(new ActionCallback() {
+      public void doAction(UIElement e) {
+        checkbox2.checked = false;
+        checkbox1.checked = false;
+        checkbox4.checked = false;
+        p.json.setString("height", "5'8 - 6'0");
+        saveJSONObject(p.json, "profiles.json");
+      }
+    });
+    checkbox4.setActionCallback(new ActionCallback() {
+      public void doAction(UIElement e) {
+        checkbox2.checked = false;
+        checkbox3.checked = false;
+        checkbox1.checked = false;
+        p.json.setString("height", "Above 6'0");
+        saveJSONObject(p.json, "profiles.json");
+      }
+    });
     
     
     // submit button
@@ -379,7 +447,20 @@ public class GlowViews
     UIElement buttonSubmit = new ImageButton(480, height - submit.height - 6 * offSet, submit, submitHover);
     view.addUIElement(buttonSubmit);
 
-    buttonSubmit.setActionCallback(this.glowHomeCallback);
+    buttonSubmit.setActionCallback(new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        p.json.setBoolean("logged_in", true);
+        saveJSONObject(p.json, "profiles.json");
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        // Set new view
+        viewManager.setView(glowViews.GlowHome());
+      }
+    });
     View GlowHome = new View(width, height, color(128, 128, 128),
         loadImage("background/create_profile_bg.jpg"));
     
@@ -559,7 +640,15 @@ public class GlowViews
     View view = new View(width, height, color(128, 128, 128),
         loadImage("newbuttons/summary_bg.jpg"));
     drawGlowHomeButton(view);
-         drawBackButton(view).setActionCallback(this.learnPosesCallback); 
+    for (int i = 0; i < 7; i++)
+    {    
+      UIElement poseNameTag = new TextElement(345, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, videos[i].substring(7, videos[i].length()-4) + " Percentage:");
+      view.addUIElement(poseNameTag);
+      UIElement percentage = new TextElement(700, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, p.json.getString(videos[i].substring(7, videos[i].length()-3)+"pose"));
+      view.addUIElement(percentage);
+    } 
+      drawBackButton(view).setActionCallback(this.learnPosesCallback);
+
     return view; 
   }
 
@@ -712,42 +801,41 @@ public class GlowViews
   
   public View mountainPoseView(){
   
-    return drawVideoPoseView("posvid/Mountain.mov", this.mountainPoseCallback, true);
-    //return drawVideoPoseView("totoro.mov");
+    return drawVideoPoseView(videos[0], this.mountainPoseCallback, true);
   
   }  
   public View halfmoonPoseView(){
   
-    return drawVideoPoseView("posvid/HalfMoon.mov", this.halfMoonPoseCallback, true);
+    return drawVideoPoseView(videos[1], this.halfMoonPoseCallback, true);
   }
     
   public View warrior2PoseView(){
   
-    return drawVideoPoseView("posvid/Warrior2Right.mov", this.warrior2PoseCallback, true);
+    return drawVideoPoseView(videos[2], this.warrior2PoseCallback, true);
   }
   public View warrior1PoseView(){
   
-    return drawVideoPoseView("posvid/Warrior1Right.mov", this.warrior1PoseCallback, true);
+    return drawVideoPoseView(videos[3], this.warrior1PoseCallback, true);
   
   } 
   public View trianglePoseView(){
   
-    return drawVideoPoseView("posvid/TriangleRight.mov", this.trianglePoseCallback, true);
+    return drawVideoPoseView(videos[4], this.trianglePoseCallback, true);
   }
   public View standingYogaPoseView(){
   
-    return drawVideoPoseView("posvid/StandingBend.mov", this.standingYogaMudraCallback, true);
+    return drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true);
   
   }
   public View dogPoseView(){
   
-    return drawVideoPoseView("posvid/DownwardDog.mov", this.dogPoseCallback, true);
+    return drawVideoPoseView(videos[6], this.dogPoseCallback, true);
   
   }
   
   public View fullSession1(){
     
-    return drawVideoPoseView("posvid/FullSession.mov", this.fullSession1Callback, false);
+    return drawVideoPoseView(videos[7], this.fullSession1Callback, false);
   }
   
   public View drawVideoPoseView(String posevideo, ActionCallback action, Boolean learnmode ) {
@@ -765,7 +853,20 @@ public class GlowViews
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
-
+    /*
+    videoElement.setActionCallback( new ActionCallback{
+       public void doAction(UIElement e) {
+         
+       }
+     });
+     */
+    // THIS CODE SAVES THE PERCENTAGES YOU WANT TO THE FILE AND NAMES THEM ACCORDING TO VIDEO CONVENTION
+    // PUT THIS IN THE CALLBACK METHOD ABOVE
+    String percentage= "50%";
+    p.json.setString(posevideo.substring(7, posevideo.length()-3)+"pose", percentage);
+    saveJSONObject(p.json, "profiles.json");
+    
+    
     PImage continueIMG = loadImage("newbuttons/session_menu.png");
     PImage continueIMGHover = loadImage("newbuttons/session_menu_hover.png");
     int offSetY = 20;

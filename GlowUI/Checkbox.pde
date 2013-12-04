@@ -1,6 +1,5 @@
 public class CheckBox extends UIElement
 {
-    boolean checked;
     int x, y, width, height;
     String label;
     float padx = 7;
@@ -29,9 +28,13 @@ public class CheckBox extends UIElement
     
     void mouseReleased ()
     {
-        checked = !checked;
+      checked = !checked;
+      if (checked) {
+        // Activate button callback
+        activateActionCallback();
+      }  
     }
-    
+  
     public boolean isInside ( float mx, float my ) {
       hover = Interactive.insideRect( x, y, elementWidth, elementHeight, mx, my );
       return hover;
