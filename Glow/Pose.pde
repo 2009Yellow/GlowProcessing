@@ -60,12 +60,12 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
     return leds;
   }
   
-  int getTimes() {
+  float[] getTimes() {
     //array of times for video to pause
     float[] times = allPoseData[29];
     //currently, only the first value in this array is relevant
-    print(times[0]);
-    return (int)times[0];   
+    print(times);
+    return times;   
   }
   
   float[] getDirections() {

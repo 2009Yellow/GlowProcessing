@@ -31,11 +31,11 @@ public class GlowViews
 
     "posvid/Warrior1Right.mov",
 
-    "posvid/TrianglePoseRight.mov",
+    "posvid/TriangleRight.mov",
 
     "posvid/StandingBend.mov",
   
-    "posvid/DownwardDog.mov",
+    "posvid/DownwardDog(1).mov",
 
     "posvid/FullSession.mov"
   };

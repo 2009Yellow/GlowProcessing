@@ -142,10 +142,12 @@ public class MatIn {
   }
 
   public void setLights(float[] positions, float[] colors) {
+    /*
     println("Positions");
     println(positions);
     println("Colors");
     println(colors);
+    */
     
     int[] positionsToWrite = {0, 0, 0, 0};
     int[] colorsToWrite = {0, 0, 0, 0};
@@ -193,7 +195,7 @@ public class MatIn {
     myPort.write(SERIAL_LIGHT_FINAL_RECEIVE_CHAR);
     
     int arduinoIsFinished = waitToRead();
-    println("Finished theoretically"+arduinoIsFinished);
+    //println("Finished theoretically"+arduinoIsFinished);
     
   }
   

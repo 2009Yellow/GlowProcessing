@@ -5,13 +5,20 @@ class WorkoutManager {
   long LENGTH_OF_PAUSE = 10000; //length of pause and pressure feedback (in milliseconds)
 
   int heightBinNo = 2;//aribtrarily set for now
-  int poseNumber = 100;//don't light up anything
   
-  Pose pose;
   long lastTime;
   long currentTime;
   long pauseStartTime;
+  
+  
+  //pose-specific info
+  Pose pose;
   int timeToStartPause;
+  int startPoseTransitionTime;
+  int endPoseTransitionTime;
+  int poseNumber = 100; //don't light up anything
+  
+  //have we finished pressure sensing?
   boolean donePressureSensing;
   
   
@@ -27,8 +34,12 @@ class WorkoutManager {
     //time in milliseconds
     lastTime = 0;
     currentTime = 0;
+    
+    //arbitrarily initializing variables
     pauseStartTime = 0;
-    timeToStartPause = pose.getTimes();
+    timeToStartPause = 0;
+    startPoseTransitionTime = 0;
+    endPoseTransitionTime = 0;
   }
 
   void setHeightBin(int heightBinNo) {
@@ -37,10 +48,18 @@ class WorkoutManager {
 
   void newPose(int poseNumber) {
     this.poseNumber = poseNumber;
+    
+    // load in relevant data for mat instruction from pose data file
     pose.loadPoseData(poseNumber, heightBinNo);
-    matControl.poseEvent();
-    pauseStartTime = System.currentTimeMillis();
-    timeToStartPause = pose.getTimes();
+    float[] poseTimes = pose.getTimes();
+    timeToStartPause = (int)poseTimes[0];
+    startPoseTransitionTime = (int)poseTimes[1];
+    endPoseTransitionTime = (int)poseTimes[2];
+    
+    //switch to mountain pose for the start of each pose
+    mountainPoseTransition();
+    
+    pauseStartTime = System.currentTimeMillis(); //this will be updated when pause actually begins
     donePressureSensing = false;
   }
 
@@ -52,6 +71,18 @@ class WorkoutManager {
     }
     workoutPoseNumber++;
     newPose( WORKOUT_LIST[workoutPoseNumber]); // update the pose
+  }
+  
+  //used to transition from mountain pose to desired pose
+  void startPoseTransition(){
+    pose.loadPoseData(poseNumber, heightBinNo);
+    matControl.poseEvent();
+  }
+  
+  //used to reset to mountain pose
+  void mountainPoseTransition(){
+    pose.loadPoseData(1, heightBinNo);
+    matControl.poseEvent();
   }
 
   void getWeight() {
@@ -69,7 +100,7 @@ class WorkoutManager {
   }
 
   void getWorkoutInfo(){
-    // give list of workout data
+    // return list of workout data
   }
   
   void draw() {
@@ -84,12 +115,27 @@ class WorkoutManager {
     
     
     
-    //pause the video if we haven't pressure sensed yet and we've passed the pause time 
-    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing && GlobalPApplet.videoElement.getTime() > timeToStartPause ){
-      println("pause time " + pose.getTimes());
-      GlobalPApplet.videoElement.pause();
-      pauseStartTime = currentTime; //to keep track of when the movie paused
-      println("I'm pausing the video now");
+    //if the video is playing...  and we haven't pressure sensed yet 
+    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing){
+      float videoTime  = GlobalPApplet.videoElement.getTime();
+      
+      /*//transition back to mountain pose in time with the video
+      if ( videoTime > endPoseTransitionTime){
+        mountainPoseTransition();
+      }*/
+      
+      //pause video if we've reached the pause time
+      if( videoTime > timeToStartPause ){
+         println("pause time " + pose.getTimes());
+        GlobalPApplet.videoElement.pause();
+        pauseStartTime = currentTime; //to keep track of when the movie paused
+        println("I'm pausing the video now");
+      }
+      
+      //transition to desired pose in time with the video
+      else if ( videoTime > startPoseTransitionTime){
+        startPoseTransition();
+      }
     }
     
     //if the movie is paused, give pressure feedback
