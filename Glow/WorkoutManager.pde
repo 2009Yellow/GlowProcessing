@@ -19,7 +19,7 @@ class WorkoutManager {
   int poseNumber = 100; //don't light up anything
   
   //have we finished pressure sensing?
-  boolean donePressureSensing;
+  boolean doneWithPose;
   
   
   int WORKOUT_LIST[] = {1, 2, 4, 3, 5, 7, 6}; //workout sequence: mountain, halfmoon, warrior2, warrior1, triangle, forwardbend, downwarddog
@@ -60,7 +60,7 @@ class WorkoutManager {
     mountainPoseTransition();
     
     pauseStartTime = System.currentTimeMillis(); //this will be updated when pause actually begins
-    donePressureSensing = false;
+    doneWithPose = false;
   }
 
   void advancePose() { //call to advance to the next pose in a set workout
@@ -116,13 +116,14 @@ class WorkoutManager {
     
     
     //if the video is playing...  and we haven't pressure sensed yet 
-    if ( GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing){
+    if ( GlobalPApplet.videoElement.getIsPlaying() && !doneWithPose){
       float videoTime  = GlobalPApplet.videoElement.getTime();
       
-      /*//transition back to mountain pose in time with the video
+      //transition back to mountain pose in time with the video
       if ( videoTime > endPoseTransitionTime){
         mountainPoseTransition();
-      }*/
+        doneWithPose = true;
+      }
       
       //pause video if we've reached the pause time
       if( videoTime > timeToStartPause ){
@@ -147,9 +148,7 @@ class WorkoutManager {
     //if the movie has been paused for a certain amount of time, resume playing
     else if( !GlobalPApplet.videoElement.getIsPlaying() && (currentTime - pauseStartTime >= LENGTH_OF_PAUSE )){
         GlobalPApplet.videoElement.play();
-        donePressureSensing = true;
         println("I'm resuming the video now");
-        stopPose();
     } 
     
     //TODO when video is done playing, what happens? (need pressure feedback, etc.)
