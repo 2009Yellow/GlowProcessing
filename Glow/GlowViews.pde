@@ -860,13 +860,13 @@ public class GlowViews
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
-    /*
-    videoElement.setActionCallback( new ActionCallback{
+    
+    /*videoElement.setActionCallback( new ActionCallback(){
        public void doAction(UIElement e) {
-         
+        
        }
-     });
-     */
+     });*/
+     
     // THIS CODE SAVES THE PERCENTAGES YOU WANT TO THE FILE AND NAMES THEM ACCORDING TO VIDEO CONVENTION
     // PUT THIS IN THE CALLBACK METHOD ABOVE
     String percentage= "50%";

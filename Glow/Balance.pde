@@ -8,6 +8,10 @@ class Balance {
   //MatGraphics matGraphics; //for testing purposes
 
   float[] stanDist;
+  
+  //keep track of balance data for the length of the pose
+  int numTimesCorrect = 0;
+  int numTimesRecorded = 0;
 
   Balance(int mat_h, int mat_w, MatIn matIn, Pose pose) {
 
@@ -29,12 +33,19 @@ class Balance {
     pressure.getWeight();
   }
   
-  
+  int getPercentTimeCorrect(){
+    int percentTimeCorrect = (numTimesCorrect*100)/numTimesRecorded;
+    println("You held the pose correctly for " + percentTimeCorrect + "% of the time");
+    return percentTimeCorrect;
+  }
   //called whenever the pose changes
   void poseEvent() {
     //update pressure distribution
     stanDist = pose.getPressures(); //the global Pose instance has already been updated
     pressure.updateAreas();
+    //reset the balance tracking variables
+    numTimesCorrect = 0;
+    numTimesRecorded = 0;
   }
 
   //returns a vector of binary pressure differences
@@ -58,6 +69,7 @@ class Balance {
       }
     }
     //println(binary);
+    trackBalanceData(binary);
     return binary;
   }
 
@@ -72,6 +84,22 @@ class Balance {
       differences[i] = currentPressure[i]-stanDist[i];
     }
     return differences;
+  }
+  
+  void trackBalanceData(float[] binary){
+    boolean allCorrect = true;
+    
+    for(int i = 0; i<binary.length; i++){
+      if((int)(binary[i])!=0){
+        allCorrect = false;
+      }
+    }
+    
+    if(allCorrect){
+      numTimesCorrect++;
+    }
+    
+    numTimesRecorded++;
   }
 
 }

@@ -58,7 +58,7 @@ public class VideoElement extends UIElement {
   }
   
   public float getTime() {
-    println("movie time " + movie.time());
+    //println("movie time " + movie.time());
     return movie.time();
   }
 
@@ -101,6 +101,7 @@ public class VideoElement extends UIElement {
     super.destroy();
     movie.stop();
     isPlaying = false;
+    super.activateActionCallback();
     //movie = null;
   }
   

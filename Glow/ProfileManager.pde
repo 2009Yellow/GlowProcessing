@@ -86,6 +86,7 @@ public class ProfileManager {
     Profile p = profiles.get(profileIndex);
     //currentProfile = p;
     saveProfiles();
+    workoutManager.setHeightBin(p.profileHeight);
     return p;
   }
   
