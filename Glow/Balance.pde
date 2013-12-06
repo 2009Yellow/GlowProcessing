@@ -34,6 +34,8 @@ class Balance {
   }
   
   int getPercentTimeCorrect(){
+    if(numTimesRecorded == 0) {return 0;}//so we're not dividing by 0
+    
     int percentTimeCorrect = (numTimesCorrect*100)/numTimesRecorded;
     println("You held the pose correctly for " + percentTimeCorrect + "% of the time");
     return percentTimeCorrect;

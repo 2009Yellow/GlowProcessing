@@ -1038,7 +1038,7 @@ public class GlowViews
     //Set the globalv video element so that other buttons can control the video
     GlobalPApplet.videoElement = videoElement;
     videoElement.play();
-    videoElement.setTime(30.0);
+    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
     /*
     videoElement.setActionCallback( new ActionCallback{

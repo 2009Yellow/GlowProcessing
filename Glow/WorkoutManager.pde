@@ -30,14 +30,16 @@ class WorkoutManager {
   int poseNumber = 100; //don't light up anything
 
   //have we finished pressure sensing?
-  boolean donePressureSensing;
-  boolean doneWithPose;
+  boolean donePressureSensing = false;
+  boolean doneWithPose = false;
+ 
 
 
   int WORKOUT_LIST[] = {
     1, 2, 4, 3, 5, 7, 6
   }; //workout sequence: mountain, halfmoon, warrior2, warrior1, triangle, forwardbend, downwarddog
   int workoutPoseNumber = 0; //keeps track of location within workout list
+  
 
    WorkoutManager(PApplet papplet) { 
     setHeightBin(profileManager.getCurrentProfileHeight());
@@ -187,10 +189,10 @@ class WorkoutManager {
       //pause video if we've reached the pause time
     }
 
-    //if the video is paused
-    if (!GlobalPApplet.videoElement.getIsPlaying()) {
+    //if the video is paused and we haven't finished pressure sensing
+    if (!GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing) {
       
-      //if the movie is paused, give pressure feedback
+      //give pressure feedback if we haven't reached the end of the pause yet
       if (currentTime - pauseStartTime < LENGTH_OF_PAUSE ) {
         matControl.processBalanceData();
         println("I'm pressure sensing now");
@@ -202,7 +204,8 @@ class WorkoutManager {
         
         //record pressure data from this pose (pose 100 is not a real pose; just turns off lights)
         if(poseNumber!=100){
-          workoutLog.add(new WorkoutData(poseNumber, matControl.getPercentTimeCorrect()));
+          int percentTimeCorrect = matControl.getPercentTimeCorrect();
+          workoutLog.add(new WorkoutData(poseNumber, percentTimeCorrect));
         }
         
         startPoseTransition();  //turn all leds back to default purple color
