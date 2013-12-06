@@ -175,7 +175,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.warrior2PoseView());
-        workoutManager.newPose(4);
+        workoutManager.newPose(3);
       }
     };
     this.warrior1PoseCallback = new ActionCallback()
@@ -188,7 +188,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.warrior1PoseView());
-        workoutManager.newPose(3);
+        workoutManager.newPose(4);
       }
     };
     this.trianglePoseCallback = new ActionCallback()
@@ -214,7 +214,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.standingYogaPoseView());
-        workoutManager.newPose(7);
+        workoutManager.newPose(6);
       }
     };
     this.dogPoseCallback = new ActionCallback()
@@ -227,7 +227,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.dogPoseView());
-        workoutManager.newPose(6);
+        workoutManager.newPose(7);
       }
     };    
     
@@ -647,12 +647,15 @@ public class GlowViews
     View view = new View(width, height, color(128, 128, 128),
         loadImage("newbuttons/summary_bg.jpg"));
     drawGlowHomeButton(view);
-    for (int i = 0; i < 7; i++)
+    ArrayList<WorkoutData> workoutLog = workoutManager.getWorkoutInfo();
+    int i = 0;
+    for (WorkoutData workout : workoutLog)
     {    
-      UIElement poseNameTag = new TextElement(345, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, videos[i].substring(7, videos[i].length()-4) + " Percentage:");
+      UIElement poseNameTag = new TextElement(345, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, workout.poseName + " Percentage:");
       view.addUIElement(poseNameTag);
-      UIElement percentage = new TextElement(700, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, p.json.getString(videos[i].substring(7, videos[i].length()-3)+"pose"));
+      UIElement percentage = new TextElement(700, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, workout.percentTimeCorrect +" %");
       view.addUIElement(percentage);
+      i++;
     } 
       drawBackButton(view).setActionCallback(this.learnPosesCallback);
 

@@ -1,9 +1,9 @@
 class WorkoutData{
-  public int poseNumber;
+  public String poseName;
   public int percentTimeCorrect;
   
   WorkoutData(int poseNumber, int percentTimeCorrect){
-    this.poseNumber = poseNumber;
+    poseName = Poses.POSE_NAMES[poseNumber-1];
     this. percentTimeCorrect = percentTimeCorrect;
   }
 }
@@ -67,14 +67,14 @@ class WorkoutManager {
     
     this.poseNumber = poseNumber;
 
-    // load in relevant data for mat instruction from pose data file
+    // load in relevant timing data for mat instruction from pose data file
     pose.loadPoseData(poseNumber, heightBinNo);
     float[] poseTimes = pose.getTimes();
     timeToStartPause = (int)poseTimes[0];
     startPoseTransitionTime = (int)poseTimes[1];
     endPoseTransitionTime = (int)poseTimes[2];
 
-    //switch to mountain pose for the start of each pose
+    //switch to basic starting position for the start of each pose
     initialPoseTransition();
 
     pauseStartTime = System.currentTimeMillis(); //this will be updated when pause actually begins
@@ -101,9 +101,13 @@ class WorkoutManager {
   //used to reset to initial position
   void initialPoseTransition() {
     
-    // mountain pose has a different starting position than the other poses
+    // forward bend and downward dog have a different starting position than the other poses
     if(poseNumber == 6){
       pose.loadPoseData(60, heightBinNo);
+    }
+    
+    else if(poseNumber == 7){
+      pose.loadPoseData(70, heightBinNo);
     }
     
     else{
@@ -128,11 +132,15 @@ class WorkoutManager {
     // reset array of pose data
   }
 
-  void getWorkoutInfo() {
-    // return list of workout data
+  ArrayList<WorkoutData> getWorkoutInfo() {
+    return workoutLog;
   }
   
-  
+  void endWorkout(){
+    workoutPoseNumber = 0;
+    workoutLog = new ArrayList<WorkoutData>(); // clear the workout log
+    stopPose();
+  }
 
   void draw() {
     matControl.loadData();
@@ -191,8 +199,11 @@ class WorkoutManager {
       //if the movie has been paused for a certain amount of time, resume playing
       else if ( !GlobalPApplet.videoElement.getIsPlaying() && (currentTime - pauseStartTime >= LENGTH_OF_PAUSE )) {
         donePressureSensing = true;
-        //record pressure data from this pose
-        workoutLog.add(new WorkoutData(poseNumber, matControl.getPercentTimeCorrect()));
+        
+        //record pressure data from this pose (pose 100 is not a real pose; just turns off lights)
+        if(poseNumber!=100){
+          workoutLog.add(new WorkoutData(poseNumber, matControl.getPercentTimeCorrect()));
+        }
         
         startPoseTransition();  //turn all leds back to default purple color
         GlobalPApplet.videoElement.play();
