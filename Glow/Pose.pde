@@ -1,6 +1,26 @@
+static class Poses {
+
+  final static String[] POSE_NAMES = {
+    "Mountain", 
+
+    "Half Moon", 
+
+    "Warrior 2", 
+
+    "Warrior 1", 
+
+    "Triangle", 
+
+    "Standing Bend", 
+
+    "Downward Dog.mov"
+  };
+
+};
+
 class Pose { //will return the reference (i.e. correct, based on yoga expert) LED positions for limb placement, pressure sensing areas, and normalized reference pressure
 
-  float[][] allPoseData; // contains all of the data in the Pose#Data.txt file
+    float[][] allPoseData; // contains all of the data in the Pose#Data.txt file
   int PRESSUREROW = 2; // row in the .csv file that contains reference pressures for each area
   int LEDROW = 1; // row in the .csv file that contains LEDs associated with each area
   int ONMATROW = 0;
@@ -31,7 +51,7 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
       }
     }
   }
-  
+
   void stopPose() {
     loadPoseData(100, 1); //posenumber 100 is a blank csv file
   }
@@ -59,20 +79,18 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
     float[] leds = allPoseData[LEDROW+heightBin*7];
     return leds;
   }
-  
+
   float[] getTimes() {
     //array of times for video to pause
     float[] times = allPoseData[29];
     //currently, only the first value in this array is relevant
     print(times);
-    return times;   
+    return times;
   }
-  
+
   float[] getDirections() {
-   float[] direction = allPoseData[28];
-   return direction;
+    float[] direction = allPoseData[28];
+    return direction;
   }
-  
-  
 }
 
