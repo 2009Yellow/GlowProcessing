@@ -699,8 +699,8 @@ public class GlowViews
     PImage pose_dog = loadImage("poses/pose_dog.png");
     PImage pose_dogHover = loadImage("poses/pose_dog_hover.png");
     
-    PImage allposes = loadImage("newbuttons/poses_menu.png");
-    PImage allposes_hover = loadImage("newbuttons/poses_menu_hover.png");
+    PImage allposes = loadImage("poses/learn_all_poses.png");
+    PImage allposes_hover = loadImage("poses/learn_all_poses_hover.png");
     
     int x = 200;
     int offSet = 80;
@@ -714,10 +714,10 @@ public class GlowViews
     view.addUIElement(pose_halfmoonButton);
     pose_halfmoonButton.setActionCallback(this.halfMoonPoseCallback);
     
-    UIElement pose_warrior2Button = new ImageButton(x, y + 2 * offSet, pose_warrior2, pose_warrior2Hover);
+    UIElement pose_warrior2Button = new ImageButton(x, y + 3 * offSet, pose_warrior2, pose_warrior2Hover);
     view.addUIElement(pose_warrior2Button);
     pose_warrior2Button.setActionCallback(this.warrior2PoseCallback);
-    UIElement pose_warrior1Button = new ImageButton(x, y + 3 * offSet, pose_warrior1, pose_warrior1Hover);
+    UIElement pose_warrior1Button = new ImageButton(x, y + 2 * offSet, pose_warrior1, pose_warrior1Hover);
     view.addUIElement(pose_warrior1Button);
     pose_warrior1Button.setActionCallback(this.warrior1PoseCallback);
     
@@ -851,7 +851,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton(20, 90, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
       buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -881,7 +881,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton(20, 90, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
       buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -910,7 +910,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height - 3 * 20, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
       buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -939,7 +939,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton(20, 90, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
       buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -968,7 +968,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton(20, 90, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
       buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -995,7 +995,7 @@ public class GlowViews
       PImage backHover = loadImage("buttons/back_hover.png");
       backHover.resize(50, 50);
       back.resize(50, 50);
-      UIElement buttonBack = new ImageButton(20, 90, back, backHover);
+      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
        buttonBack.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -1049,9 +1049,9 @@ public class GlowViews
      */
     // THIS CODE SAVES THE PERCENTAGES YOU WANT TO THE FILE AND NAMES THEM ACCORDING TO VIDEO CONVENTION
     // PUT THIS IN THE CALLBACK METHOD ABOVE
-    //String percentage= "50%";
-    //p.json.setString(posevideo.substring(7, posevideo.length()-3)+"pose", percentage);
-    //saveJSONObject(p.json, "profiles.json");
+    String percentage= "50%";
+    p.json.setString(posevideo.substring(7, posevideo.length()-3)+"pose", percentage);
+    saveJSONObject(p.json, "profiles.json");
     
     
 //    PImage continueIMG = loadImage("newbuttons/session_menu.png");
