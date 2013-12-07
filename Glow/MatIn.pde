@@ -94,8 +94,8 @@ public class MatIn {
     // flush the serial buffer and return
     if (inByte != SERIAL_PRESSURE_FIRST_RECEIVE_CHAR) {
       String trash = myPort.readStringUntil(SERIAL_PRESSURE_FINAL_RECEIVE_CHAR);
-      //println("Trash: " + trash);
-      //println("Error receiving first char");
+      println("Trash: " + trash);
+      println("Error receiving first char");
       return;
     }
     //println("Received start char!");
@@ -109,7 +109,7 @@ public class MatIn {
     inByte = waitToRead();
     //println("final " + inByte);
     if (inByte != SERIAL_PRESSURE_FINAL_RECEIVE_CHAR) {
-     // println("Error receiving final char");
+      println("Error receiving final char");
       return;
     }
     
@@ -195,7 +195,7 @@ public class MatIn {
     myPort.write(SERIAL_LIGHT_FINAL_RECEIVE_CHAR);
     
     int arduinoIsFinished = waitToRead();
-    //println("Finished theoretically"+arduinoIsFinished);
+    println("Finished theoretically"+arduinoIsFinished);
     
   }
   

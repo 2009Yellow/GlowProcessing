@@ -76,9 +76,11 @@ public class MatController {
   }
 
   void poseEvent() {
+    println("MatController::poseEvent()");
     balance.poseEvent(); //pose already updated to new pose by WorkoutManager
     resetLastPressure();
     led.poseEvent();
+    println("MatController::poseEvent() finihsed");
   }
 
   void stopPose() {

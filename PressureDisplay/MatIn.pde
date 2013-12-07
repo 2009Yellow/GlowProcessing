@@ -19,7 +19,9 @@ public class MatIn {
   private int matHeight;
   
   private Serial myPort;   
-  private int[] serialInArray;  // Input bytes from the serial
+  private int[] mat1Array;  // Input bytes from the serial
+  private int[] mat2Array;  // Input bytes from the serial
+  private int[] mat3Array;  // Input bytes from the serial
   
   // Time update members
   private long lastTime;
@@ -29,10 +31,13 @@ public class MatIn {
   public MatIn(int mat_w, int mat_h, PApplet papplet ){
     matWidth = mat_w;
     matHeight = mat_h;
-    serialInArray = new int[matWidth * matHeight];
-    // Print a list of the serial ports, for debugging purposes:
+    // INit all mat arrays
+    mat1Array = new int[matWidth * matHeight];
+    mat2Array = new int[matWidth * matHeight];
+    mat3Array = new int[matWidth * matHeight];
+    // Print a lisdt of the serial ports, for debugging purposes:
     println(Serial.list());
-    String portName = Serial.list()[0];
+    String portName = Serial.list()[8];
     myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
@@ -44,13 +49,13 @@ public class MatIn {
   // ========================== Private Methods ==========================
   private void establishContact() {
     // Tripple clear the port. This is a hack to deal with buggy arduinos
-    while (myPort.available() ==0) {
+    while (myPort.available() == 0) {
     }
     myPort.clear();
-    while (myPort.available() ==0) {
+    while (myPort.available() == 0) {
     }
     myPort.clear();
-    while (myPort.available() ==0) {
+    while (myPort.available() == 0) {
     }
     println("Established contact!");
     myPort.write(SERIAL_ESTABLISH_CONTACT_CHAR); // send a capital A
@@ -78,8 +83,16 @@ public class MatIn {
     //println("Received start char!");
   
     // Read the payload from the serial
-    for (int i = 0; i < serialInArray.length; ++i) {
-       serialInArray[i] =  waitToRead();
+    for (int i = 0; i < mat1Array.length; ++i) {
+       mat1Array[i] =  waitToRead();
+       //println("Data char " + serialInArray[i] + " at index " + i);
+    }
+    for (int i = 0; i < mat2Array.length; ++i) {
+       mat2Array[i] =  waitToRead();
+       //println("Data char " + serialInArray[i] + " at index " + i);
+    }
+    for (int i = 0; i < mat3Array.length; ++i) {
+       mat3Array[i] =  waitToRead();
        //println("Data char " + serialInArray[i] + " at index " + i);
     }
     // Ensure final char is correct
@@ -138,9 +151,21 @@ public class MatIn {
     
   }
   
-  public int[] getPressureDataRaw() {
-    int[] ans = new int[serialInArray.length];
-    System.arraycopy(serialInArray, 0, ans, 0, serialInArray.length);
+  public int[] getMat1DataRaw() {
+    int[] ans = new int[mat1Array.length];
+    System.arraycopy(mat1Array, 0, ans, 0, mat1Array.length);
+    return ans;
+  }
+  
+  public int[] getMat2DataRaw() {
+    int[] ans = new int[mat1Array.length];
+    System.arraycopy(mat2Array, 0, ans, 0, mat2Array.length);
+    return ans;
+  }
+  
+  public int[] getMat3DataRaw() {
+    int[] ans = new int[mat1Array.length];
+    System.arraycopy(mat3Array, 0, ans, 0, mat3Array.length);
     return ans;
   }
   
@@ -149,7 +174,7 @@ public class MatIn {
         for (int j = 0; j<matWidth; ++j){
       for (int i = 0; i <matHeight; ++i){
 
-        outputMatrix[matHeight-i-1][j] = serialInArray[j * WIDTH + i];
+        outputMatrix[matHeight-i-1][j] = mat1Array[j * WIDTH + i];
       }
     }
     return outputMatrix;

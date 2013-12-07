@@ -33,6 +33,7 @@ void setup () {
   //viewManager.setView(glowViews.GlowHome());
   //viewManager.setView(glowViews.GlowHomeTest());
   viewManager.setView(glowViews.GlowHomeSplash());
+  
 }
 
 void draw () {
