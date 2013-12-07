@@ -149,6 +149,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.mountainPoseView());
+        println("changed the view");
         workoutManager.newPose(1);
       }
     };
@@ -862,7 +863,6 @@ public class GlowViews
     GlobalPApplet.videoElement = videoElement;
     videoElement.play();
     //videoElement.setTime(30.0);
-    view.addUIElement(videoElement);
     
     /*videoElement.setActionCallback( new ActionCallback(){
        public void doAction(UIElement e) {
@@ -893,6 +893,7 @@ public class GlowViews
     drawBackButton(view).setActionCallback(this.learnPosesCallback);
     
     // Review new view
+    println("returning the view");
     return view;
     }
     else {

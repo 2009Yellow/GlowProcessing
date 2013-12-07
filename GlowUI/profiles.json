@@ -1,14 +1,14 @@
 {
   "uid": 0,
   "logged_in": true,
-  "height": "Below 5'4",
   "weight": 43,
+  "height": "5'4 - 5'8",
   "Warrior1Right.pose": "50%",
-  "name": "￿Sofia",
+  "name": "yogamaster",
   "StandingBend.pose": "50%",
   "Mountain.pose": "50%",
-  "DownwardDog.pose": "50%",
   "HalfMoon.pose": "50%",
-  "Warrior2Right.pose": "50%",
-  "TrianglePoseRight.pose": "50%"
+  "DownwardDog.pose": "50%",
+  "TrianglePoseRight.pose": "50%",
+  "Warrior2Right.pose": "50%"
 }
