@@ -50,6 +50,7 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
         allPoseData[i][j]=float(temp[j]); //populates allPoseData with sata from .csv
       }
     }
+    println("Pose:: done loading pose data");
   }
 
   void stopPose() {

@@ -66,11 +66,12 @@ class WorkoutManager {
   }
 
   void newPose(int poseNumber) {
-    
+    println("WorkoutManager:: starting pose " + poseNumber);
     this.poseNumber = poseNumber;
 
     // load in relevant timing data for mat instruction from pose data file
     pose.loadPoseData(poseNumber, heightBinNo);
+    
     float[] poseTimes = pose.getTimes();
     timeToStartPause = (int)poseTimes[0];
     startPoseTransitionTime = (int)poseTimes[1];
@@ -102,7 +103,7 @@ class WorkoutManager {
 
   //used to reset to initial position
   void initialPoseTransition() {
-    
+    println("WorkoutManager::initialPoseTransition()");
     // forward bend and downward dog have a different starting position than the other poses
     if(poseNumber == 6){
       pose.loadPoseData(60, heightBinNo);

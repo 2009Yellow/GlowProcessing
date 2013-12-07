@@ -8,8 +8,9 @@ public class VideoElement extends UIElement {
 
   public VideoElement( int xx, int yy, int w, int h, PApplet p, String fileName) {
     super(xx, yy, w, h);
+    println("Vidoe Element attempt load file: " + fileName);
     movie = new Movie(p, fileName);
-    isPlaying = false;
+    println("Vidoe Element loaded" + movie.toString());    isPlaying = false;
     show = true;
     //movie.loop();
   }
