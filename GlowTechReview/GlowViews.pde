@@ -11,7 +11,6 @@ public class GlowViews
   ActionCallback pose1Callback;
   ActionCallback measureYourWeightCallback;
   ActionCallback mountainPoseCallback;
-  ActionCallback mountainPoseCallbackALL;
   ActionCallback halfMoonPoseCallback;
   ActionCallback warrior2PoseCallback;
   ActionCallback warrior1PoseCallback;
@@ -21,7 +20,6 @@ public class GlowViews
   ActionCallback summaryCallback;
   ActionCallback sessionsdoCallback;
   ActionCallback fullSession1Callback;
-  Boolean inAllPosesView;
   ProfManager manager;
   final ProfManager p = new ProfManager();
   final String[] videos = {
@@ -33,17 +31,17 @@ public class GlowViews
 
     "posvid/Warrior1Right.mov",
 
-    "posvid/TrianglePoseRight.mov",
+    "posvid/TriangleRight.mov",
 
     "posvid/StandingBend.mov",
   
-    "posvid/DownwardDog.mov",
+    "posvid/DownwardDog(1).mov",
 
     "posvid/FullSession.mov"
   };
+  
   public GlowViews()
   {
-    this.inAllPosesView = false;
     this.manager = new ProfManager();
     this.glowHomeCallback = new ActionCallback()
     {
@@ -117,7 +115,6 @@ public class GlowViews
         ViewManager viewManager = e.getView().getViewManager();
         // Create glow views object
         GlowViews glowViews = new GlowViews();
-        //glowViews.inAllPosesMenu = false;
         // Set new view
         viewManager.setView(glowViews.learnNewPoses());
       }
@@ -146,30 +143,15 @@ public class GlowViews
     {
       public void doAction(UIElement e)
       {
-        
         // Get the view manger
         ViewManager viewManager = e.getView().getViewManager();
         // Create glow views object
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.mountainPoseView());
+        workoutManager.newPose(1);
       }
     };
-    this.mountainPoseCallbackALL = new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.mountainPoseView());
-      }
-    };
-    
-    
     this.halfMoonPoseCallback = new ActionCallback()
     {
       public void doAction(UIElement e)
@@ -180,6 +162,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.halfmoonPoseView());
+        workoutManager.newPose(2);
       }
     };
     this.warrior2PoseCallback = new ActionCallback()
@@ -192,6 +175,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.warrior2PoseView());
+        workoutManager.newPose(3);
       }
     };
     this.warrior1PoseCallback = new ActionCallback()
@@ -204,6 +188,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.warrior1PoseView());
+        workoutManager.newPose(4);
       }
     };
     this.trianglePoseCallback = new ActionCallback()
@@ -216,6 +201,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.trianglePoseView());
+        workoutManager.newPose(5);
       }
     };
     this.standingYogaMudraCallback = new ActionCallback()
@@ -228,6 +214,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.standingYogaPoseView());
+        workoutManager.newPose(6);
       }
     };
     this.dogPoseCallback = new ActionCallback()
@@ -240,6 +227,7 @@ public class GlowViews
         GlowViews glowViews = new GlowViews();
         // Set new view
         viewManager.setView(glowViews.dogPoseView());
+        workoutManager.newPose(7);
       }
     };    
     
@@ -400,7 +388,6 @@ public class GlowViews
     // name input
     int inputNameWidth = 300;
     UIElement inputName = new TextInputBox(500, 310, 250, 40, 24, "enter user name", p);
-    // callback getsave string
     view.addUIElement(inputName);
     //String cas = inputName.getTypingMessage();
     view.addKeyEventListener((KeyEventListener) inputName);
@@ -426,7 +413,6 @@ public class GlowViews
         checkbox2.checked = false;
         checkbox3.checked = false;
         checkbox4.checked = false;
-        //profileManager.setCurrentProfileHeight();
         p.json.setString("height", "Below 5'4");
         saveJSONObject(p.json, "profiles.json");
       }
@@ -556,7 +542,7 @@ public class GlowViews
     //userName1Button.setActionCallback(this.sessionsCallback);
     //userName2Button.setActionCallback(this.sessionsCallback);
     //drawBackButton(view).setActionCallback(this.sessionsCallback); 
-   // drawGlowHomeButton(view);
+    drawGlowHomeButton(view);
 
     // Review new view
     return view;
@@ -661,12 +647,15 @@ public class GlowViews
     View view = new View(width, height, color(128, 128, 128),
         loadImage("newbuttons/summary_bg.jpg"));
     drawGlowHomeButton(view);
-    for (int i = 0; i < 7; i++)
+    ArrayList<WorkoutData> workoutLog = workoutManager.getWorkoutInfo();
+    int i = 0;
+    for (WorkoutData workout : workoutLog)
     {    
-      UIElement poseNameTag = new TextElement(450, 280 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, videos[i].substring(7, videos[i].length()-4) + " Percentage:");
+      UIElement poseNameTag = new TextElement(345, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, workout.poseName + " Percentage:");
       view.addUIElement(poseNameTag);
-      UIElement percentage = new TextElement(855, 280 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, p.json.getString(videos[i].substring(7, videos[i].length()-3)+"pose"));
+      UIElement percentage = new TextElement(700, 320 + i * 60, 100, 40, color(255, 0, 0, 0), color(0, 0, 0), 10, workout.percentTimeCorrect +" %");
       view.addUIElement(percentage);
+      i++;
     } 
       drawBackButton(view).setActionCallback(this.learnPosesCallback);
 
@@ -699,9 +688,6 @@ public class GlowViews
     PImage pose_dog = loadImage("poses/pose_dog.png");
     PImage pose_dogHover = loadImage("poses/pose_dog_hover.png");
     
-    PImage allposes = loadImage("poses/learn_all_poses.png");
-    PImage allposes_hover = loadImage("poses/learn_all_poses_hover.png");
-    
     int x = 200;
     int offSet = 80;
     int y = 300;
@@ -714,10 +700,10 @@ public class GlowViews
     view.addUIElement(pose_halfmoonButton);
     pose_halfmoonButton.setActionCallback(this.halfMoonPoseCallback);
     
-    UIElement pose_warrior2Button = new ImageButton(x, y + 3 * offSet, pose_warrior2, pose_warrior2Hover);
+    UIElement pose_warrior2Button = new ImageButton(x, y + 2 * offSet, pose_warrior2, pose_warrior2Hover);
     view.addUIElement(pose_warrior2Button);
     pose_warrior2Button.setActionCallback(this.warrior2PoseCallback);
-    UIElement pose_warrior1Button = new ImageButton(x, y + 2 * offSet, pose_warrior1, pose_warrior1Hover);
+    UIElement pose_warrior1Button = new ImageButton(x, y + 3 * offSet, pose_warrior1, pose_warrior1Hover);
     view.addUIElement(pose_warrior1Button);
     pose_warrior1Button.setActionCallback(this.warrior1PoseCallback);
     
@@ -732,23 +718,6 @@ public class GlowViews
     UIElement pose_dogButton = new ImageButton(x + pose_mountain.width + offSet/2, y + 2 * offSet, pose_dog, pose_dogHover);
     pose_dogButton.setActionCallback(this.dogPoseCallback);
     view.addUIElement(pose_dogButton);
-    
-    UIElement allposes_button = new ImageButton(x + pose_mountain.width + offSet/2, y + 3 * offSet, allposes, allposes_hover);
-    allposes_button.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.mountainPoseView());
-      }
-    });
-    view.addUIElement(allposes_button);
-    
     //this.workoutSummaryCallback
     drawGlowHomeButton(view);
     drawBackButton(view).setActionCallback(this.sessionsCallback); 
@@ -799,10 +768,9 @@ public class GlowViews
   
   private void drawGlowHomeButton(View view)
   {
-    PImage home = loadImage("reonuistuff/home.png");
-    PImage homeHover = loadImage("reonuistuff/home_hover.png");
+    PImage logo = loadImage("background/logo.png");
   
-    UIElement homeButton = new ImageButton (80, height - 110, home, homeHover);
+    UIElement homeButton = new ImageButton (width/2-logo.width/2 + 16, 26, logo, logo);
     view.addUIElement(homeButton);
     
     ActionCallback homeCallback = new ActionCallback()
@@ -843,180 +811,35 @@ public class GlowViews
   
   public View mountainPoseView(){
   
-    View view = drawVideoPoseView(videos[0], this.mountainPoseCallback, true);
-    
-    if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.halfmoonPoseView());
-      }
-    });
-      view.addUIElement(buttonBack);
-    }
-    
-    return view;
+    return drawVideoPoseView(videos[0], this.mountainPoseCallback, true);
   
   }  
   public View halfmoonPoseView(){
   
-    View view = drawVideoPoseView(videos[1], this.halfMoonPoseCallback, true);
-    
-    if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.warrior1PoseView());
-      }
-    });
-      view.addUIElement(buttonBack);
-    }
-    return view;
+    return drawVideoPoseView(videos[1], this.halfMoonPoseCallback, true);
   }
     
   public View warrior2PoseView(){
   
-    View view = drawVideoPoseView(videos[2], this.warrior2PoseCallback, true);
-    
-    if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.trianglePoseView());
-      }
-    });
-      view.addUIElement(buttonBack);
-    }
-    return view;  
+    return drawVideoPoseView(videos[2], this.warrior2PoseCallback, true);
   }
-  
   public View warrior1PoseView(){
   
-    View view = drawVideoPoseView(videos[3], this.warrior1PoseCallback, true);
-    
-     if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.warrior2PoseView());
-      }
-    });
-      view.addUIElement(buttonBack);
-    }
-    return view;
-  } 
+    return drawVideoPoseView(videos[3], this.warrior1PoseCallback, true);
   
+  } 
   public View trianglePoseView(){
   
-    View view = drawVideoPoseView(videos[4], this.trianglePoseCallback, true);
-    
-         if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.standingYogaPoseView());
-      }
-    });
-      view.addUIElement(buttonBack);
-    }
-    return view;
+    return drawVideoPoseView(videos[4], this.trianglePoseCallback, true);
   }
   public View standingYogaPoseView(){
   
-    View view = drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true);
-     if (this.inAllPosesView == true)
-    {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-       buttonBack.setActionCallback(new ActionCallback()
-    {
-      public void doAction(UIElement e)
-      {
-        // Get the view manger
-        ViewManager viewManager = e.getView().getViewManager();
-        // Create glow views object
-        GlowViews glowViews = new GlowViews();
-        glowViews.inAllPosesView = true;
-        // Set new view
-        viewManager.setView(glowViews.dogPoseView());
-      }
-    });
-    }
-    return view;
+    return drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true);
   
   }
   public View dogPoseView(){
   
-    View view = drawVideoPoseView(videos[6], this.dogPoseCallback, true);    
-    return view;
+    return drawVideoPoseView(videos[6], this.dogPoseCallback, true);
   
   }
   
@@ -1033,20 +856,20 @@ public class GlowViews
     
     int offSetX = 400;
     int offSetYY = 400;
-    //println("hi i played here");
-    VideoElement videoElement = new VideoElement((width)/2, (height)/2 +20, 720, 400, GlobalPApplet.papplet, posevideo);
-    //Set the globalv video element so that other buttons can control the video
+    println("hi i played here");
+    VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
+    // Set the globalv video element so that other buttons can control the video
     GlobalPApplet.videoElement = videoElement;
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
-    /*
-    videoElement.setActionCallback( new ActionCallback{
+    
+    /*videoElement.setActionCallback( new ActionCallback(){
        public void doAction(UIElement e) {
-         
+        
        }
-     });
-     */
+     });*/
+     
     // THIS CODE SAVES THE PERCENTAGES YOU WANT TO THE FILE AND NAMES THEM ACCORDING TO VIDEO CONVENTION
     // PUT THIS IN THE CALLBACK METHOD ABOVE
     String percentage= "50%";
@@ -1054,21 +877,20 @@ public class GlowViews
     saveJSONObject(p.json, "profiles.json");
     
     
-//    PImage continueIMG = loadImage("newbuttons/session_menu.png");
-//    PImage continueIMGHover = loadImage("newbuttons/session_menu_hover.png");
+    PImage continueIMG = loadImage("newbuttons/session_menu.png");
+    PImage continueIMGHover = loadImage("newbuttons/session_menu_hover.png");
     int offSetY = 20;
-//    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 +250, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
-//    view.addUIElement(buttonContinue);
+    UIElement buttonContinue = new ImageButton((width - continueIMG.width)/2 +250, height - continueIMG.height - 3 * offSetY, continueIMG, continueIMGHover);
+    view.addUIElement(buttonContinue);
     
     PImage retryIMG = loadImage("newbuttons/retry.png");
     PImage retryIMGHover = loadImage("newbuttons/retry_hover.png");
-    UIElement retryButton = new ImageButton( (width - retryIMG.width)/2 - 300, height - retryIMG.height - 5*offSetY, retryIMG, retryIMGHover);
+    UIElement retryButton = new ImageButton( (width - retryIMG.width)/2 - 300, height - retryIMG.height - 3 * offSetY, retryIMG, retryIMGHover);
     view.addUIElement(retryButton);
     retryButton.setActionCallback(action);
 
-    //buttonContinue.setActionCallback(this.learnPosesCallback);
+    buttonContinue.setActionCallback(this.learnPosesCallback);
     drawBackButton(view).setActionCallback(this.learnPosesCallback);
-    drawGlowHomeButton(view);
     
     // Review new view
     return view;
@@ -1079,7 +901,6 @@ public class GlowViews
     int offSetX = 400;
     int offSetYY = 400;
     println("hi i played here");
-    // change video element here
     VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
     // Set the globalv video element so that other buttons can control the video
     GlobalPApplet.videoElement = videoElement;
