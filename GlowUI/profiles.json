@@ -2,9 +2,15 @@
   "uid": 0,
   "logged_in": true,
   "weight": 43,
+<<<<<<< HEAD
+  "height": "5'4 - 5'8",
+  "Warrior1Right.pose": "50%",
+  "name": "yogamaster",
+=======
   "height": "Below 5'4",
   "Warrior1Right.pose": "50%",
   "name": "Looo",
+>>>>>>> c09d3030411bcac59c3c9f6eafacfc27c158cecc
   "StandingBend.pose": "50%",
   "Mountain.pose": "50%",
   "HalfMoon.pose": "50%",

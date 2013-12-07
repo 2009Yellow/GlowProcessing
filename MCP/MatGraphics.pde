@@ -2,7 +2,7 @@ class MatGraphics {
 
 
   // Display Constants
-  final int SQUARE_SIZE = 40;
+  final int SQUARE_SIZE = 30;
   final int TEXT_SIZE = 20;
 
   PFont myFont;

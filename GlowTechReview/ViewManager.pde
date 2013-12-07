@@ -111,11 +111,14 @@ public class ViewManager{
     if (currentView != null) {
       currentView.destroy();
     }
+    
     // Set the new view
     if (newView != null) {
+      println("newView");
       currentView = newView;
       newView.setViewManager(this);
     } else {
+      println("view was null");
       currentView = null;
     }
   }
