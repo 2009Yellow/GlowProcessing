@@ -1027,6 +1027,8 @@ public class GlowViews
   
   public View drawVideoPoseView(String posevideo, ActionCallback action, Boolean learnmode ) {
     // Create view
+    //println("drawVidoePoseview start :" + posevideo + " and with learn: " + learnmode);
+    //println(" I see : " + GlobalPApplet.videoElement);
     
     if (learnmode){
     View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));    // Create Views
@@ -1034,9 +1036,8 @@ public class GlowViews
     int offSetX = 400;
     int offSetYY = 400;
     //println("hi i played here");
-    VideoElement videoElement = new VideoElement((width)/2, (height)/2 +20, 720, 400, GlobalPApplet.papplet, posevideo);
-    //Set the globalv video element so that other buttons can control the video
-    GlobalPApplet.videoElement = videoElement;
+    VideoElement videoElement = GlobalPApplet.videoElement;
+    videoElement.setVideo(posevideo);
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
@@ -1080,9 +1081,8 @@ public class GlowViews
     int offSetYY = 400;
     println("hi i played here");
     // change video element here
-    VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
-    // Set the globalv video element so that other buttons can control the video
-    GlobalPApplet.videoElement = videoElement;
+    VideoElement videoElement = GlobalPApplet.videoElement;
+    videoElement.setVideo(posevideo);
     videoElement.play();
     //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
