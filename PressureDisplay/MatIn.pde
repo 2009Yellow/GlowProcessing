@@ -37,7 +37,7 @@ public class MatIn {
     mat3Array = new int[matWidth * matHeight];
     // Print a lisdt of the serial ports, for debugging purposes:
     println(Serial.list());
-    String portName = Serial.list()[8];
+    String portName = Serial.list()[0];
     myPort = new Serial(papplet, portName, 115200);
     // Number of bytes to buffer before calling serialEvent()
     establishContact();
@@ -170,7 +170,7 @@ public class MatIn {
   }
   
   public float[][] getPressureDataMatrix() {
-    float [][] outputMatrix = new float[matHeight][matWidth];
+    float [][] outputMatrix = new float[matHeight][matWidth*3];
         for (int j = 0; j<matWidth; ++j){
       for (int i = 0; i <matHeight; ++i){
 

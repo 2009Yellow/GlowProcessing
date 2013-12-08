@@ -161,10 +161,13 @@ public class MatIn {
     int[] positionsToWrite = {0, 0, 0, 0};
     int[] colorsToWrite = {0, 0, 0, 0};
     
+    
     for ( int i = 0; i<positions.length; i++){
       positionsToWrite[i] = (int)positions[i];
       colorsToWrite[i] = (int)colors[i];
     }
+   
+    
     myPort.clear(); //Clear old pressure data from buffer
     // Tell Arduino to begin receiving light info 
     myPort.write(SERIAL_LIGHT_START_CHAR);
@@ -206,8 +209,6 @@ public class MatIn {
     println("wrote everything");
     int arduinoIsFinished = waitToRead();
     println("arduino got it");
-    
-    //println("Finished theoretically"+arduinoIsFinished);
     
   }
   

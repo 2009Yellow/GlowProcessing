@@ -29,13 +29,6 @@ public class MatController {
     resetLastPressure();
   }
 
-  void getWeight() {
-    pose.loadPoseData(0, 2);
-    matIn.update();
-    led.poseEvent();
-    balance.getWeight();
-    stopPose();
-  }
 
   // so that if we reset to a pose, initially all positions are purple,
   // and then allows lighting update to change when balance distribution is even 
@@ -49,7 +42,7 @@ public class MatController {
   // this gets called continuously
   void loadData() {
     matIn.update();
-    matIn.getTimeAveragedData();
+    matIn.getPressureDataMatrix(); //also updates pressure display
     pressureButtons.getButtonAction();
   }
 

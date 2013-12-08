@@ -35,13 +35,6 @@ class Pressure { // Analyzes
     setAreas(pose.getAreas());
   }
   
-  void getWeight(){
-    float[] areaWeights = new float[poseAreas.length];
-    areaWeights = help.sumAreas(matIn.getPressureDataMatrix(), poseAreas);
-    
-    weight = help.sumVector(areaWeights);
-    //println("Your weight is " + weight);
-  }
   
   //gives total normalized pressure in each area
   float[] getNormPressDist() {  
@@ -51,7 +44,7 @@ class Pressure { // Analyzes
     //matGraphics.drawDisplay(rawData);
     
     //TODO: delete the necessity for onPressureMat() and weight
-    float[] areaSums = help.sumAreas(rawData, poseAreas, pose.onPressureMat(), weight);
+    float[] areaSums = help.sumAreas(rawData, poseAreas);
     return normAreas(areaSums);
   }
 

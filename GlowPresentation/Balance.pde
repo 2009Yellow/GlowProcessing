@@ -56,13 +56,16 @@ class Balance {
   //0.0 if the pressure is as expected
   float[] getBinaryFeedback() {
     
-    //method that tells whether or not a significant amount of weight is on the mat
-    if(!pressure.isWeightSignificant()){
-      return new float[stanDist.length];
-    }
-    
     float[] diff = getDiff();
     float binary[] = new float[diff.length];
+    
+    //method that tells whether or not a significant amount of weight is on the mat
+    if(!pressure.isWeightSignificant()){
+      for(int i = 0; i<binary.length; i++){
+        binary[i] = -1;
+      }
+      return binary;
+    }
 
     for (int i = 0; i<diff.length; i++) {
       //arbitrary tolerance value

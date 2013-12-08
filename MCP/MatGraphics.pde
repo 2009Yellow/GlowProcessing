@@ -14,7 +14,7 @@ class MatGraphics {
   MatGraphics(int HEIGHT, int WIDTH) {
 
     // Init display
-    size(SQUARE_SIZE * WIDTH, 3*SQUARE_SIZE * HEIGHT);  // Stage size
+    size(SQUARE_SIZE * WIDTH * 3, 3*SQUARE_SIZE * HEIGHT);  // Stage size
 
     // Drawing setup
     rectMode(CORNER);
@@ -29,9 +29,9 @@ class MatGraphics {
     matWidth = WIDTH;
   }
 
-  void drawDisplay(float[] matData) {
+  void drawDisplay(float[][] matData) {
     noStroke();
-    for (int i = 0; i < matHeight; ++i) {
+    /*for (int i = 0; i < matHeight; ++i) {
       for (int j = 0; j < matWidth; ++j) {
         int brightness = (int)matData[(matHeight-1-i) * matWidth + j];
         fill(brightness);
@@ -39,17 +39,18 @@ class MatGraphics {
         fill(0, 102, 153);
         text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
       }
-    }
+    }*/
     
-    /*for (int i = 0; i < matHeight; ++i) {
-      for (int j = 0; j < matWidth; ++j) {
+    for (int i = 0; i < matHeight; ++i) {
+      for (int j = 0; j < 3*matWidth; ++j) {
         int brightness = (int)matData[i][j];
         fill(brightness);
         rect(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
         fill(0, 102, 153);
-        text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
+        //text("" + brightness, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
+        text("" + j, j * SQUARE_SIZE + SQUARE_SIZE/2, i * SQUARE_SIZE + SQUARE_SIZE/2);
       }
-    }*/
+    }
     
    }
 

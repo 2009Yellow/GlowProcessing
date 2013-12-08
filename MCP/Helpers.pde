@@ -1,7 +1,7 @@
 class Helpers {
   //yay.
   
-  final public int SINGLE_VALUE_THRESHOLD = 60;
+  final public int SINGLE_VALUE_THRESHOLD = 50;
   
   
   Helpers() {
@@ -123,6 +123,8 @@ class Helpers {
       areaSums[areaNum] = sum;
     }
     
+    println("Area Sums ");
+    println(areaSums);
     return areaSums;
   }
   
