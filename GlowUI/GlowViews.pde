@@ -146,7 +146,7 @@ public class GlowViews
     {
       public void doAction(UIElement e)
       {
-        
+        println("mountainPoseCallback");
         // Get the view manger
         ViewManager viewManager = e.getView().getViewManager();
         // Create glow views object
@@ -1036,11 +1036,10 @@ public class GlowViews
     
     int offSetX = 400;
     int offSetYY = 400;
-    //println("hi i played here");
+    println("hi i played here learn");
     VideoElement videoElement = GlobalPApplet.videoElement;
     videoElement.setVideo(posevideo);
     videoElement.play();
-    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
     /*
     videoElement.setActionCallback( new ActionCallback{
@@ -1080,12 +1079,11 @@ public class GlowViews
     
     int offSetX = 400;
     int offSetYY = 400;
-    println("hi i played here");
+    println("hi i played here do");
     // change video element here
     VideoElement videoElement = GlobalPApplet.videoElement;
     videoElement.setVideo(posevideo);
     videoElement.play();
-    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
 
     PImage continueIMG = loadImage("newbuttons/session_menu.png");

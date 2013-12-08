@@ -100,6 +100,7 @@ public class View {
   public void remove(UIElement e) {
     uiElements.remove(e);
     Interactive.remove(e);
+    e.destroy();
   }
 
   public void draw() {

@@ -19,10 +19,12 @@ public class VideoElement extends UIElement {
   public void setVideo(String fileName) {
     if (movie != null) {
       stop();
+      println("Video element removing from old view");
+      view.remove(this);
     }
-    println("Vidoe Element attempt load file: " + fileName);
+    println("Video Element attempt load file: " + fileName);
     movie = new Movie(papplet, fileName);
-    println("Vidoe Element loaded" + movie.toString());
+    println("Video Element loaded" + movie.toString());
     show = true;
   }
 
