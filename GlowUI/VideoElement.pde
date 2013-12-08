@@ -42,7 +42,7 @@ public class VideoElement extends UIElement {
         // Darken the video when its not playing
         tint(128);
       }
-      image(movie, x - elementWidth/2, y - elementHeight/2, elementWidth, elementHeight);
+      image(movie, x, y, elementWidth, elementHeight);
       popStyle();
     }
     // call action callback if movie is finished
