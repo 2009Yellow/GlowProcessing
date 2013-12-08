@@ -25,6 +25,11 @@ void setup () {
   println(profileManager.listProfiles());
   println(profileManager.getCurrentProfileIndex());
   
+  // Create the video 
+  VideoElement videoElement = new VideoElement((width)/2, (height)/2 +20, 720, 400, GlobalPApplet.papplet);
+  GlobalPApplet.videoElement = videoElement;
+  
+  
   // Create ViewManage and views
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);

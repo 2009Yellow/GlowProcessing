@@ -40,7 +40,11 @@ void draw() {
   // Update MatIn
   matIn.update();
   // Get pressure data
+<<<<<<< HEAD
    System.arraycopy(matIn.getMat2DataRaw(), 0, displayColors, 0, displayColors.length);
+=======
+   System.arraycopy(matIn.getMat1DataRaw(), 0, displayColors, 0, displayColors.length);
+>>>>>>> 775a729d86f9441e871c35e9bed19c54058bd115
   // Paint display
   drawDisplay();
 }

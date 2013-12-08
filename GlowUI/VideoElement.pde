@@ -5,16 +5,27 @@ public class VideoElement extends UIElement {
   public boolean isPlaying;
   protected boolean hover = false;
   protected boolean show = false;
+  private PApplet papplet;
 
-  public VideoElement( int xx, int yy, int w, int h, PApplet p, String fileName) {
+  public VideoElement( int xx, int yy, int w, int h, PApplet p) {
     super(xx, yy, w, h);
-    println("Vidoe Element attempt load file: " + fileName);
-    movie = new Movie(p, fileName);
-    println("Vidoe Element loaded" + movie.toString());
-
     isPlaying = false;
     show = true;
-    //movie.loop();
+    papplet = p;
+    movie = null;
+    println("VidoeElement created! (YOU SHOULD ONLY SEE THIS ONCE)");
+  }
+  
+  public void setVideo(String fileName) {
+    if (movie != null) {
+      stop();
+      println("Video element removing from old view");
+      view.remove(this);
+    }
+    println("Video Element attempt load file: " + fileName);
+    movie = new Movie(papplet, fileName);
+    println("Video Element loaded" + movie.toString());
+    show = true;
   }
 
   void draw() {

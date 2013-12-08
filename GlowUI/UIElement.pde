@@ -20,10 +20,15 @@ public abstract class UIElement{
   public void destroy() {
     //view.remove(this);
     //Interactive.remove(this);
+    removeView();
   }
   
   public void setView(View v) {
     view = v;
+  }
+  
+  public void removeView() {
+    view = null;
   }
   
   public View getView() {

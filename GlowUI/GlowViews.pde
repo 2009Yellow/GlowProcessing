@@ -146,7 +146,7 @@ public class GlowViews
     {
       public void doAction(UIElement e)
       {
-        
+        println("mountainPoseCallback");
         // Get the view manger
         ViewManager viewManager = e.getView().getViewManager();
         // Create glow views object
@@ -847,12 +847,12 @@ public class GlowViews
     
     if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -865,7 +865,7 @@ public class GlowViews
         viewManager.setView(glowViews.halfmoonPoseView());
       }
     });
-      view.addUIElement(buttonBack);
+      view.addUIElement(buttonNext);
     }
     
     return view;
@@ -877,12 +877,12 @@ public class GlowViews
     
     if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -895,7 +895,7 @@ public class GlowViews
         viewManager.setView(glowViews.warrior1PoseView());
       }
     });
-      view.addUIElement(buttonBack);
+      view.addUIElement(buttonNext);
     }
     return view;
   }
@@ -906,12 +906,12 @@ public class GlowViews
     
     if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -924,7 +924,7 @@ public class GlowViews
         viewManager.setView(glowViews.trianglePoseView());
       }
     });
-      view.addUIElement(buttonBack);
+      view.addUIElement(buttonNext);
     }
     return view;  
   }
@@ -935,12 +935,12 @@ public class GlowViews
     
      if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -953,7 +953,7 @@ public class GlowViews
         viewManager.setView(glowViews.warrior2PoseView());
       }
     });
-      view.addUIElement(buttonBack);
+      view.addUIElement(buttonNext);
     }
     return view;
   } 
@@ -964,12 +964,12 @@ public class GlowViews
     
          if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-      buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -982,7 +982,7 @@ public class GlowViews
         viewManager.setView(glowViews.standingYogaPoseView());
       }
     });
-      view.addUIElement(buttonBack);
+      view.addUIElement(buttonNext);
     }
     return view;
   }
@@ -991,12 +991,12 @@ public class GlowViews
     View view = drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true);
      if (this.inAllPosesView == true)
     {
-      PImage back = loadImage("buttons/back.png");
-      PImage backHover = loadImage("buttons/back_hover.png");
-      backHover.resize(50, 50);
-      back.resize(50, 50);
-      UIElement buttonBack = new ImageButton((width - back.width)/2 + 300, height - back.height -100, back, backHover);
-       buttonBack.setActionCallback(new ActionCallback()
+      PImage next = loadImage("buttons/next.png");
+      PImage nextHover = loadImage("buttons/next_hover.png");
+      nextHover.resize(50, 50);
+      next.resize(50, 50);
+      UIElement buttonNext = new ImageButton((width - next.width)/2 + 300, height - next.height -100, next, nextHover);
+      buttonNext.setActionCallback(new ActionCallback()
     {
       public void doAction(UIElement e)
       {
@@ -1009,6 +1009,7 @@ public class GlowViews
         viewManager.setView(glowViews.dogPoseView());
       }
     });
+        view.addUIElement(buttonNext);
     }
     return view;
   
@@ -1027,18 +1028,18 @@ public class GlowViews
   
   public View drawVideoPoseView(String posevideo, ActionCallback action, Boolean learnmode ) {
     // Create view
+    //println("drawVidoePoseview start :" + posevideo + " and with learn: " + learnmode);
+    //println(" I see : " + GlobalPApplet.videoElement);
     
     if (learnmode){
     View view = new View(width, height, color(128, 128, 128), loadImage("background/bg.jpg"));    // Create Views
     
     int offSetX = 400;
     int offSetYY = 400;
-    //println("hi i played here");
-    VideoElement videoElement = new VideoElement((width)/2, (height)/2 +20, 720, 400, GlobalPApplet.papplet, posevideo);
-    //Set the globalv video element so that other buttons can control the video
-    GlobalPApplet.videoElement = videoElement;
+    println("hi i played here learn");
+    VideoElement videoElement = GlobalPApplet.videoElement;
+    videoElement.setVideo(posevideo);
     videoElement.play();
-    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
     /*
     videoElement.setActionCallback( new ActionCallback{
@@ -1078,13 +1079,11 @@ public class GlowViews
     
     int offSetX = 400;
     int offSetYY = 400;
-    println("hi i played here");
+    println("hi i played here do");
     // change video element here
-    VideoElement videoElement = new VideoElement((width)/2, (height)/2 + 20, 720, 400, GlobalPApplet.papplet, posevideo);
-    // Set the globalv video element so that other buttons can control the video
-    GlobalPApplet.videoElement = videoElement;
+    VideoElement videoElement = GlobalPApplet.videoElement;
+    videoElement.setVideo(posevideo);
     videoElement.play();
-    //videoElement.setTime(30.0);
     view.addUIElement(videoElement);
 
     PImage continueIMG = loadImage("newbuttons/session_menu.png");
