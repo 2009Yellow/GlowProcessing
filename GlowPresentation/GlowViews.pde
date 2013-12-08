@@ -201,6 +201,14 @@ public class GlowViews
     int offSetY = 20;
     // Instead of continue it will be pose menu button
     UIElement endSessionButton = new ImageButton((width - endSession.width)/2 + 200, height - endSession.height - 3 * offSetY, endSession, endSessionHover);
+    endSessionButton.setActionCallback(new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+         workoutManager.stopPose();
+      }
+    }
+    );
     view.addUIElement(endSessionButton);
 
 

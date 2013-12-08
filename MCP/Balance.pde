@@ -19,16 +19,6 @@ class Balance {
     stanDist = pose.getPressures();
   }
   
-  void getWeight(){
-    this.poseEvent();      //basically just to reset pressure
-    long beginWeightGetting = System.currentTimeMillis();
-    long currentTime = System.currentTimeMillis();
-    while( currentTime - beginWeightGetting < 6000){ //give user 6 seconds to get on the mat
-      currentTime = System.currentTimeMillis();
-    }
-    
-    pressure.getWeight();
-  }
   
   
   //called whenever the pose changes
@@ -44,17 +34,20 @@ class Balance {
   //0.0 if the pressure is as expected
   float[] getBinaryFeedback() {
     
-    //method that tells whether or not a significant amount of weight is on the mat
-    if(!pressure.isWeightSignificant()){
-      return new float[stanDist.length];
-    }
-    
     float[] diff = getDiff();
     float binary[] = new float[diff.length];
+    
+    //method that tells whether or not a significant amount of weight is on the mat
+    if(!pressure.isWeightSignificant()){
+      for(int i = 0; i<binary.length; i++){
+        binary[i] = -1;
+      }
+      return binary;
+    }
 
     for (int i = 0; i<diff.length; i++) {
       //arbitrary tolerance value
-      if (abs(diff[i]) > 0.08) { 
+      if (abs(diff[i]) > 0.12) { 
         binary[i] = abs(diff[i])/diff[i];
       }
     }

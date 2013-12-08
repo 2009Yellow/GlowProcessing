@@ -2,7 +2,7 @@ import java.lang.System;
 
 
 // Display Constants
-final int SQUARE_SIZE = 50;
+final int SQUARE_SIZE = 40;
 final int WIDTH = 16;
 final int HEIGHT = 16;
 final int TEXT_SIZE = 30;
@@ -40,7 +40,7 @@ void draw() {
   // Update MatIn
   matIn.update();
   // Get pressure data
-   System.arraycopy(matIn.getMat3DataRaw(), 0, displayColors, 0, displayColors.length);
+   System.arraycopy(matIn.getMat2DataRaw(), 0, displayColors, 0, displayColors.length);
   // Paint display
   drawDisplay();
 }
