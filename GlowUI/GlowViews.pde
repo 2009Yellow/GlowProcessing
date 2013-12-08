@@ -842,11 +842,23 @@ public class GlowViews
   }
   
   public View mountainPoseView(){
-  
-    View view = drawVideoPoseView(videos[0], this.mountainPoseCallback, true);
-    
+    println("MOUNTAIN");
+      View view;
     if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.mountainPoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -867,16 +879,32 @@ public class GlowViews
     });
       view.addUIElement(buttonNext);
     }
+    else
+    {
+      view = drawVideoPoseView(videos[0], this.mountainPoseCallback, true);
+    }
     
     return view;
   
   }  
   public View halfmoonPoseView(){
-  
-    View view = drawVideoPoseView(videos[1], this.halfMoonPoseCallback, true);
-    
+    println("HALFMOON");
+    View view;
     if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.halfmoonPoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -897,15 +925,30 @@ public class GlowViews
     });
       view.addUIElement(buttonNext);
     }
+    else{
+      view = drawVideoPoseView(videos[1], this.halfMoonPoseCallback, true);
+    }
     return view;
   }
     
-  public View warrior2PoseView(){
-  
-    View view = drawVideoPoseView(videos[2], this.warrior2PoseCallback, true);
-    
+  public View warrior2PoseView(){    
+    println("WARRIOR2");
+    View view;
     if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.warrior2PoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -926,15 +969,31 @@ public class GlowViews
     });
       view.addUIElement(buttonNext);
     }
+    else
+    {
+      view = drawVideoPoseView(videos[2], this.warrior2PoseCallback, true);
+    }
     return view;  
   }
   
   public View warrior1PoseView(){
-  
-    View view = drawVideoPoseView(videos[3], this.warrior1PoseCallback, true);
-    
-     if (this.inAllPosesView == true)
+    println("WARRIOR1");
+    View view;
+    if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.warrior1PoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -954,16 +1013,31 @@ public class GlowViews
       }
     });
       view.addUIElement(buttonNext);
+    }else
+    {
+      view = drawVideoPoseView(videos[3], this.warrior1PoseCallback, true);
     }
     return view;
   } 
   
   public View trianglePoseView(){
-  
-    View view = drawVideoPoseView(videos[4], this.trianglePoseCallback, true);
-    
-         if (this.inAllPosesView == true)
+    println("TRIANGLE");
+    View view;
+    if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.trianglePoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -983,14 +1057,30 @@ public class GlowViews
       }
     });
       view.addUIElement(buttonNext);
+    }else {
+      view = drawVideoPoseView(videos[4], this.trianglePoseCallback, true);
     }
     return view;
   }
-  public View standingYogaPoseView(){
   
-    View view = drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true);
-     if (this.inAllPosesView == true)
+  public View standingYogaPoseView(){
+    println("STANDING");
+    View view;
+    if (this.inAllPosesView == true)
     {
+      view = drawVideoPoseView(videos[0], new ActionCallback()
+    {
+      public void doAction(UIElement e)
+      {
+        // Get the view manger
+        ViewManager viewManager = e.getView().getViewManager();
+        // Create glow views object
+        GlowViews glowViews = new GlowViews();
+        glowViews.inAllPosesView = true;
+        // Set new view
+        viewManager.setView(glowViews.standingYogaPoseView());
+      }
+    }, true);
       PImage next = loadImage("buttons/next.png");
       PImage nextHover = loadImage("buttons/next_hover.png");
       nextHover.resize(50, 50);
@@ -1010,15 +1100,17 @@ public class GlowViews
       }
     });
         view.addUIElement(buttonNext);
+    }else{
+      view = drawVideoPoseView(videos[5], this.standingYogaMudraCallback, true); 
     }
     return view;
   
   }
-  public View dogPoseView(){
   
+  
+  public View dogPoseView(){
     View view = drawVideoPoseView(videos[6], this.dogPoseCallback, true);    
     return view;
-  
   }
   
   public View fullSession1(){
@@ -1105,4 +1197,3 @@ public class GlowViews
     }
   }
 }
-
