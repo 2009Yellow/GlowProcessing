@@ -7,8 +7,8 @@ public class VideoElement extends UIElement {
   protected boolean show = false;
   private PApplet papplet;
 
-  public VideoElement( int xx, int yy, int w, int h, PApplet p) {
-    super(xx, yy, w, h);
+  public VideoElement( int xx, int yy, int w, int h, PApplet p) { 
+    super(xx - w/2, yy - h/2, w, h);
     isPlaying = false;
     show = true;
     papplet = p;
@@ -36,12 +36,13 @@ public class VideoElement extends UIElement {
     // Show the video if show is active
     if (show) {
       pushStyle();
-      imageMode(CENTER);
+      //imageMode(CENTER);
+      imageMode(CORNER);
       if (!isPlaying) {
         // Darken the video when its not playing
         tint(128);
       }
-      image(movie, x, y, elementWidth, elementHeight);
+      image(movie, x - elementWidth/2, y - elementHeight/2, elementWidth, elementHeight);
       popStyle();
     }
     // call action callback if movie is finished
