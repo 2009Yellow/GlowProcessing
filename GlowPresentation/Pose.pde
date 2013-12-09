@@ -15,7 +15,6 @@ static class Poses {
 
     "Downward Dog.mov"
   };
-
 };
 
 class Pose { //will return the reference (i.e. correct, based on yoga expert) LED positions for limb placement, pressure sensing areas, and normalized reference pressure
@@ -84,13 +83,8 @@ class Pose { //will return the reference (i.e. correct, based on yoga expert) LE
     //array of times for video to pause
     float[] times = allPoseData[29];
     //currently, only the first value in this array is relevant
-    print(times);
     return times;
   }
 
-  float[] getDirections() {
-    float[] direction = allPoseData[28];
-    return direction;
-  }
 }
 

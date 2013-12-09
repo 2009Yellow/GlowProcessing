@@ -31,10 +31,9 @@ class LED {
     pixelNumbers = pose.getLeds();
   }
 
-
   void poseEvent() {
-    println("calling pose event");
     setLeds();
+
     //all lights start out purple for a new pose
     int numAreas = pixelNumbers.length;
     colors = new float[numAreas];
@@ -44,7 +43,6 @@ class LED {
     }
 
     matIn.setLights(pixelNumbers, colors);
-    println("lights set");
   }
 
   void pressureEvent(float[] pressure) {

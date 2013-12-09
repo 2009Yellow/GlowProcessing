@@ -26,12 +26,6 @@ public class MatController {
     resetLastPressure();
   }
 
-  void getWeight() {
-    matIn.update();
-    led.poseEvent();
-    balance.getWeight();
-    stopPose();
-  }
   
   //returns the percentage of the pose time the user had the correct balance distribution
   int getPercentTimeCorrect(){
@@ -50,7 +44,7 @@ public class MatController {
   // this gets called continuously
   void loadData() {
     matIn.update();
-    matIn.getTimeAveragedData();
+    matIn.getPressureDataMatrix();
   }
 
   void processBalanceData() {
@@ -76,11 +70,11 @@ public class MatController {
   }
 
   void poseEvent() {
-    println("MatController::poseEvent()");
+    //println("MatController::poseEvent()");
     balance.poseEvent(); //pose already updated to new pose by WorkoutManager
     resetLastPressure();
     led.poseEvent();
-    println("MatController::poseEvent() finihsed");
+    //println("MatController::poseEvent() finihsed");
   }
 
   void stopPose() {

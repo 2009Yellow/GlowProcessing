@@ -63,7 +63,7 @@ class Pressure { // Analyzes
     float[] areaSums = help.sumAreas(matIn.getPressureDataMatrix(),poseAreas);
     float currentPressureTotal = help.sumVector(areaSums);
     
-    return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*10;
+    return currentPressureTotal > help.SINGLE_VALUE_THRESHOLD*5;
   }
   
 }

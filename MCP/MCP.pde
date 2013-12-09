@@ -6,7 +6,7 @@ Serial myPort;
 MatController matControl;
 Helpers help;
 
-int heightBinNo = 0;
+int heightBinNo = 1;
 int poseNumber = 100;
 Pose pose;
 long lastTime;
@@ -47,7 +47,7 @@ void draw() {
   
   if(numLoops == 10){
       //matControl.getWeight();
-      newPose(3);
+      newPose(7);
   }
   
   currentTime = System.currentTimeMillis();

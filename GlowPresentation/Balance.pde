@@ -4,11 +4,12 @@ class Balance {
 
   Pressure pressure;
   Pose pose;
-  
+
   //MatGraphics matGraphics; //for testing purposes
 
   float[] stanDist;
-  
+  float threshold;
+
   //keep track of balance data for the length of the pose
   int numTimesCorrect = 0;
   int numTimesRecorded = 0;
@@ -20,23 +21,15 @@ class Balance {
     pressure = new Pressure(mat_h, mat_w, matIn, pose);
     this.pose = pose;
     stanDist = pose.getPressures();
+    setThreshold();
   }
-  
-  void getWeight(){
-    this.poseEvent();      //basically just to reset pressure
-    long beginWeightGetting = System.currentTimeMillis();
-    long currentTime = System.currentTimeMillis();
-    while( currentTime - beginWeightGetting < 6000){ //give user 6 seconds to get on the mat
-      currentTime = System.currentTimeMillis();
-    }
-    
-    pressure.getWeight();
-  }
-  
-  int getPercentTimeCorrect(){
-    if(numTimesRecorded == 0) {return 0;}//so we're not dividing by 0
-    
-    int percentTimeCorrect = (numTimesCorrect*100)/numTimesRecorded;
+
+  int getPercentTimeCorrect() {
+    if (numTimesRecorded == 0) {
+      return 0;
+    }//so we're not dividing by 0
+
+      int percentTimeCorrect = (numTimesCorrect*100)/numTimesRecorded;
     println("You held the pose correctly for " + percentTimeCorrect + "% of the time");
     return percentTimeCorrect;
   }
@@ -45,9 +38,20 @@ class Balance {
     //update pressure distribution
     stanDist = pose.getPressures(); //the global Pose instance has already been updated
     pressure.updateAreas();
+    setThreshold();
     //reset the balance tracking variables
     numTimesCorrect = 0;
     numTimesRecorded = 0;
+  }
+
+  void setThreshold() {
+    if ( stanDist.length == 4) {
+      threshold = 0.03;
+    }
+
+    else {
+      threshold = 0.1;
+    }
   }
 
   //returns a vector of binary pressure differences
@@ -55,13 +59,13 @@ class Balance {
   //1.0 if too much pressure in an area
   //0.0 if the pressure is as expected
   float[] getBinaryFeedback() {
-    
+
     float[] diff = getDiff();
     float binary[] = new float[diff.length];
-    
+
     //method that tells whether or not a significant amount of weight is on the mat
-    if(!pressure.isWeightSignificant()){
-      for(int i = 0; i<binary.length; i++){
+    if (!pressure.isWeightSignificant()) {
+      for (int i = 0; i<binary.length; i++) {
         binary[i] = -1;
       }
       return binary;
@@ -69,12 +73,11 @@ class Balance {
 
     for (int i = 0; i<diff.length; i++) {
       //arbitrary tolerance value
-      if (abs(diff[i]) > 0.04) { 
+      if (abs(diff[i]) > threshold) { 
         binary[i] = abs(diff[i])/diff[i];
       }
     }
     //println(binary);
-    trackBalanceData(binary);
     return binary;
   }
 
@@ -90,22 +93,21 @@ class Balance {
     }
     return differences;
   }
-  
-  void trackBalanceData(float[] binary){
+
+  void trackBalanceData(float[] binary) {
     boolean allCorrect = true;
-    
-    for(int i = 0; i<binary.length; i++){
-      if((int)(binary[i])!=0){
+
+    for (int i = 0; i<binary.length; i++) {
+      if ((int)(binary[i])!=0) {
         allCorrect = false;
       }
     }
-    
-    if(allCorrect){
+
+    if (allCorrect) {
       numTimesCorrect++;
     }
-    
+
     numTimesRecorded++;
   }
-
 }
 

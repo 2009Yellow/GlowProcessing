@@ -8,6 +8,7 @@ class Balance {
   //MatGraphics matGraphics; //for testing purposes
 
   float[] stanDist;
+  float threshold;
 
   //keep track of balance data for the length of the pose
   int numTimesCorrect = 0;
@@ -20,6 +21,7 @@ class Balance {
     pressure = new Pressure(mat_h, mat_w, matIn, pose);
     this.pose = pose;
     stanDist = pose.getPressures();
+    setThreshold();
   }
 
   int getPercentTimeCorrect() {
@@ -36,9 +38,20 @@ class Balance {
     //update pressure distribution
     stanDist = pose.getPressures(); //the global Pose instance has already been updated
     pressure.updateAreas();
+    setThreshold();
     //reset the balance tracking variables
     numTimesCorrect = 0;
     numTimesRecorded = 0;
+  }
+
+  void setThreshold() {
+    if ( stanDist.length == 4) {
+      threshold = 0.03;
+    }
+
+    else {
+      threshold = 0.1;
+    }
   }
 
   //returns a vector of binary pressure differences
@@ -60,7 +73,7 @@ class Balance {
 
     for (int i = 0; i<diff.length; i++) {
       //arbitrary tolerance value
-      if (abs(diff[i]) > 0.12) { 
+      if (abs(diff[i]) > threshold) { 
         binary[i] = abs(diff[i])/diff[i];
       }
     }

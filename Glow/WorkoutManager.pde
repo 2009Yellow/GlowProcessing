@@ -121,10 +121,6 @@ class WorkoutManager {
     matControl.poseEvent();
   }
 
-  void getWeight() {
-    pose.loadPoseData(0, heightBinNo);
-    matControl.getWeight();
-  }
 
   void stopPose() {
     poseNumber = 100;
@@ -192,6 +188,8 @@ class WorkoutManager {
 
     //if the video is paused and we haven't finished pressure sensing
     if (!GlobalPApplet.videoElement.getIsPlaying() && !donePressureSensing) {
+      
+      //TODO add in logic for user pausing the video
       
       //give pressure feedback if we haven't reached the end of the pause yet
       if (currentTime - pauseStartTime < LENGTH_OF_PAUSE ) {

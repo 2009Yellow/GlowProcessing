@@ -18,11 +18,11 @@ class LED {
     this.pose = pose;
     setLeds();
     colors = new float[pixelNumbers.length];
-    
+
     for (int i = 0; i<colors.length; i++) {
       colors[i] = 1;
     }
-    
+
     matIn.setLights(pixelNumbers, colors);
   }
 
@@ -39,21 +39,36 @@ class LED {
     colors = new float[numAreas];
 
     for (int i =0; i<numAreas; i++) {
-      colors[i] = 1;  //1 = purple LEDs for start of pose
+      colors[i] = 1;  //1 = white LEDs for start of pose
     }
-    
+
     matIn.setLights(pixelNumbers, colors);
   }
 
   void pressureEvent(float[] pressure) {
 
+    boolean allBalanceCorrect = true;
+
     for ( int i = 0; i<pressure.length; i++) {
-      colors[i] = pressure[i]+2;
+      if (pressure[i] != 0 ) // if the pressure isn't correct
+      {
+        allBalanceCorrect = false;
+      }
     }
-    
+
+
+    for ( int i = 0; i<pressure.length; i++) {
+      if (allBalanceCorrect) {
+        colors[i] = 4; //green for all correct
+      }
+      else {
+        colors[i] = pressure[i]+2;
+      }
+    }
+
     //println("new colors");
     //println(colors);
-    
+
     matIn.setLights(pixelNumbers, colors);
   }
 }

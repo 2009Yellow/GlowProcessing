@@ -32,6 +32,10 @@ public class MatController {
     return balance.getPercentTimeCorrect();
   }
   
+  void startupSequence(){
+    matIn.startupSequence();
+  }
+  
   // so that if we reset to a pose, initially all positions are purple,
   // and then allows lighting update to change when balance distribution is even 
   void resetLastPressure() {
@@ -44,11 +48,7 @@ public class MatController {
   // this gets called continuously
   void loadData() {
     matIn.update();
-    matIn.getTimeAveragedData();
-  }
-  
-  void startupSequence(){
-    matIn.startupSequence();
+    matIn.getPressureDataMatrix();
   }
 
   void processBalanceData() {
@@ -74,9 +74,11 @@ public class MatController {
   }
 
   void poseEvent() {
+    //println("MatController::poseEvent()");
     balance.poseEvent(); //pose already updated to new pose by WorkoutManager
     resetLastPressure();
     led.poseEvent();
+    //println("MatController::poseEvent() finihsed");
   }
 
   void stopPose() {
