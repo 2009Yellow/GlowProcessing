@@ -66,7 +66,7 @@ public class MatIn {
 
   // ========================== Private Methods ==========================
   private void establishContact() {
-    // Triple clear the port. This is a hack to deal with buggy arduinos+
+    // Triple clear the port. This is a hack to deal with buggy arduinos+dde
     while (myPort.available () ==0) {
     }
     myPort.clear();

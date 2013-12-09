@@ -13,7 +13,7 @@ static class Poses {
 
     "Standing Bend", 
 
-    "Downward Dog.mov"
+    "Downward Dog"
   };
 };
 
