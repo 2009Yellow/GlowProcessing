@@ -126,7 +126,7 @@ class WorkoutManager {
     }
     
     //update lights
-    println("WorkoutManager:: initialPoseTransition -- poseEvent");
+    //println("WorkoutManager:: initialPoseTransition -- poseEvent");
     matControl.poseEvent();
   }
 
