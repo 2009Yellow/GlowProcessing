@@ -1,14 +1,14 @@
 {
   "uid": 0,
   "logged_in": true,
-  "weight": 43,
   "height": "5'8 - 6'0",
+  "weight": 43,
   "Warrior1Right.pose": "50%",
   "name": "weee",
   "StandingBend.pose": "50%",
   "Mountain.pose": "50%",
-  "HalfMoon.pose": "50%",
   "DownwardDog.pose": "50%",
-  "TrianglePoseRight.pose": "50%",
-  "Warrior2Right.pose": "50%"
+  "HalfMoon.pose": "50%",
+  "Warrior2Right.pose": "50%",
+  "TrianglePoseRight.pose": "50%"
 }

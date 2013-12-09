@@ -13,7 +13,7 @@ class WorkoutManager {
   MatController matControl;
   private ArrayList<WorkoutData> workoutLog;
   long POSETIMEOUT = 20000; //20 second timeout? this can be changed
-  long LENGTH_OF_PAUSE = 10000; //length of pause and pressure feedback (in milliseconds)
+  long LENGTH_OF_PAUSE = 20000; //length of pause and pressure feedback (in milliseconds)
 
   int heightBinNo = 2;//aribtrarily set for now
 
@@ -67,7 +67,7 @@ class WorkoutManager {
   }
 
   void newPose(int poseNumber) {
-    println("WorkoutManager:: starting pose " + poseNumber);
+    //println("WorkoutManager:: starting pose " + poseNumber);
     this.poseNumber = poseNumber;
 
     // load in relevant timing data for mat instruction from pose data file
@@ -100,13 +100,13 @@ class WorkoutManager {
   //used to transition from mountain pose to desired pose
   void startPoseTransition() {
     pose.loadPoseData(poseNumber, heightBinNo);
-    println("WorkoutManager:: startPoseTransition -- poseEvent");
+    //println("WorkoutManager:: startPoseTransition -- poseEvent");
     matControl.poseEvent();
   }
 
   //used to reset to initial position
   void initialPoseTransition() {
-    println("WorkoutManager::initialPoseTransition()");
+    //println("WorkoutManager::initialPoseTransition()");
     // forward bend and downward dog have a different starting position than the other poses
     
     if(poseNumber == 3 || poseNumber == 4 || poseNumber == 5){
@@ -184,6 +184,7 @@ class WorkoutManager {
         //... and it's time to transition, then transition to desired pose in time with the video
         else if ( videoTime > startPoseTransitionTime && !hasTransitioned) {
           hasTransitioned = true;
+          println("WORKOUTMANAGER:: pose transition time: " + videoTime);
           startPoseTransition();
         }
       }
