@@ -5,14 +5,27 @@ public class VideoElement extends UIElement {
   public boolean isPlaying;
   protected boolean hover = false;
   protected boolean show = false;
+  private PApplet papplet;
 
-  public VideoElement( int xx, int yy, int w, int h, PApplet p, String fileName) {
-    super(xx, yy, w, h);
-    println("Vidoe Element attempt load file: " + fileName);
-    movie = new Movie(p, fileName);
-    println("Vidoe Element loaded" + movie.toString());    isPlaying = false;
+  public VideoElement( int xx, int yy, int w, int h, PApplet p) { 
+    super(xx - w/2, yy - h/2, w, h);
+    isPlaying = false;
     show = true;
-    //movie.loop();
+    papplet = p;
+    movie = null;
+    println("VidoeElement created! (YOU SHOULD ONLY SEE THIS ONCE)");
+  }
+  
+  public void setVideo(String fileName) {
+    if (movie != null) {
+      stop();
+      println("Video element removing from old view");
+      view.remove(this);
+    }
+    println("Video Element attempt load file: " + fileName);
+    movie = new Movie(papplet, fileName);
+    println("Video Element loaded" + movie.toString());
+    show = true;
   }
 
   void draw() {
@@ -23,7 +36,8 @@ public class VideoElement extends UIElement {
     // Show the video if show is active
     if (show) {
       pushStyle();
-      imageMode(CENTER);
+      //imageMode(CENTER);
+      imageMode(CORNER);
       if (!isPlaying) {
         // Darken the video when its not playing
         tint(128);
@@ -59,7 +73,6 @@ public class VideoElement extends UIElement {
   }
   
   public float getTime() {
-    //println("movie time " + movie.time());
     return movie.time();
   }
 
@@ -100,19 +113,20 @@ public class VideoElement extends UIElement {
   
   public void destroy() {
     super.destroy();
-    movie.stop();
-    isPlaying = false;
-    super.activateActionCallback();
-    //movie = null;
+    stop();
+    movie = null;
   }
   
-  public boolean getIsPlaying() {
-     return isPlaying;
+  public boolean isInit() {
+    return movie != null;
   }
-
   
   public boolean isDone() {
     return (movie.duration() <= movie.time());
+  }
+  
+  public boolean getIsPlaying() {
+    return isPlaying;
   }
   
 }

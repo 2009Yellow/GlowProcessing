@@ -27,6 +27,10 @@ void setup () {
   // Make the workout manager
   workoutManager = new WorkoutManager(this);
   
+  // Create the video
+  VideoElement videoElement = new VideoElement((width)/2, (height)/2 +20, 720, 400, GlobalPApplet.papplet);
+  GlobalPApplet.videoElement = videoElement;
+  
   // Create ViewManage and views
   glowViews = new GlowViews();
   viewManager = new ViewManager(0,0, this);
@@ -43,6 +47,7 @@ void draw () {
   workoutManager.draw();
 }
 
+
 // This class is a hack to allow PApplet and certain variables to be accessed
 // anywhere in the program without restrictoin.
 // This is bad programing practice, please don't replicate this...
@@ -50,6 +55,7 @@ public static class GlobalPApplet {
   public static PApplet papplet;
   public static ProfileManager profileManager; 
   public static VideoElement videoElement;
+  public static ViewManager viewManager;
   public static WorkoutManager workoutManager;
 }
 

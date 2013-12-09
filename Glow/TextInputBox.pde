@@ -56,6 +56,10 @@ public class TextInputBox extends UIElement implements  KeyEventListener {
         tmp = tmp.substring(0, tmp.length()-1);
       }
     } else {
+      String s = "" + key;
+      if (!s.matches("[a-zA-Z0-9]")) {
+        return;
+      }
       // Otherwise, concatenate the String
       // Each character typed by the user is added to the end of the String variable.
       tmp += "" + key;

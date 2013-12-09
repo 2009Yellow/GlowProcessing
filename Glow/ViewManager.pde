@@ -109,7 +109,6 @@ public class ViewManager{
   public void setView(View newView) {
     // Destroy the old view
     if (currentView != null) {
-      println("view destroyed");
       currentView.destroy();
     }
     // Set the new view

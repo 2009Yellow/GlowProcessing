@@ -78,6 +78,7 @@ class Balance {
       }
     }
     //println(binary);
+    trackBalanceData(binary);
     return binary;
   }
 

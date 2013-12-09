@@ -123,8 +123,8 @@ class Helpers {
       areaSums[areaNum] = sum;
     }
     
-    println("Area Sums ");
-    println(areaSums);
+    //println("Area Sums ");
+    //println(areaSums);
     return areaSums;
   }
   

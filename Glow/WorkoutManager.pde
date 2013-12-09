@@ -31,6 +31,7 @@ class WorkoutManager {
 
   //have we finished pressure sensing?
   boolean donePressureSensing = false;
+  boolean hasTransitioned = false;
   boolean doneWithPose = false;
  
 
@@ -83,6 +84,7 @@ class WorkoutManager {
     pauseStartTime = System.currentTimeMillis(); //this will be updated when pause actually begins
     donePressureSensing = false;
     doneWithPose = false;
+    hasTransitioned = false;
   }
 
   void advancePose() { //call to advance to the next pose in a set workout
@@ -98,6 +100,7 @@ class WorkoutManager {
   //used to transition from mountain pose to desired pose
   void startPoseTransition() {
     pose.loadPoseData(poseNumber, heightBinNo);
+    println("WorkoutManager:: startPoseTransition -- poseEvent");
     matControl.poseEvent();
   }
 
@@ -105,7 +108,12 @@ class WorkoutManager {
   void initialPoseTransition() {
     println("WorkoutManager::initialPoseTransition()");
     // forward bend and downward dog have a different starting position than the other poses
-    if(poseNumber == 6){
+    
+    if(poseNumber == 3 || poseNumber == 4 || poseNumber == 5){
+      pose.loadPoseData(30, heightBinNo);
+    }
+    
+    else if(poseNumber == 6){
       pose.loadPoseData(60, heightBinNo);
     }
     
@@ -118,6 +126,7 @@ class WorkoutManager {
     }
     
     //update lights
+    println("WorkoutManager:: initialPoseTransition -- poseEvent");
     matControl.poseEvent();
   }
 
@@ -145,7 +154,8 @@ class WorkoutManager {
     matControl.loadData();
     currentTime = System.currentTimeMillis();
 
-    if (GlobalPApplet.videoElement == null) {
+    if (! GlobalPApplet.videoElement.isInit()) {
+      stopPose();
       return;
     }
 
@@ -172,7 +182,8 @@ class WorkoutManager {
         }
 
         //... and it's time to transition, then transition to desired pose in time with the video
-        else if ( videoTime > startPoseTransitionTime) {
+        else if ( videoTime > startPoseTransitionTime && !hasTransitioned) {
+          hasTransitioned = true;
           startPoseTransition();
         }
       }
@@ -203,11 +214,12 @@ class WorkoutManager {
         
         //record pressure data from this pose (pose 100 is not a real pose; just turns off lights)
         if(poseNumber!=100){
+          println("getting workout data");
           int percentTimeCorrect = matControl.getPercentTimeCorrect();
           workoutLog.add(new WorkoutData(poseNumber, percentTimeCorrect));
         }
         
-        startPoseTransition();  //turn all leds back to default purple color
+        //startPoseTransition();  //turn all leds back to default purple color
         GlobalPApplet.videoElement.play();
         println("I'm resuming the video now");
       }

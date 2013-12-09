@@ -33,6 +33,7 @@ class LED {
 
   void poseEvent() {
     setLeds();
+    println("LED:: poseEvent");
 
     //all lights start out purple for a new pose
     int numAreas = pixelNumbers.length;
@@ -41,12 +42,12 @@ class LED {
     for (int i =0; i<numAreas; i++) {
       colors[i] = 1;  //1 = white LEDs for start of pose
     }
-
+    println(pixelNumbers);
     matIn.setLights(pixelNumbers, colors);
   }
 
   void pressureEvent(float[] pressure) {
-
+    println("LED:: pressureEvent");
     boolean allBalanceCorrect = true;
 
     for ( int i = 0; i<pressure.length; i++) {
@@ -68,6 +69,7 @@ class LED {
 
     //println("new colors");
     //println(colors);
+    println(pixelNumbers);
 
     matIn.setLights(pixelNumbers, colors);
   }
